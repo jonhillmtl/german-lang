@@ -1,0 +1,129 @@
+{% extends 'apps/base.html' %}
+
+{% block content %}
+    <div class="noun_gender_flash">
+        <span id="singular_span"></span>
+    </div>
+
+    <div class="noun_gender_flash">
+        <span id="plural_span"></span>
+    </div>
+    
+    <div id="id_buttons" class="noun_gender_buttons">
+        <button class="n neutral">das</button>
+        <button class="f feminine">die</button>
+        <button class="m masculine" >der</button>
+    </div>
+
+    <div id="id_correction_overlay" class="noun_gender_correction_overlay">
+        <div class="noun_gender_correction"><span id="id_correction_correct"></span></div>
+        <input type="text" id="id_correction_text">
+        <button id="id_correction_submit">Submit</a>
+    </div>
+
+    <script type="text/javascript">
+        var token = 'eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0.u0Nn8fZS-BDuqW9ELUYUFW6QD-1p7wOk78WdxFzI4srnRBA0FXQU2VS-oHawYDAHCiB0vH7HlqxGbrs8uMpA72du71ZvnMmI.DgLutMHSv25wCmNjekNvSw.wV7WYjSWiyFOsCFDhHcz9g6aMIJRgVJlTxaa6K0T2Rewl-i2iK7wjWQ0mjcq7Zb4X3G0lWqv0C6HSEtI7l3uoU6-y_KkMzxk0Snsudkr9Q_cq8dPb3d4cwUUguGgVPhIFdCglH-ffxfV3EFDvt_JHfPfgddcdeuEW_kY9X6BQuWkO6ybFC7LdwZ_TmiP-ZQ5GcURIjoD3VqDZRB4YOKX4syLnAExIv-m5akjpnHDouAWIK3IIoMyN3Vgqj0Nj8PRLnuI5ot8QxVnxQkn-FAf_MV_sFfP4a6zuUG_e2Yb-KQNzzBnBfAV58pxj5F7i3dZE9OYtKQM-MaGzLtivaDz6wV2XrKVBOhnCLsRySN_eDs5vkrCbGq_tEtaaEQptxu5DHdvpJhLFPxlPa6tm4B56v8Y-FLv6x1dwoO_FIy4DEjoRCl6EwsuMys81V-NtkXbmEyVaqEf2mYpHJ_pYvl3beGcnfh9_YZBkIwKHtpR-6Jiu-kNwIkB6Et4JiFw9XzoJoNnXLXM9BZYL4H4MugkJA.8TevSJh9v7jA_vXkNCtH5ZCkv71xZQGiJP4klmDfihc';
+        
+        
+        var current_id = 0;
+        var current_noun = null;
+        var correct = 0;
+        var total = 0;
+        
+        function get_noun()
+        {
+            url = 'http://0.0.0.0:8080/api/nouns/';
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data)
+                {
+                    console.log(data);
+                    $("#singular_span").html(data.noun.singular_form);
+                    $("#plural_span").html(data.noun.plural_form);
+                    current_id = data.noun.id;
+                    current_noun = data.noun;
+                }
+            });
+        }
+        
+        function submit(gender)
+        {
+            var url = 'http://0.0.0.0:8080/api/nouns/' + current_id + '/gender/';
+            $.post({
+                url: url,
+                success: function(data)
+                {
+                    total += 1;
+                    if(data.results)
+                    {
+                        correct += 1;        
+                        get_noun();
+                    }
+                    else
+                    {
+                        $("#id_correction_correct").html(data.correction);
+                        $("#id_correction_overlay").show();
+                        $("#id_correction_text").val('')
+                    }
+                    
+                    var percentage = Math.round(correct / total * 100);
+                },
+                data: JSON.stringify(
+                    {
+                        'gender' : gender
+                    }
+                )
+            });
+        }
+        
+        $(document).ready(function()
+        {
+            $.ajaxSetup({
+                headers:
+                { 
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': token,
+                    'Content-Type':'application/json'
+                }
+            });
+
+            get_noun();
+
+            $(".n").click(function(){
+                submit('n');
+            });
+
+            $(".f").click(function(){
+                submit('f');
+            });
+
+            $(".m").click(function(){
+                submit('m');
+            });
+            
+            $("#id_correction_submit").click(function()
+            {
+                var url = 'http://0.0.0.0:8080/api/nouns/' + current_id + '/gender/correction/';
+                $.post({
+                    url: url,
+                    success: function(data)
+                    {
+                        if(data.success)
+                        {
+                            get_noun();
+                            $("#id_correction_overlay").hide();
+                        }
+                    },
+                    data: JSON.stringify(
+                        {
+                            'correction' : $("#id_correction_text").text()
+                        }
+                    )
+                });
+            });
+        });
+        
+    </script>
+{% endblock %}

@@ -1,0 +1,7 @@
+Django>=1.11,<2.0
+psycopg2
+git+https://github.com/jonhillmtl/django-jwt-auth
+git+https://github.com/jonhillmtl/jwt-key-gen
+git+https://github.com/jonhillmtl/django-jwt-utils
+djangorestframework
+djangorestframework-jsonapi
