@@ -52,9 +52,12 @@ def noun_gender_check(request, pk):
             object_type="Noun",
             correct=correct,
             user=request.user,
-            mode='noun_gender')
+            mode='noun_gender',
+            correct_answer=noun.gender,
+            answer=json_data,
+            correction=False)
         answer.save()
-        
+
         return JsonResponse(dict(
             correction=correct_answer,
             results=correct,
@@ -73,8 +76,25 @@ def noun_gender_check_correction(request, pk):
     noun = Noun.objects.get(pk=pk)
 
     try:
+        json_data = json.loads(request.body)
+        correct = noun.check_gender_correction(json_data['correction'])
+
+        answer = Answer(
+            object_id=noun.id,
+            object_type="Noun",
+            correct=correct,
+            user=request.user,
+            mode='noun_gender',
+            correct_answer=noun.gender_correction,
+            answer=json_data,
+            correction=True)
+        answer.save()
+
         return JsonResponse(dict(
-            success=True
+            success=correct,
+            correct_answer=noun.gender_correction,
+            answer=json_data,
+            correction=True
         ), safe=False)
     except AssertionError as e:
         return JsonResponse(dict(
@@ -104,3 +124,17 @@ def noun_answer_gender_check(request, pk):
             success=False,
             error=str(e)
         ))
+
+
+def noun_gender_stats(request):
+    print(request.user)
+    correct = Answer.objects.filter(user=request.user, object_type="Noun", correct=True).count()
+    incorrect = Answer.objects.filter(user=request.user).filter(object_type="Noun").filter(correct=False).count()
+
+    all_time = 0
+    all_time = (correct / (correct + incorrect) * 100)
+
+    return JsonResponse(dict(
+        all_time=all_time,
+        succces=True
+    ))

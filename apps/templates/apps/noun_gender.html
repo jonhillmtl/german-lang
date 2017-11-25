@@ -8,7 +8,7 @@
     <div class="noun_gender_flash">
         <span id="plural_span"></span>
     </div>
-    
+
     <div id="id_buttons" class="noun_gender_buttons">
         <button class="n neutral">das</button>
         <button class="f feminine">die</button>
@@ -17,18 +17,35 @@
 
     <div id="id_correction_overlay" class="noun_gender_correction_overlay">
         <div class="noun_gender_correction"><span id="id_correction_correct"></span></div>
-        <input type="text" id="id_correction_text">
-        <button id="id_correction_submit">Submit</a>
+        <input type="text" id="id_correction_text"></input>
+        <button id="id_correction_submit">Submit</button>
+    </div>
+
+    <div id="id_score_container" class="noun_gender_score">
+        <div id="id_score"></div>
     </div>
 
     <script type="text/javascript">
-        var token = 'eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0.u0Nn8fZS-BDuqW9ELUYUFW6QD-1p7wOk78WdxFzI4srnRBA0FXQU2VS-oHawYDAHCiB0vH7HlqxGbrs8uMpA72du71ZvnMmI.DgLutMHSv25wCmNjekNvSw.wV7WYjSWiyFOsCFDhHcz9g6aMIJRgVJlTxaa6K0T2Rewl-i2iK7wjWQ0mjcq7Zb4X3G0lWqv0C6HSEtI7l3uoU6-y_KkMzxk0Snsudkr9Q_cq8dPb3d4cwUUguGgVPhIFdCglH-ffxfV3EFDvt_JHfPfgddcdeuEW_kY9X6BQuWkO6ybFC7LdwZ_TmiP-ZQ5GcURIjoD3VqDZRB4YOKX4syLnAExIv-m5akjpnHDouAWIK3IIoMyN3Vgqj0Nj8PRLnuI5ot8QxVnxQkn-FAf_MV_sFfP4a6zuUG_e2Yb-KQNzzBnBfAV58pxj5F7i3dZE9OYtKQM-MaGzLtivaDz6wV2XrKVBOhnCLsRySN_eDs5vkrCbGq_tEtaaEQptxu5DHdvpJhLFPxlPa6tm4B56v8Y-FLv6x1dwoO_FIy4DEjoRCl6EwsuMys81V-NtkXbmEyVaqEf2mYpHJ_pYvl3beGcnfh9_YZBkIwKHtpR-6Jiu-kNwIkB6Et4JiFw9XzoJoNnXLXM9BZYL4H4MugkJA.8TevSJh9v7jA_vXkNCtH5ZCkv71xZQGiJP4klmDfihc';
-        
-        
+        var token = 'eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIn0.3QinpQBFzEtSSa3wPvgPOQcqKFObVX3jTciJsV5KxYlnrl5mVhuQkeKLLkdKeyT3Cc49rZntALAGNeJ-VjBApJ-hzGccEZ-_.qO2mq8PCSDXNViNjRXYG5g.5SNRT5dGvb2wCNsYL43RW4unVBThDnovDGbf3AS3zVxEqDm1IjGoIe6DdYL0qwKEKgiLsTJ2NpQS4A96GndJZgh6gftwZot38Lwq3R9Nk83bHXzx-vMG2saij2nEGW42-GBwcWXDwinAW91EzzJkGJghXkn4cuU72jEJnwXdqRK-P0z_PAGl27mVkIOyU1giy53o5JTnKD-GSpQiQWAFGPOX8GLCQCsbXFBnyHO0flnkpmXRuFRZ18kqyJfE_sZ5KR47Jc1PRkqd3jizmR2NcnK84qj3bb2Zfml4q8UylbpL06G5CTS8N1QR6e3XzKK-3mHd6qLDs81UC4RMYU9QF3eUkvEuw_bul01mrOJTsauRYW1Gfa8xSXYRhFG097XltjjVnrLhg1hBXw8WTKWPCFNrPcYvIWX4-yW8UQxyUw5Mva6xYSXkLLlHbR43GUoqKcuLofEnxB5rW_rKispORjOxUEhcNNQvjGdUMKtugBMoqNKB8yZMrhIRgM_THFFSiFSnOJxpkSEruEAGjuIcPw.BLniI2Hw715EUagl7qi9MTiGx-ulRMPNhmdZkGaGNMo';
+
         var current_id = 0;
         var current_noun = null;
         var correct = 0;
         var total = 0;
+        
+        function refresh_stats()
+        {
+            url = 'http://0.0.0.0:8080/api/nouns/gender/stats/';
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data)
+                {
+                    $("#id_score").text(data.all_time);
+                }
+            });
+        }
         
         function get_noun()
         {
@@ -67,7 +84,7 @@
                         $("#id_correction_overlay").show();
                         $("#id_correction_text").val('')
                     }
-                    
+
                     var percentage = Math.round(correct / total * 100);
                 },
                 data: JSON.stringify(
@@ -77,7 +94,7 @@
                 )
             });
         }
-        
+
         $(document).ready(function()
         {
             $.ajaxSetup({
@@ -88,6 +105,8 @@
                     'Content-Type':'application/json'
                 }
             });
+            
+            refresh_stats();
 
             get_noun();
 
@@ -118,7 +137,7 @@
                     },
                     data: JSON.stringify(
                         {
-                            'correction' : $("#id_correction_text").text()
+                            'correction' : $("#id_correction_text").val()
                         }
                     )
                 });

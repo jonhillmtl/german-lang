@@ -9,6 +9,9 @@ class Command(BaseCommand):
             for line in f.readlines()[1:]:
                 values = line.split(',')
 
+                # TODO JHILL: check for doubles
+                # TODO JHILL: sanitize
+
                 noun = Noun()
                 noun.singular_form = values[0]
                 noun.plural_form = values[1]

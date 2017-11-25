@@ -22,7 +22,7 @@ div.noun_gender_flash
 
 div.noun_gender_buttons
 {
-    height: 60px;
+    height: 120px;
 }
 
 div.noun_gender_correction_overlay
@@ -114,4 +114,11 @@ div.percentage
 div#id_correction_zone
 {
     visibility: hidden;
+}
+
+div.noun_gender_score
+{
+    width: 790px;
+    height: 120px;
+    background-color: #CCCCCC;
 }

@@ -2,6 +2,8 @@ from django.db import models
 from utils import GENDERS, NOUN_FORMS
 from django.contrib.auth.models import User
 
+from django.contrib.postgres.fields import JSONField
+
 def normalize_answer(answer):
     if answer is None:
         return None
@@ -36,13 +38,22 @@ class Noun(models.Model):
             language_code=target_language_code
         ).all()]
 
-    def check_gender(self, gender):
-        correction = "{} {}, die {}".format(
-            GERMAN_GENDER_DEFINITE_ARTICLES[self.gender],
-            self.singular_form,
-            self.plural_form
+    @property
+    def gender_correction(self):
+        print(self)
+        correction = "{} {}".format(
+            GERMAN_GENDER_DEFINITE_ARTICLES.get(self.gender, ""),
+            self.singular_form
         )
-        return self.gender == gender, correction
+        return correction
+
+    def check_gender_correction(self, correction):
+        # TODO JHILL: make more lenient
+        print(correction, self.gender_correction)
+        return correction == self.gender_correction
+
+    def check_gender(self, gender):
+        return self.gender == gender, self.gender_correction
 
     def check_answers(self, data):
         target_language_code = data.get('target_language_code', None)
@@ -109,4 +120,13 @@ class Answer(models.Model):
     correct = models.BooleanField(default=False)
     mode = models.CharField(max_length=16, default='')
 
-    
+    answer = JSONField(default='{}')
+    correction = models.BooleanField(default=False)
+    correct_answer = models.CharField(max_length=512, default='')
+
+    def __str__(self):
+        return "{}/{} ({}) ({})".format(
+            self.object_id,
+            self.object_type,
+            self.correct,
+            self.correction)
