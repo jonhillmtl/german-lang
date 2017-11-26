@@ -20,7 +20,7 @@ import random
 
 
 @api_view(['POST'])
-def gender_check(request):
+def check(request):
     # TODO JHILL: handle 404 gracefuly
     json_data = json.loads(request.body)
     noun = Noun.objects.get(pk=json_data['noun_id'])
@@ -53,7 +53,7 @@ def gender_check(request):
         ))
 
 @api_view(['POST'])
-def gender_correction(request):
+def correction(request):
     json_data = json.loads(request.body)
     noun = Noun.objects.get(pk=json_data['noun_id'])
 
@@ -85,7 +85,7 @@ def gender_correction(request):
 
 
 @api_view(['GET'])
-def gender_stats(request):
+def stats(request):
     # TODO JHILL: Move this onto the user object, make it queryable like crazy
     us = UserStats(request.user)
 

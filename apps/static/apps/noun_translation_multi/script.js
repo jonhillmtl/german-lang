@@ -38,6 +38,7 @@ $(document).ready(function()
             success: function(data)
             {
                 current_noun = data.noun;
+                console.log(data.choice_mode);
 
                 $("#singular_span").html(current_noun.singular_form);
                 $("#plural_span").html(current_noun.plural_form);

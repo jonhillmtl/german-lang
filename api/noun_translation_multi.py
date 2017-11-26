@@ -38,11 +38,11 @@ def check(request):
             answer=json_data,
             correction=False)
         answer.save()
-        print(answer.id)
+
         return JsonResponse(dict(
             correct=correct,
-            correct_answer=noun.gender,
-            correction_hint=noun.gender_correction,
+            correct_answer=[nt.id for nt in noun.nountranslation_set.all()],
+            correction_hint="",
             noun=NounSerializer(noun).data,
             success=True
         ), safe=False)
