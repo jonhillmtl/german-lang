@@ -1,5 +1,5 @@
 from django.db import models
-from utils import GENDERS, NOUN_FORMS
+from utils import GENDERS, NOUN_FORMS, COURSE_LEVELS, PERSON
 from django.contrib.auth.models import User
 
 from django.contrib.postgres.fields import JSONField
@@ -16,16 +16,27 @@ GERMAN_GENDER_DEFINITE_ARTICLES = {
     'm': 'der'
 }
 
-class Noun(models.Model):
+class GrammarQueryModel(models.Model):
+    level = models.CharField(max_length=2, null=True, choices=GENDERS, default=None)
+    chapter = models.IntegerField(null=True, default=None)
+
+    class Meta:
+        abstract = True
+
+class TimeStampedModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        abstract = True
+
+class Noun(GrammarQueryModel, TimeStampedModel):
     singular_form = models.CharField(max_length=128)
     plural_form = models.CharField(max_length=128)
     language_code = models.CharField(max_length=5)
     gender = models.CharField(max_length=1, choices=GENDERS)
 
     notes = models.TextField(null=True, blank=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     @staticmethod
     def random():
@@ -101,16 +112,13 @@ class Noun(models.Model):
             self.language_code)
 
 
-class NounTranslation(models.Model):
+class NounTranslation(TimeStampedModel):
     noun = models.ForeignKey(Noun)
     answer = models.CharField(max_length=128)
     form = models.CharField(max_length=1, choices=NOUN_FORMS)
     notes = models.TextField(null=True, blank=True)
     language_code = models.CharField(max_length=5, default='en_US')
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
     def __str__(self):
         return "{}: {} ({}) ({})".format(
             self.noun,
@@ -119,7 +127,7 @@ class NounTranslation(models.Model):
             self.language_code)
 
 
-class Answer(models.Model):
+class Answer(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
 
     user = models.ForeignKey(User)
@@ -129,9 +137,6 @@ class Answer(models.Model):
     answer = JSONField(default='{}')
     correction = models.BooleanField(default=False)
     correct_answer = models.CharField(max_length=512, default='')
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return "({}) ({})".format(
