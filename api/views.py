@@ -45,7 +45,7 @@ def noun_gender_check(request, pk):
 
     try:
         json_data = json.loads(request.body)
-        correct, correct_answer = noun.check_gender(json_data['gender'])
+        correct, correction_hint = noun.check_gender(json_data['gender'])
 
         answer = Answer(
             noun=noun,
@@ -58,8 +58,9 @@ def noun_gender_check(request, pk):
         answer.save()
 
         return JsonResponse(dict(
-            correction=correct_answer,
             results=correct,
+            correct_answer=noun.gender,
+            correction_hint=correction_hint,
             noun=NounSerializer(noun).data,
             success=True
         ), safe=False)
@@ -90,9 +91,9 @@ def noun_gender_check_correction(request, pk):
 
         return JsonResponse(dict(
             success=correct,
-            correct_answer=noun.gender_correction,
-            answer=json_data,
-            correction=True
+            correct_answer=noun.gender,
+            correction_hint=noun.gender_correction,
+            answer=json_data
         ), safe=False)
     except AssertionError as e:
         return JsonResponse(dict(
