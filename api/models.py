@@ -19,6 +19,7 @@ GERMAN_GENDER_DEFINITE_ARTICLES = {
 class GrammarQueryModel(models.Model):
     level = models.CharField(max_length=2, null=True, choices=GENDERS, default=None)
     chapter = models.IntegerField(null=True, default=None)
+    language_code = models.CharField(max_length=5)
 
     class Meta:
         abstract = True
@@ -33,10 +34,7 @@ class TimeStampedModel(models.Model):
 class Noun(GrammarQueryModel, TimeStampedModel):
     singular_form = models.CharField(max_length=128)
     plural_form = models.CharField(max_length=128)
-    language_code = models.CharField(max_length=5)
     gender = models.CharField(max_length=1, choices=GENDERS)
-
-    notes = models.TextField(null=True, blank=True)
 
     @staticmethod
     def random():

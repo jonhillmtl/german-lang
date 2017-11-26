@@ -1,0 +1,112 @@
+/* noun_gender */
+div.noun_gender_flash
+{
+    width: 800px;
+    height: 40px;
+    font-size: 40px;
+    text-align: center;
+    
+}
+
+div.noun_gender_buttons
+{
+    height: 120px;
+}
+
+div.noun_gender_correction_overlay
+{
+    position: absolute; /* Sit on top of the page content */
+    display: none; /* Hidden by default */    
+    width: 800px;
+    height: 375px;
+    background-color: white;
+    border: 5px solid gray;
+    top: 0px;
+    left: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+div.noun_gender_correction
+{
+    width: 800px;
+    height: 125px;
+    font-size: 50px;
+    text-align: center;
+}
+
+input#id_correction_text
+{
+    width: 800px;
+    height: 125px;
+    font-size: 50px;
+    text-align:center;
+}
+
+button#id_correction_submit
+{
+    width: 800px;
+    height: 125px;
+}
+
+button.neutral
+{
+    background-color: green;
+}
+
+button.feminine
+{
+    background-color: red;
+}
+
+button.masculine
+{
+    background-color: blue;
+}
+
+div.noun_gender_buttons button
+{
+    margin: 40px 0px;
+    height: 60px;
+    width: 260px;
+    font-size: 50px;
+    padding: 0px;
+}
+
+div.answer
+{
+    height: 100px;
+    width: 100px;    
+    text-align: center;
+}
+
+div.correct
+{
+    background-color: green;
+    font-color: white;
+}
+
+div.incorrect
+{
+    background-color: red;
+    font-color: white;
+}
+
+div.percentage
+{
+    padding-top: 40px;
+}
+
+div#id_correction_zone
+{
+    visibility: hidden;
+}
+
+div.noun_gender_score
+{
+    width: 790px;
+    height: 120px;
+    background-color: #CCCCCC;
+}

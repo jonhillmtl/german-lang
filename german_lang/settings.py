@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_json_api',
     'api',
-    'apps'
+    'apps',
+    'landing'
 ]
 
 MIDDLEWARE = [

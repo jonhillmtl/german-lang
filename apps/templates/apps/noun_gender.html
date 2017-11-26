@@ -1,4 +1,9 @@
 {% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/noun_gender/style.css' %}" />    
+{% endblock %}
 
 {% block content %}
     <div class="noun_gender_flash">
