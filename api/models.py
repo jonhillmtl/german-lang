@@ -23,7 +23,10 @@ class Noun(models.Model):
     gender = models.CharField(max_length=1, choices=GENDERS)
 
     notes = models.TextField(null=True, blank=True)
-    
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     @staticmethod
     def random():
         # TODO JHILL: need to specify language code or have a default
@@ -105,6 +108,9 @@ class NounTranslation(models.Model):
     notes = models.TextField(null=True, blank=True)
     language_code = models.CharField(max_length=5, default='en_US')
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
     def __str__(self):
         return "{}: {} ({}) ({})".format(
             self.noun,
@@ -114,8 +120,8 @@ class NounTranslation(models.Model):
 
 
 class Answer(models.Model):
-    object_id = models.IntegerField()
-    object_type = models.CharField(max_length=32)
+    noun = models.ForeignKey(Noun, null=True)
+
     user = models.ForeignKey(User)
     correct = models.BooleanField(default=False)
     mode = models.CharField(max_length=16, default='')
@@ -124,9 +130,10 @@ class Answer(models.Model):
     correction = models.BooleanField(default=False)
     correct_answer = models.CharField(max_length=512, default='')
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
-        return "{}/{} ({}) ({})".format(
-            self.object_id,
-            self.object_type,
+        return "({}) ({})".format(
             self.correct,
             self.correction)

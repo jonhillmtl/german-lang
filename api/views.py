@@ -48,8 +48,7 @@ def noun_gender_check(request, pk):
         correct, correct_answer = noun.check_gender(json_data['gender'])
 
         answer = Answer(
-            object_id=noun.id,
-            object_type="Noun",
+            noun=noun,
             correct=correct,
             user=request.user,
             mode='noun_gender',
@@ -80,8 +79,7 @@ def noun_gender_check_correction(request, pk):
         correct = noun.check_gender_correction(json_data['correction'])
 
         answer = Answer(
-            object_id=noun.id,
-            object_type="Noun",
+            noun=noun,            
             correct=correct,
             user=request.user,
             mode='noun_gender',
@@ -127,11 +125,10 @@ def noun_answer_gender_check(request, pk):
 
 
 def noun_gender_stats(request):
-    print(request.user)
+    # TODO JHILL: Move this onto the user object, make it queryable like crazy
     correct = Answer.objects.filter(user=request.user, object_type="Noun", correct=True).count()
     incorrect = Answer.objects.filter(user=request.user).filter(object_type="Noun").filter(correct=False).count()
 
-    all_time = 0
     all_time = (correct / (correct + incorrect) * 100)
 
     return JsonResponse(dict(

@@ -11,6 +11,8 @@ class Command(BaseCommand):
 
                 # TODO JHILL: check for doubles
                 # TODO JHILL: sanitize
+                # TODO JHILL: add translations
+                # TODO JHILL: add language
 
                 noun = Noun()
                 noun.singular_form = values[0]
