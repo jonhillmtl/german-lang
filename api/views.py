@@ -16,16 +16,61 @@ from .serializers import NounSerializer
 from .models import Noun, Answer, UserStats
 
 import json
+import random
+
+def _rarely_done(us, mode):
+    noun = None
+    rarely_done = us.rarely_done_nouns(mode)[0:10]
+    if len(rarely_done) > 0:
+        noun = Noun.objects.get(pk=random.choice(rarely_done)['noun'])
+    return noun, "rarely_done"
+    
+def _recently_wrong(us, mode):
+    noun = None
+    recently_wrong_nouns = us.recently_wrong_nouns(mode)[0:10]
+    if len(recently_wrong_nouns) > 0:
+        noun = random.choice(recently_wrong_nouns)
+    return noun, "recently_wrong"
+    
+def _weak_noun(us, mode):
+    noun = None
+    weak_nouns = us.weak_nouns(mode)[0:10]
+    if len(weak_nouns) > 0:
+        noun = Noun.objects.get(pk=random.choice(weak_nouns)['noun'])
+    return noun, "weak"
+    
+def _never_done_noun(us, mode):
+    noun = None
+    never_done_nouns = us.never_done_nouns(mode)
+    if len(never_done_nouns) > 0:
+        noun = random.choice(never_done_nouns)
+    return noun, "never_done"
 
 @api_view(['GET'])
 def random_noun(request):
     # TODO JHILL: need to specify language code, or provide a default
-    noun = Noun.random()
+    # need to specify a mode for this
+    mode = 'noun_gender'
 
-    return JsonResponse(dict(
+    us = UserStats(request.user)
+    funcs = [_rarely_done, _recently_wrong, _weak_noun, _never_done_noun]
+    noun, choice_mode = random.choice(funcs)(us, mode)
+
+    if noun is None:
+        noun = Noun.random()
+        choice_mode = "random_recovery_" + choice_mode
+
+    data = dict(
         noun=NounSerializer(noun).data,
-        success=True
-    ), safe=False)
+        success=True,
+        choice_mode=choice_mode
+    )
+
+    # if 'get_translations' in json_data and json_data['get_translations'] is True
+    if True:
+        data['translations'] = noun.possible_translations
+
+    return JsonResponse(data, safe=False)
 
 
 @api_view(['GET'])
@@ -38,68 +83,6 @@ def noun_view(request, pk):
         success=True
     ), safe=False)
 
-@api_view(['POST'])
-def noun_gender_check(request):
-    # TODO JHILL: handle 404 gracefuly
-    json_data = json.loads(request.body)
-    noun = Noun.objects.get(pk=json_data['noun_id'])
-
-    try:
-        json_data = json.loads(request.body)
-        correct, correction_hint = noun.check_gender(json_data['gender'])
-
-        answer = Answer(
-            noun=noun,
-            correct=correct,
-            user=request.user,
-            mode='noun_gender',
-            correct_answer=noun.gender,
-            answer=json_data,
-            correction=False)
-        answer.save()
-
-        return JsonResponse(dict(
-            results=correct,
-            correct_answer=noun.gender,
-            correction_hint=correction_hint,
-            noun=NounSerializer(noun).data,
-            success=True
-        ), safe=False)
-    except AssertionError as e:
-        return JsonResponse(dict(
-            success=False,
-            error=str(e)
-        ))
-
-@api_view(['POST'])
-def noun_gender_check_correction(request):
-    json_data = json.loads(request.body)
-    noun = Noun.objects.get(pk=json_data['noun_id'])
-
-    try:
-        json_data = json.loads(request.body)
-        correct = noun.check_gender_correction(json_data['correction'])
-
-        answer = Answer(
-            noun=noun,            
-            correct=correct,
-            user=request.user,
-            mode='noun_gender',
-            correct_answer=noun.gender_correction,
-            answer=json_data,
-            correction=True)
-        answer.save()
-
-        return JsonResponse(dict(
-            success=correct,
-            correct_answer=noun.gender,
-            answer=json_data
-        ), safe=False)
-    except AssertionError as e:
-        return JsonResponse(dict(
-            success=False,
-            error=str(e)
-        ))
 
 @api_view(['POST'])
 def noun_answer_gender_check(request):
@@ -121,18 +104,3 @@ def noun_answer_gender_check(request):
             success=False,
             error=str(e)
         ))
-
-
-def noun_gender_stats(request):
-    # TODO JHILL: Move this onto the user object, make it queryable like crazy
-    us = UserStats(request.user)
-
-    return JsonResponse(dict(
-        mode_percentage=us.all_time_percentage('noun_gender'),
-        all_time_percentage=us.all_time_percentage(),
-
-        mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
-        last_24h_percentage=us.last_24h_percentage(),
-        
-        succces=True
-    ))

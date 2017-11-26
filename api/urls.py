@@ -1,16 +1,31 @@
 from django.conf.urls import url
 
 from . import views
+from . import noun_gender
+from . import noun_translation_multi
 
 urlpatterns = [
+
+    # nouns
+    
     # GET
-    url(r'^$', views.random_noun, name='random_noun'),   
-    url(r'^(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
-    
-    # noun_gender
-    
+    url(r'^nouns/$', views.random_noun, name='random_noun'),   
+    url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
+
+
+    # noun_gender mode
+
+    # GET
+    url(r'nouns/gender/stats/$', noun_gender.gender_stats, name='noun_gender_stats'),
+
     # POST
-    url(r'gender/$', views.noun_gender_check, name='noun_gender_check'),   
-    url(r'gender/correction/$', views.noun_gender_check_correction, name='noun_gender_check_correction'),
-    url(r'gender/stats/$', views.noun_gender_stats, name='noun_gender_stats'),
+    url(r'nouns/gender/check/$', noun_gender.gender_check, name='noun_gender_check'),   
+    url(r'nouns/gender/correction/$', noun_gender.gender_correction, name='noun_gender_correction'),
+    
+    # noun_translation_multi mode
+
+    # POST
+    url(r'nouns/translations/multi/check/$', noun_translation_multi.check, name='noun_gender_check'),   
+    url(r'nouns/translations/multi/correction/$', noun_translation_multi.correction, name='noun_gender_correction'),
+
 ]

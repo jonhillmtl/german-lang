@@ -1,9 +1,6 @@
 $(document).ready(function()
 {
-    var current_id = 0;
     var current_noun = null;
-    var correct = 0;
-    var total = 0;
 
     refresh_stats();
     get_noun();
@@ -49,10 +46,14 @@ $(document).ready(function()
 
                     $("#id_correction_overlay").hide();
                 }
+                else
+                {
+                    // TODO JHILL: an alert or something?
+                }
             },
             data: JSON.stringify(
                 {
-                    'noun_id': current_id,
+                    'noun_id': current_noun.id,
                     'correction': $("#id_correction_text").val()
                 }
             )
@@ -87,26 +88,23 @@ $(document).ready(function()
             {
                 $("#singular_span").html(data.noun.singular_form);
                 $("#plural_span").html(data.noun.plural_form);
-                current_id = data.noun.id;
                 current_noun = data.noun;
+                console.log(data.choice_mode)
             }
         });
     }
 
     function submit_answer(gender)
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/gender/';
+        var url = 'http://0.0.0.0:8080/api/nouns/gender/check/';
         $.post({
             url: url,
             success: function(data)
             {
-                total += 1;
-                if(data.results)
+                if(data.correct)
                 {
                     refresh_stats();
                     get_noun();
-
-                    correct += 1;
                 }
                 else
                 {
@@ -115,12 +113,10 @@ $(document).ready(function()
                     $("#id_correction_overlay").show();
                     $("#id_correction_text").val('')
                 }
-
-                var percentage = Math.round(correct / total * 100);
             },
             data: JSON.stringify(
                 {
-                    'noun_id': current_id,
+                    'noun_id': current_noun.id,
                     'gender': gender
                 }
             )

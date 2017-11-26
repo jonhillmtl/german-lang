@@ -1,8 +1,13 @@
 from django.db import models
 from utils import GENDERS, NOUN_FORMS, COURSE_LEVELS, PERSON
 from django.contrib.auth.models import User
+import datetime
+from django.db.models import Count,  Case, When, Sum, F, Value, FloatField, CharField
+from django.db.models.functions import Cast
+import random
 
 from django.contrib.postgres.fields import JSONField
+from itertools import chain
 
 def normalize_answer(answer):
     if answer is None:
@@ -16,18 +21,35 @@ GERMAN_GENDER_DEFINITE_ARTICLES = {
     'm': 'der'
 }
 
+GERMAN_GENDER_INDEFINITE_ARTICLES = {
+    'n': 'ein',
+    'f': 'eine',
+    'm': 'ein'
+}
+
 class UserStats(object):
     user = None
     def __init__(self, user):
         self.user = user
 
-    def _percentage_query(self, mode=None, start_time=None, end_time=None):
+    def _build_query_params(self, mode=None, start_time=None, end_time=None):
         params = dict(
             user=self.user,
         )
 
         if mode is not None:
-            params['mode'] = mode
+            params['mode']   = mode
+
+        if start_time is not None:
+            params['created_at__gt'] = start_time
+
+        if end_time is not None:
+            params['created_at__lt'] = end_time
+
+        return params
+
+    def _percentage_query(self, mode=None, start_time=None, end_time=None):
+        params = self._build_query_params(mode, start_time, end_time)
 
         correct = Answer.objects.filter(
             **params,
@@ -43,28 +65,84 @@ class UserStats(object):
         if total is 0:
             return None
 
-        return correct / (total) * 100.0
+        return correct / total * 100.0
 
     def all_time_percentage(self, mode=None):
         return self._percentage_query(mode=mode)
 
     def last_24h_percentage(self, mode=None):
-        return self._percentage_query(mode=mode)
+        return self._percentage_query(
+            mode=mode,
+            start_time=datetime.datetime.now() - datetime.timedelta(days=1))
+
+    # TODO JHILL: collapse this and check the results, it seems fishy
+    def rarely_done_nouns(self, mode=None, start_time=None, end_time=None):
+        params = self._build_query_params(mode, start_time, end_time)
+
+        return Answer.objects.filter(
+            **params,
+        ).values('noun').annotate(
+            correct_count=Cast(Count(Case(When(correct=True, then=True))), FloatField())
+        ).annotate(
+            incorrect_count=Cast(Count(Case(When(correct=False, then=False))), FloatField())
+        ).annotate(
+            total=(F('correct_count') + F('incorrect_count'))
+        ).order_by("total")
+        
+    # TODO JHILL: collapse this and check the results, it seems fishy
+    def recently_wrong_nouns(self, mode=None, start_time=None, end_time=None):
+        params = self._build_query_params(mode, start_time, end_time)
+        recently_wrong_nouns = Answer.objects.filter(
+            **params,
+            correct=False
+        ).values('noun')
+        
+        return Noun.objects.filter(id__in=[dn['noun'] for dn in recently_wrong_nouns])
+
+    # TODO JHILL: collapse this and check the results, it seems fishy
+    def never_done_nouns(self, mode=None, start_time=None, end_time=None):
+        params = self._build_query_params(mode, start_time, end_time)
+        done_nouns = Answer.objects.filter(
+            **params,
+        ).values('noun')
+
+        return Noun.objects.exclude(id__in=[dn['noun'] for dn in done_nouns])
+
+    # TODO JHILL: collapse this and check the results, it seems fishy
+    def weak_nouns(self, mode=None, start_time=None, end_time=None):
+        params = self._build_query_params(mode, start_time, end_time)
+
+        return Answer.objects.filter(
+            **params,
+        ).values('noun').annotate(
+            correct_count=Cast(Count(Case(When(correct=True, then=True))), FloatField())
+        ).annotate(
+            incorrect_count=Cast(Count(Case(When(correct=False, then=False))), FloatField())
+        ).annotate(
+            total=(F('correct_count') + F('incorrect_count'))
+        ).filter(
+            total__gt=0
+        ).annotate(
+            average=(F('correct_count') / F('total') * 100)
+        ).order_by("average")
+
 
 class GrammarQueryModel(models.Model):
-    level = models.CharField(max_length=2, null=True, choices=GENDERS, default=None)
+    level = models.CharField(max_length=4, null=True, choices=GENDERS, default=None)
     chapter = models.IntegerField(null=True, default=None)
     language_code = models.CharField(max_length=5)
 
     class Meta:
         abstract = True
 
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         abstract = True
+
 
 class Noun(GrammarQueryModel, TimeStampedModel):
     singular_form = models.CharField(max_length=128)
@@ -87,20 +165,31 @@ class Noun(GrammarQueryModel, TimeStampedModel):
 
     @property
     def gender_correction(self):
-        print(self)
-        correction = "{} {}".format(
+        return "{} {}".format(
             GERMAN_GENDER_DEFINITE_ARTICLES.get(self.gender, ""),
             self.singular_form
         )
-        return correction
 
     def check_gender_correction(self, correction):
         # TODO JHILL: make more lenient
-        print(correction, self.gender_correction)
-        return correction == self.gender_correction
+        return self.gender_correction == correction
 
     def check_gender(self, gender):
-        return self.gender == gender, self.gender_correction
+        return self.gender == gender
+        
+    def check_translation(self, translation_id):
+        return self.nountranslation_set.filter(id=translation_id).first() is not None
+    
+    @property
+    def possible_translations(self):
+        # TODO JHILL: this is probably crazy slow
+        correct_translations = self.nountranslation_set.filter(noun=self, form='s').all()
+        fill_count = 8 - len(correct_translations)
+        
+        random_translations = random.sample(list(NounTranslation.objects.filter(form='s').all()), fill_count)
+        translations = list(chain(random_translations, correct_translations))
+
+        return random.sample([dict(id=nt.id, answer=nt.answer) for nt in translations], 8)
 
     def check_answers(self, data):
         target_language_code = data.get('target_language_code', None)
@@ -165,7 +254,7 @@ class Answer(TimeStampedModel):
 
     user = models.ForeignKey(User)
     correct = models.BooleanField(default=False)
-    mode = models.CharField(max_length=16, default='')
+    mode = models.CharField(max_length=32, default='')
 
     answer = JSONField(default='{}')
     correction = models.BooleanField(default=False)
