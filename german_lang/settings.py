@@ -74,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'german_lang.context_processors.jwt_token_processor'
             ],
         },
     },
@@ -187,4 +188,3 @@ JWT_AUTH_NO_USER_STORE = False
 
 # we are using django-rest-framework, so we need to return tuples from our Auth backend
 JWT_AUTH_RETURN_TUPLES = True
-

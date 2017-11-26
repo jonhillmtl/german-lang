@@ -13,7 +13,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 
 from .serializers import NounSerializer
-from .models import Noun, Answer
+from .models import Noun, Answer, UserStats
 
 import json
 
@@ -39,9 +39,10 @@ def noun_view(request, pk):
     ), safe=False)
 
 @api_view(['POST'])
-def noun_gender_check(request, pk):
+def noun_gender_check(request):
     # TODO JHILL: handle 404 gracefuly
-    noun = Noun.objects.get(pk=pk)
+    json_data = json.loads(request.body)
+    noun = Noun.objects.get(pk=json_data['noun_id'])
 
     try:
         json_data = json.loads(request.body)
@@ -71,9 +72,9 @@ def noun_gender_check(request, pk):
         ))
 
 @api_view(['POST'])
-def noun_gender_check_correction(request, pk):
-    # TODO JHILL: handle 404 gracefuly
-    noun = Noun.objects.get(pk=pk)
+def noun_gender_check_correction(request):
+    json_data = json.loads(request.body)
+    noun = Noun.objects.get(pk=json_data['noun_id'])
 
     try:
         json_data = json.loads(request.body)
@@ -92,7 +93,6 @@ def noun_gender_check_correction(request, pk):
         return JsonResponse(dict(
             success=correct,
             correct_answer=noun.gender,
-            correction_hint=noun.gender_correction,
             answer=json_data
         ), safe=False)
     except AssertionError as e:
@@ -102,13 +102,11 @@ def noun_gender_check_correction(request, pk):
         ))
 
 @api_view(['POST'])
-def noun_answer_gender_check(request, pk):
-    # TODO JHILL: handle 404 gracefuly
-    noun = Noun.objects.get(pk=pk)
+def noun_answer_gender_check(request):
+    json_data = json.loads(request.body)
+    noun = Noun.objects.get(pk=json_data['noun_id'])
 
     try:
-        json_data = json.loads(request.body)
-
         results, singular_answers, plural_answers = noun.check_answers(json_data)
 
         return JsonResponse(dict(
@@ -127,12 +125,14 @@ def noun_answer_gender_check(request, pk):
 
 def noun_gender_stats(request):
     # TODO JHILL: Move this onto the user object, make it queryable like crazy
-    correct = Answer.objects.filter(user=request.user, object_type="Noun", correct=True).count()
-    incorrect = Answer.objects.filter(user=request.user).filter(object_type="Noun").filter(correct=False).count()
-
-    all_time = (correct / (correct + incorrect) * 100)
+    us = UserStats(request.user)
 
     return JsonResponse(dict(
-        all_time=all_time,
+        mode_percentage=us.all_time_percentage('noun_gender'),
+        all_time_percentage=us.all_time_percentage(),
+
+        mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
+        last_24h_percentage=us.last_24h_percentage(),
+        
         succces=True
     ))

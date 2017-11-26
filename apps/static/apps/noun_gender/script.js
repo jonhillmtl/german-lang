@@ -37,7 +37,7 @@ $(document).ready(function()
 
     $("#id_correction_submit").click(function()
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/' + current_id + '/gender/correction/';
+        var url = 'http://0.0.0.0:8080/api/nouns/gender/correction/';
         $.post({
             url: url,
             success: function(data)
@@ -52,7 +52,8 @@ $(document).ready(function()
             },
             data: JSON.stringify(
                 {
-                    'correction' : $("#id_correction_text").val()
+                    'noun_id': current_id,
+                    'correction': $("#id_correction_text").val()
                 }
             )
         });
@@ -67,7 +68,10 @@ $(document).ready(function()
             dataType: 'json',
             success: function(data)
             {
-                $("#id_score").text(data.all_time);
+                $("#id_mode_percentage").text(data.mode_percentage);
+                $("#id_all_time_percentage").text(data.all_time_percentage);
+                $("#id_last_24h_percentage").text(data.last_24h_percentage);
+                $("#id_mode_last_24h_percentage").text(data.mode_last_24h_percentage);
             }
         });
     }
@@ -91,7 +95,7 @@ $(document).ready(function()
 
     function submit_answer(gender)
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/' + current_id + '/gender/';
+        var url = 'http://0.0.0.0:8080/api/nouns/gender/';
         $.post({
             url: url,
             success: function(data)
@@ -116,7 +120,8 @@ $(document).ready(function()
             },
             data: JSON.stringify(
                 {
-                    'gender' : gender
+                    'noun_id': current_id,
+                    'gender': gender
                 }
             )
         });

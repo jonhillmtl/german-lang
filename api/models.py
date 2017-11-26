@@ -16,6 +16,41 @@ GERMAN_GENDER_DEFINITE_ARTICLES = {
     'm': 'der'
 }
 
+class UserStats(object):
+    user = None
+    def __init__(self, user):
+        self.user = user
+
+    def _percentage_query(self, mode=None, start_time=None, end_time=None):
+        params = dict(
+            user=self.user,
+        )
+
+        if mode is not None:
+            params['mode'] = mode
+
+        correct = Answer.objects.filter(
+            **params,
+            correct=True
+        ).count()
+
+        incorrect = Answer.objects.filter(
+            **params,
+            correct=False
+        ).count()
+
+        total = correct + incorrect
+        if total is 0:
+            return None
+
+        return correct / (total) * 100.0
+
+    def all_time_percentage(self, mode=None):
+        return self._percentage_query(mode=mode)
+
+    def last_24h_percentage(self, mode=None):
+        return self._percentage_query(mode=mode)
+
 class GrammarQueryModel(models.Model):
     level = models.CharField(max_length=2, null=True, choices=GENDERS, default=None)
     chapter = models.IntegerField(null=True, default=None)
@@ -140,3 +175,5 @@ class Answer(TimeStampedModel):
         return "({}) ({})".format(
             self.correct,
             self.correction)
+            
+
