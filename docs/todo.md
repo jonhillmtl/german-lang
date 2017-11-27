@@ -1,0 +1,11 @@
+- game modes
+- answer mode
+- translation context
+- convert all randoms to QuerySet, put on GrammarQueryModel
+- move random to model
+- simplify random_noun
+- add a flash app for just showing words
+- base class for answer: interaction
+- expand on Answer::__str__
+- stats for modes, codify
+- a function to get any kind of word

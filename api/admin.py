@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import Noun, NounTranslation, Answer
+from .models import Noun, Verb, Translation, Answer
 
 admin.site.register(Noun)
-admin.site.register(NounTranslation)
+admin.site.register(Translation)
 admin.site.register(Answer)

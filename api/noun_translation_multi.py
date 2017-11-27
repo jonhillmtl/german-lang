@@ -34,14 +34,14 @@ def check(request):
             correct=correct,
             user=request.user,
             mode='noun_translation_multi',
-            correct_answer=[nt.id for nt in noun.nountranslation_set.all()],
+            correct_answer=[nt.id for nt in noun.translation_set.all()],
             answer=json_data,
             correction=False)
         answer.save()
 
         return JsonResponse(dict(
             correct=correct,
-            correct_answer=[nt.id for nt in noun.nountranslation_set.all()],
+            correct_answer=[nt.id for nt in noun.translation_set.all()],
             correction_hint="",
             noun=NounSerializer(noun).data,
             success=True

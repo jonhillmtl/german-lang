@@ -86,8 +86,10 @@ $(document).ready(function()
             dataType: 'json',
             success: function(data)
             {
-                $("#singular_span").html(data.noun.singular_form);
-                $("#plural_span").html(data.noun.plural_form);
+                console.log(data);
+                $("#id_singular_span").html(data.noun.singular_form);
+                $("#id_plural_span").html(data.noun.plural_form);
+                $("#id_translation_span").html(data.noun.translations_text);
                 current_noun = data.noun;
                 console.log(data.choice_mode)
             }

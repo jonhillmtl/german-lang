@@ -8,6 +8,14 @@ div.noun_gender_flash
     
 }
 
+div.noun_gender_translation
+{
+    width: 800px;
+    height: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
 div.noun_gender_buttons
 {
     height: 120px;

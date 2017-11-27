@@ -14,7 +14,7 @@ urlpatterns = [
 
 
     # noun_gender mode
-
+    # TODO JHILL: are these regexes right at the beginning?
     # GET
     url(r'nouns/gender/stats/$', noun_gender.stats, name='noun_gender_stats'),
 

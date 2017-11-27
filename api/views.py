@@ -13,62 +13,28 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 
 from .serializers import NounSerializer
-from .models import Noun, Answer, UserStats
+from .models import Noun, Answer, UserStats, GrammarQueryStub
 
 import json
 import random
-
-def _rarely_done(us, mode):
-    noun = None
-    rarely_done = us.rarely_done_nouns(mode)[0:10]
-    if len(rarely_done) > 0:
-        noun = Noun.objects.get(pk=random.choice(rarely_done)['noun'])
-    return noun, "rarely_done"
-    
-def _recently_wrong(us, mode):
-    noun = None
-    recently_wrong_nouns = us.recently_wrong_nouns(mode)[0:10]
-    if len(recently_wrong_nouns) > 0:
-        noun = random.choice(recently_wrong_nouns)
-    return noun, "recently_wrong"
-    
-def _weak_noun(us, mode):
-    noun = None
-    weak_nouns = us.weak_nouns(mode)[0:10]
-    if len(weak_nouns) > 0:
-        noun = Noun.objects.get(pk=random.choice(weak_nouns)['noun'])
-    return noun, "weak"
-    
-def _never_done_noun(us, mode):
-    noun = None
-    never_done_nouns = us.never_done_nouns(mode)
-    if len(never_done_nouns) > 0:
-        noun = random.choice(never_done_nouns)
-    return noun, "never_done"
+from text_header import text_header
 
 @api_view(['GET'])
 def random_noun(request):
     # TODO JHILL: need to specify language code, or provide a default
     # need to specify a mode for this
-    mode = 'noun_gender'
+    # TODO JHILL: make into a general purpose view for all GrammarQueryModels
+    # very important here!
+    mode = 'noun_translation_multi'
 
-    us = UserStats(request.user)
-    funcs = [_rarely_done, _recently_wrong, _weak_noun, _never_done_noun]
-    noun, choice_mode = random.choice(funcs)(us, mode)
-
-    if noun is None:
-        noun = Noun.random()
-        choice_mode = "random_recovery_" + choice_mode
+    query_stub = GrammarQueryStub(mode=mode, user=request.user)
+    noun, choice_mode = Noun.random(grammar_query_stub=query_stub)
 
     data = dict(
         noun=NounSerializer(noun).data,
         success=True,
         choice_mode=choice_mode
     )
-
-    # if 'get_translations' in json_data and json_data['get_translations'] is True
-    if True:
-        data['translations'] = noun.possible_translations
 
     return JsonResponse(data, safe=False)
 

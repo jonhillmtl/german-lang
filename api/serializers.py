@@ -4,4 +4,6 @@ from .models import Noun
 class NounSerializer(serializers.ModelSerializer):
     class Meta:
         model = Noun
-        fields = '__all__'
+        fields = ('id', 'singular_form', 'plural_form', 'gender', 'level',
+                  'chapter', 'gendered_singular', 'gendered_plural', 'translations_text',
+                  'possible_translations')

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from api.models import Noun, NounTranslation
+from api.models import Noun, Translation
 
 class Command(BaseCommand):
     help = 'Populates the nouns'
@@ -28,21 +28,23 @@ class Command(BaseCommand):
                 noun.level = values[5]
                 noun.chapter = values[6]
 
-                for nt in noun.nountranslation_set.all():
+                noun.save()
+
+                for nt in noun.translation_set.all():
                     nt.delete()
 
                 if values[3] != '':
-                    nt = NounTranslation(
+                    nt = Translation(
                         noun=noun,
-                        answer=values[3],
+                        translation=values[3],
                         form='s',
                         language_code='en_US')
                     nt.save()
 
                 if values[4] != '':
-                    nt = NounTranslation(
+                    nt = Translation(
                         noun=noun,
-                        answer=values[4],
+                        translation=values[4],
                         form='p',
                         language_code='en_US')
                     nt.save()

@@ -90,11 +90,11 @@ def stats(request):
     us = UserStats(request.user)
 
     return JsonResponse(dict(
-        mode_percentage=us.all_time_percentage('noun_gender'),
-        all_time_percentage=us.all_time_percentage(),
+        # mode_percentage=us.all_time_percentage('noun_gender'),
+        # all_time_percentage=us.all_time_percentage(),
 
-        mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
-        last_24h_percentage=us.last_24h_percentage(),
+        # mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
+        # last_24h_percentage=us.last_24h_percentage(),
         
         succces=True
     ))
