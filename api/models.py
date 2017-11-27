@@ -343,6 +343,7 @@ class Adverb(GrammarQueryModel, TimeStampedModel):
 
 class Phrase(GrammarQueryModel, TimeStampedModel):
     pass
+    
 
 class Translation(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)

@@ -1,8 +1,7 @@
 from django.conf.urls import url
 
 from . import views
-from . import noun_gender
-from . import noun_translation_multi
+from .views import noun_gender, noun_translation_multi
 
 urlpatterns = [
 
@@ -25,7 +24,16 @@ urlpatterns = [
     # noun_translation_multi mode
 
     # POST
-    url(r'nouns/translations/multi/check/$', noun_translation_multi.check, name='noun_gender_check'),   
-    url(r'nouns/translations/multi/correction/$', noun_translation_multi.correction, name='noun_gender_correction'),
+    url(
+        r'nouns/translations/multi/check/$',
+        noun_translation_multi.check,
+        name='noun_translation_multi_check'
+    ),
+
+    url(
+        r'nouns/translations/multi/correction/$',
+        noun_translation_multi.correction,
+        name='noun_translation_mutli_correction'
+    ),
 
 ]

@@ -12,8 +12,8 @@ from rest_framework.renderers import JSONRenderer
 
 from rest_framework.views import APIView
 
-from .serializers import NounSerializer
-from .models import Noun, Answer, UserStats
+from ..serializers import NounSerializer
+from ..models import Noun, Answer, UserStats
 
 import json
 import random
@@ -27,22 +27,22 @@ def check(request):
 
     try:
         json_data = json.loads(request.body)
-        correct = noun.check_translation(json_data['translation_id'])
+        correct = noun.check_gender(json_data['gender'])
 
         answer = Answer(
             noun=noun,
             correct=correct,
             user=request.user,
-            mode='noun_translation_multi',
-            correct_answer=[nt.id for nt in noun.translation_set.all()],
+            mode='noun_gender',
+            correct_answer=noun.gender,
             answer=json_data,
             correction=False)
         answer.save()
 
         return JsonResponse(dict(
             correct=correct,
-            correct_answer=[nt.id for nt in noun.translation_set.all()],
-            correction_hint="",
+            correct_answer=noun.gender,
+            correction_hint=noun.gender_correction,
             noun=NounSerializer(noun).data,
             success=True
         ), safe=False)
@@ -62,7 +62,7 @@ def correction(request):
         correct = noun.check_gender_correction(json_data['correction'])
 
         answer = Answer(
-            noun=noun,
+            noun=noun,            
             correct=correct,
             user=request.user,
             mode='noun_gender',
@@ -82,17 +82,19 @@ def correction(request):
             error=str(e)
         ))
 
+
+
 @api_view(['GET'])
-def gender_stats(request):
+def stats(request):
     # TODO JHILL: Move this onto the user object, make it queryable like crazy
     us = UserStats(request.user)
 
     return JsonResponse(dict(
-        mode_percentage=us.all_time_percentage('noun_gender'),
-        all_time_percentage=us.all_time_percentage(),
+        # mode_percentage=us.all_time_percentage('noun_gender'),
+        # all_time_percentage=us.all_time_percentage(),
 
-        mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
-        last_24h_percentage=us.last_24h_percentage(),
+        # mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
+        # last_24h_percentage=us.last_24h_percentage(),
         
         succces=True
     ))
