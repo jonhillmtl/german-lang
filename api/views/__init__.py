@@ -12,8 +12,8 @@ from rest_framework.renderers import JSONRenderer
 
 from rest_framework.views import APIView
 
-from ..serializers import NounSerializer
-from ..models import Noun, Answer, UserStats, GrammarQueryStub
+from ..serializers import NounSerializer, VerbSerializer
+from ..models import Noun, Answer, UserStats, GrammarQueryStub, Verb
 
 import json
 import random
@@ -41,6 +41,30 @@ def random_noun(request):
 
     data = dict(
         noun=NounSerializer(noun).data,
+        success=True,
+        choice_mode=choice_mode,
+        mode=mode
+    )
+
+    return JsonResponse(data, safe=False)
+
+@api_view(['GET'])
+def random_verb(request):
+    # TODO JHILL: need to specify language code, or provide a default
+    # need to specify a mode for this
+    # TODO JHILL: make into a general purpose view for all GrammarQueryModels
+    # very important here!
+    assert request.method == 'GET'
+
+    mode = request.GET.get('mode', None)
+
+    query_stub = GrammarQueryStub(mode=mode, user=request.user)
+    verb, choice_mode = Verb.random(grammar_query_stub=query_stub)
+
+    text_header(verb)
+
+    data = dict(
+        verb=VerbSerializer(verb).data,
         success=True,
         choice_mode=choice_mode,
         mode=mode

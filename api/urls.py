@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from . import views
-from .views import noun_gender, noun_translation_multi, noun_pluralization
+from .views import noun_gender, noun_translation_multi, noun_pluralization, noun_translation, verb_translation_multi
 
 urlpatterns = [
 
@@ -10,7 +10,6 @@ urlpatterns = [
     # GET
     url(r'^nouns/$', views.random_noun, name='random_noun'),   
     url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
-
 
     # noun_gender mode
     # TODO JHILL: are these regexes right at the beginning?
@@ -43,5 +42,28 @@ urlpatterns = [
         r'nouns/pluralization/check/$',
         noun_pluralization.check,
         name='noun_pluralization_check'
+    ),
+    
+    # noun_translation mode
+
+    # POST
+    url(
+        r'nouns/translation/check/$',
+        noun_translation.check,
+        name='noun_translation_check'
+    ),
+
+    # verbs
+    
+    # GET
+    url(r'^verbs/$', views.random_verb, name='random_verb'),   
+    # url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
+    
+    # POST
+    url(
+        r'verbs/translation/multi/check/$',
+        verb_translation_multi.check,
+        name='verb_translation_multi_check'
     )
+    
 ]

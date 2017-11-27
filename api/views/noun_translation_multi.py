@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer    
+from rest_framework.renderers import JSONRenderer
 
 from rest_framework.views import APIView
 
@@ -27,7 +27,7 @@ def check(request):
 
     try:
         json_data = json.loads(request.body)
-        correct = noun.check_translation(json_data['translation_id'])
+        correct = noun.check_translation_id(json_data['translation_id'])
 
         answer = Answer(
             noun=noun,

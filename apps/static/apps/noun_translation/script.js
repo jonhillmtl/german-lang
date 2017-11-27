@@ -3,6 +3,8 @@ $(document).ready(function()
     var current_noun = null;
 
     get_noun();
+    
+    var correction = false;
 
     function update_colors(gender)
     {
@@ -20,32 +22,50 @@ $(document).ready(function()
         }
     }
     
-    $(".translation").click(function()
+    $('#id_translation_text').bind("enterKey", function(e)
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/translation/multi/check/';
+        var url = 'http://0.0.0.0:8080/api/nouns/translation/check/';
 
         $.post({
             url: url,
             success: function(data)
             {
+                console.log(data);
                 if(data.correct)
                 {
+                    correction = false;
                     get_noun();
+                }
+                else
+                {
+                    $("#id_plural_span").html(current_noun.gendered_plural);
+                    $("#id_translation_text").val('');
+                    $("#id_translation_text").focus();
+                    $("#id_translation_span").html(current_noun.translations_text);
+                    correction = true;
                 }
             },
             data: JSON.stringify(
                 {
                     'noun_id': current_noun.id,
-                    'translation_id': $(this).data('translation_id')
+                    'translation': $(this).val(),
+                    'correction': correction
                 }
             )
         });
-        
+    });
+
+    $('#id_translation_text').keyup(function(e)
+    {
+        if(e.keyCode == 13)
+        {
+            $(this).trigger("enterKey");
+        }
     });
 
     function get_noun()
     {
-        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_translation_multi';
+        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_translation';
         $.ajax({
             url: url,
             method: 'GET',
@@ -59,14 +79,10 @@ $(document).ready(function()
 
                 $("#id_singular_span").html(current_noun.gendered_singular);
                 $("#id_plural_span").html(current_noun.gendered_plural);
-                
-                var index = 0;
-                $("#id_buttons").children('button').each(function()
-                {
-                    $(this).data('translation_id', current_noun.possible_translations[index].id)
-                    $(this).text(current_noun.possible_translations[index].translation);
-                    index++;
-                });
+
+                $("#id_translation_text").val('');
+                $("#id_translation_text").focus();
+                $("#id_translation_span").html('');
             }
         });
     }

@@ -8,3 +8,9 @@ def noun_translation_multi(request):
 
 def noun_pluralization(request):
     return render(request, 'apps/noun_pluralization.html')
+
+def noun_translation(request):
+    return render(request, 'apps/noun_translation.html')
+    
+def verb_translation_multi(request):
+    return render(request, 'apps/verb_translation_multi.html')

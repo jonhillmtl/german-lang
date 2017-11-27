@@ -54,7 +54,7 @@ COURSE_LEVELS = (
     ('a2.2', 'a2.2'),
     ('b1.1', 'b1.2'),
     ('b2.1', 'b2.2'),
-    ('c1')
+    ('c1', 'c1')
 )
 
 class GrammarQueryStub(object):
@@ -65,7 +65,7 @@ class GrammarQueryStub(object):
     cls = None
     count = 30
 
-    def __init__(self, count=10, cls=None, user=None, mode=None, start_time=None, end_time=None):
+    def __init__(self, count=10, user=None, mode=None, start_time=None, end_time=None):
         self.user = user
         self.mode = mode
         self.start_time = start_time
@@ -122,7 +122,7 @@ class UserStats(object):
             start_time=datetime.datetime.now() - datetime.timedelta(days=1))
 
 class GrammarQueryModel(models.Model):
-    level = models.CharField(max_length=4, null=True, choices=GENDERS, default=None)
+    level = models.CharField(max_length=4, null=True, choices=COURSE_LEVELS, default=None)
     chapter = models.IntegerField(null=True, default=None)
     language_code = models.CharField(max_length=5)
 
@@ -132,6 +132,7 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def random(cls, grammar_query_stub):
         # TODO JHILL: move somewhere nicer
+        return cls.objects.order_by('?').first(), "random"
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
         funcs = [
@@ -146,10 +147,14 @@ class GrammarQueryModel(models.Model):
         models, choice_mode = random.choice(funcs)(grammar_query_stub)
 
         if models.count() == 0:
-            models, choice_mode = cls.rarely_done
-        
+            models, choice_mode = cls.rarely_done(grammar_query_stub)
+
+        models = models.filter(chapter__gt='8')
+
         if models.count() == 0:
             models, choice_mode = cls.objects.order_by('?'), "random"
+
+        models = models.filter(chapter__gt='8')
 
         model = random.choice(models[0:grammar_query_stub.count])
         return model, choice_mode
@@ -211,13 +216,13 @@ class GrammarQueryModel(models.Model):
         query = Answer.objects.filter(
             **params,
             correct=False
-        ).values('noun_id').values_list('noun_id', flat=True)
+        ).order_by('-created_at').values(grammar_query_stub.cls).values_list('noun_id', flat=True)
 
         return cls.objects.filter(pk__in=query), "recently_wrong"
 
     @property
     def possible_translations(self):
-        translations = self.translation_set.filter(form='s')
+        translations = self.translation_set.filter()
         fill_count = 8 - len(translations)
 
         random_translations = random.sample(list(Translation.objects.filter(form='s').all()), fill_count)
@@ -230,6 +235,10 @@ class GrammarQueryModel(models.Model):
         translations = self.translation_set.all()
         return ", ".join([pt.translation for pt in translations])
 
+    def check_translation_id(self, translation_id):
+        return self.translation_set.filter(id=translation_id).first() is not None
+
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -239,8 +248,8 @@ class TimeStampedModel(models.Model):
 
 
 class Noun(GrammarQueryModel, TimeStampedModel):
-    singular_form = models.CharField(max_length=128)
-    plural_form = models.CharField(max_length=128)
+    singular_form = models.CharField(max_length=64)
+    plural_form = models.CharField(max_length=64)
     gender = models.CharField(max_length=1, choices=GENDERS)
 
     def answers(self, form, target_language_code):
@@ -288,8 +297,9 @@ class Noun(GrammarQueryModel, TimeStampedModel):
         return self.gender == gender
 
     # TODO JHILL: move to grammar query model?
-    def check_translation(self, translation_id):
-        return self.translation_set.filter(id=translation_id).first() is not None
+    def check_translation(self, translation):
+        # TODO JHILL: make more lenient
+        return self.translation_set.filter(translation=translation).first() is not None
 
     def check_answers(self, data):
         target_language_code = data.get('target_language_code', None)
@@ -335,7 +345,12 @@ class Noun(GrammarQueryModel, TimeStampedModel):
 
 
 class Verb(GrammarQueryModel, TimeStampedModel):
-    pass
+    verb = models.CharField(max_length=64, default='')
+    past_participle = models.CharField(max_length=64, default='')
+    seperable = models.BooleanField(default=False)
+    irregular = models.BooleanField(default=False)
+    auxiliary = models.CharField(max_length=32, default='')
+    type = models.CharField(max_length=16, default='')
 
 class Preposition(GrammarQueryModel, TimeStampedModel):
     pass
