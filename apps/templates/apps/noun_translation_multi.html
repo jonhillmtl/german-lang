@@ -7,29 +7,24 @@
 {% endblock %}
 
 {% block content %}
-    <div class="noun_gender_flash">
+    <div class="flash">
         <span id="id_singular_span"></span>
     </div>
 
-    <div class="noun_gender_flash">
+    <div class="flash">
         <span id="id_plural_span"></span>
     </div>
 
-    <div id="id_buttons" class="noun_translation_buttons">
-        <button id="id_multi_answer_0" class="noun_translation_button">0</button>
-        <button id="id_multi_answer_1" class="noun_translation_button">1</button>
-        <button id="id_multi_answer_2" class="noun_translation_button">2</button>
-        <button id="id_multi_answer_3" class="noun_translation_button">3</button>
-        <button id="id_multi_answer_4" class="noun_translation_button">4</button>
-        <button id="id_multi_answer_5" class="noun_translation_button">5</button>
-        <button id="id_multi_answer_6" class="noun_translation_button">6</button>
-        <button id="id_multi_answer_7" class="noun_translation_button">7</button>
+    <div id="id_buttons" class="buttons">
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
     </div>
 
-    <div id="id_score_container" class="noun_gender_score">
-        <div id="id_mode_percentage"></div>
-        <div id="id_all_time_percentage"></div>
-        <div id="id_mode_last_24h_percentage"></div>
-        <div id="id_last_24h_percentage"></div>
-    </div>
+    {% include 'apps/sections/score.html' %}
 {% endblock %}

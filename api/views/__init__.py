@@ -25,15 +25,25 @@ def random_noun(request):
     # need to specify a mode for this
     # TODO JHILL: make into a general purpose view for all GrammarQueryModels
     # very important here!
-    mode = 'noun_translation_multi'
+    assert request.method == 'GET'
+
+    mode = request.GET.get('mode', None)
 
     query_stub = GrammarQueryStub(mode=mode, user=request.user)
-    noun, choice_mode = Noun.random(grammar_query_stub=query_stub)
+
+    if mode == 'noun_plurazation':    
+        while True:
+            noun, choice_mode = Noun.random(grammar_query_stub=query_stub)
+            if noun.plural_form != '':
+                break
+    else:
+        noun, choice_mode = Noun.random(grammar_query_stub=query_stub)
 
     data = dict(
         noun=NounSerializer(noun).data,
         success=True,
-        choice_mode=choice_mode
+        choice_mode=choice_mode,
+        mode=mode
     )
 
     return JsonResponse(data, safe=False)
@@ -70,3 +80,18 @@ def noun_answer_gender_check(request):
             success=False,
             error=str(e)
         ))
+
+@api_view(['GET'])
+def stats(request):
+    # TODO JHILL: Move this onto the user object, make it queryable like crazy
+    us = UserStats(request.user)
+
+    return JsonResponse(dict(
+        # mode_percentage=us.all_time_percentage('noun_gender'),
+        # all_time_percentage=us.all_time_percentage(),
+
+        # mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
+        # last_24h_percentage=us.last_24h_percentage(),
+        
+        succces=True
+    ))

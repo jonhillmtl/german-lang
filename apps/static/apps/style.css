@@ -3,9 +3,148 @@ body
     font-family: Arial;
 }
 
+/******************************************************************************************************
+*
+* divs
+*
+*/
+
 div.main
 {
     margin: 0px auto;
     width: 800px;
     position: relative;
+}
+
+div.flash
+{
+    width: 800px;
+    height: 40px;
+    font-size: 40px;
+    text-align: center;
+    
+}
+
+div.buttons
+{
+    height: 120px;
+    margin: 20px 0px;
+    width: 800px;
+}
+
+div.text_input
+{
+    height: 120px;
+    margin: 20px 0px;
+    width: 800px;    
+}
+
+div.buttons button
+{
+    height: 120px;
+    width: 250px;
+    font-size: 20px;
+    padding: 0px;
+}
+
+div.translation
+{
+    width: 800px;
+    height: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+div.buttons button.translation
+{
+    width: 190px;
+    height: 60px;
+}
+
+div.score
+{
+    width: 800px;
+    height: 120px;
+    background-color: #CCCCCC;
+}
+
+div.correction_overlay
+{
+    position: absolute; /* Sit on top of the page content */
+    display: none; /* Hidden by default */    
+    width: 800px;
+    height: 246px;
+    background-color: white;
+    border: 5px solid gray;
+    top: 0px;
+    left: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+div.correction_overlay div.correction
+{
+    width: 800px;
+    height: 60px;
+    font-size: 60px;
+    text-align: center;
+    padding: 30px 0px;
+}
+
+/******************************************************************************************************
+*
+* other
+*
+*/
+button.gender
+{
+    color: white;
+}
+
+div.buttons button.neutral
+{
+    background-color: #228B22;
+}
+
+div.buttons button.feminine
+{
+    background-color: red;
+}
+
+div.buttons button.masculine
+{
+    background-color: #4169E1;
+}
+
+input.large
+{
+    width: 800px;
+    height: 125px;
+    font-size: 50px;
+    text-align:center;
+}
+
+.gender_text_n
+{
+    color: #228B22;
+}
+
+.gender_text_f
+{
+    color: red;
+}
+
+.gender_text_m
+{
+    color: #4169E1;
+}
+
+input#id_correction_text
+{
+    width: 800px;
+    height: 125px;
+    font-size: 50px;
+    text-align:center;
 }

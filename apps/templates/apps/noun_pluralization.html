@@ -1,0 +1,26 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/noun_pluralization/style.css' %}" />
+    <script type="text/javascript" src="{% static 'apps/noun_pluralization/script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="flash">
+        <span id="id_singular_span"></span>
+    </div>
+
+    <div class="flash">
+        <span id="id_plural_span"></span>
+    </div>
+
+    <div class="translation">
+        (<span id="id_translation_span"></span>)
+    </div>
+
+    <div class="text_input">
+        <input type="text" class="large" id="id_plural_text" placeholder="pluralize, plz">
+    </div>
+    {% include 'apps/sections/score.html' %}
+{% endblock %}

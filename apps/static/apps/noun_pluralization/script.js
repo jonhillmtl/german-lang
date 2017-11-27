@@ -1,12 +1,14 @@
 $(document).ready(function()
 {
     var current_noun = null;
+    var correction = false;
 
     get_noun();
 
+    // TODO JHILL: factor out somewhere
     function update_colors(gender)
     {
-        var controls = [$("#id_plural_span"), $("#id_singular_span")];
+        var controls = [$("#id_singular_span"), $("#id_plural_span"), $("#id_plural_text")];
 
         for(index = 0; index < controls.length; index++)
         {
@@ -19,10 +21,10 @@ $(document).ready(function()
             text.addClass('gender_text_' + gender);
         }
     }
-    
-    $(".translation").click(function()
+
+    $('#id_plural_text').bind("enterKey", function(e)
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/translations/multi/check/';
+        var url = 'http://0.0.0.0:8080/api/nouns/pluralization/check/';
 
         $.post({
             url: url,
@@ -30,22 +32,38 @@ $(document).ready(function()
             {
                 if(data.correct)
                 {
+                    correction = false;
                     get_noun();
+                }
+                else
+                {
+                    $("#id_plural_span").html(current_noun.gendered_plural);
+                    $("#id_plural_text").val('');
+                    $("#id_plural_text").focus();
+                    correction = true;
                 }
             },
             data: JSON.stringify(
                 {
                     'noun_id': current_noun.id,
-                    'translation_id': $(this).data('translation_id')
+                    'plural': $(this).val(),
+                    'correction': correction
                 }
             )
         });
-        
+    });
+
+    $('#id_plural_text').keyup(function(e)
+    {
+        if(e.keyCode == 13)
+        {
+            $(this).trigger("enterKey");
+        }
     });
 
     function get_noun()
     {
-        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_translation_multi';
+        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_pluralization';
         $.ajax({
             url: url,
             method: 'GET',
@@ -53,20 +71,15 @@ $(document).ready(function()
             success: function(data)
             {
                 current_noun = data.noun;
-                console.log(data);
+                console.log(data.choice_mode);
 
                 update_colors(current_noun.gender);
 
                 $("#id_singular_span").html(current_noun.gendered_singular);
-                $("#id_plural_span").html(current_noun.gendered_plural);
-                
-                var index = 0;
-                $("#id_buttons").children('button').each(function()
-                {
-                    $(this).data('translation_id', current_noun.possible_translations[index].id)
-                    $(this).text(current_noun.possible_translations[index].translation);
-                    index++;
-                });
+                $("#id_plural_span").html('');
+                $("#id_translation_span").html(current_noun.translations_text);
+                $("#id_plural_text").val('');
+                $("#id_plural_text").focus();
             }
         });
     }

@@ -27,54 +27,24 @@ def check(request):
 
     try:
         json_data = json.loads(request.body)
-        correct = noun.check_gender(json_data['gender'])
+        correct = noun.check_plural(json_data['plural'])
+        correction = json_data['correction']
 
         answer = Answer(
             noun=noun,
             correct=correct,
             user=request.user,
-            mode='noun_gender',
-            correct_answer=noun.gender,
+            mode='noun_pluralization',
+            correct_answer=noun.gendered_plural,
             answer=json_data,
-            correction=False)
+            correction=correction)
         answer.save()
 
         return JsonResponse(dict(
             correct=correct,
-            correct_answer=noun.gender,
-            correction_hint=noun.gender_correction,
-            noun=NounSerializer(noun).data,
+            correct_answer=noun.gendered_plural,
+            correction_hint=noun.gendered_plural,
             success=True
-        ), safe=False)
-    except AssertionError as e:
-        return JsonResponse(dict(
-            success=False,
-            error=str(e)
-        ))
-
-@api_view(['POST'])
-def correction(request):
-    json_data = json.loads(request.body)
-    noun = Noun.objects.get(pk=json_data['noun_id'])
-
-    try:
-        json_data = json.loads(request.body)
-        correct = noun.check_gender_correction(json_data['correction'])
-
-        answer = Answer(
-            noun=noun,            
-            correct=correct,
-            user=request.user,
-            mode='noun_gender',
-            correct_answer=noun.gender_correction,
-            answer=json_data,
-            correction=True)
-        answer.save()
-
-        return JsonResponse(dict(
-            success=correct,
-            correct_answer=noun.gender,
-            answer=json_data
         ), safe=False)
     except AssertionError as e:
         return JsonResponse(dict(

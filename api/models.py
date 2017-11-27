@@ -63,7 +63,7 @@ class GrammarQueryStub(object):
     end_time = None
     user = None
     cls = None
-    count = 10
+    count = 30
 
     def __init__(self, count=10, cls=None, user=None, mode=None, start_time=None, end_time=None):
         self.user = user
@@ -135,17 +135,19 @@ class GrammarQueryModel(models.Model):
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
         funcs = [
-            cls.rarely_done,
-            cls.rarely_done,
             cls.never_done,
             cls.never_done,
+            cls.never_done,
+            cls.rarely_done,
             cls.recently_wrong,
-            cls.weak,
-            cls.weak,
+            cls.weak
         ]
 
         models, choice_mode = random.choice(funcs)(grammar_query_stub)
 
+        if models.count() == 0:
+            models, choice_mode = cls.rarely_done
+        
         if models.count() == 0:
             models, choice_mode = cls.objects.order_by('?'), "random"
 
@@ -155,7 +157,8 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def rarely_done(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
-        
+        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
+
         query = Answer.objects.filter(
             **params,
         ).values(grammar_query_stub.cls).annotate(
@@ -171,18 +174,18 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def never_done(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
-        print(params)
+        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
+        
         query = Answer.objects.filter(
             **params,
         ).values(grammar_query_stub.cls).values_list('noun_id', flat=True)
-        
-        print(query)
-        
+
         return cls.objects.exclude(id__in=query), "never_done"
 
     @classmethod
     def weak(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
+        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
         query = Answer.objects.filter(
             **params,
@@ -203,6 +206,7 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def recently_wrong(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
+        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
         query = Answer.objects.filter(
             **params,
@@ -271,6 +275,10 @@ class Noun(GrammarQueryModel, TimeStampedModel):
             GERMAN_GENDER_DEFINITE_ARTICLES.get("f", "f"),
             self.plural_form
         )
+
+    def check_plural(self, plural):
+        # TODO JHILL: make more lenient
+        return self.gendered_plural == plural
 
     def check_gender_correction(self, correction):
         # TODO JHILL: make more lenient

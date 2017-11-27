@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from . import views
-from .views import noun_gender, noun_translation_multi
+from .views import noun_gender, noun_translation_multi, noun_pluralization
 
 urlpatterns = [
 
@@ -15,7 +15,7 @@ urlpatterns = [
     # noun_gender mode
     # TODO JHILL: are these regexes right at the beginning?
     # GET
-    url(r'nouns/gender/stats/$', noun_gender.stats, name='noun_gender_stats'),
+    url(r'nouns/gender/stats/$', views.stats, name='noun_gender_stats'),
 
     # POST
     url(r'nouns/gender/check/$', noun_gender.check, name='noun_gender_check'),   
@@ -33,7 +33,15 @@ urlpatterns = [
     url(
         r'nouns/translations/multi/correction/$',
         noun_translation_multi.correction,
-        name='noun_translation_mutli_correction'
+        name='noun_translation_multi_correction'
     ),
 
+    # noun_pluralization mode
+
+    # POST
+    url(
+        r'nouns/pluralization/check/$',
+        noun_pluralization.check,
+        name='noun_pluralization_check'
+    )
 ]

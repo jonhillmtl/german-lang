@@ -31,8 +31,16 @@ $(document).ready(function()
     $("#id_masculine_answer").click(function(){
         submit_answer('m');
     });
+    
+    $('#id_correction_text').keyup(function(e)
+    {
+        if(e.keyCode == 13)
+        {
+            $(this).trigger("enterKey");
+        }
+    });
 
-    $("#id_correction_submit").click(function()
+    $('#id_correction_text').bind("enterKey", function(e)
     {
         var url = 'http://0.0.0.0:8080/api/nouns/gender/correction/';
         $.post({
@@ -48,7 +56,8 @@ $(document).ready(function()
                 }
                 else
                 {
-                    // TODO JHILL: an alert or something?
+                    $("#id_correction_text").val('')
+                    $("#id_correction_text").focus();
                 }
             },
             data: JSON.stringify(
@@ -79,14 +88,13 @@ $(document).ready(function()
 
     function get_noun()
     {
-        url = 'http://0.0.0.0:8080/api/nouns/';
+        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_gender';
         $.ajax({
             url: url,
             method: 'GET',
             dataType: 'json',
             success: function(data)
             {
-                console.log(data);
                 $("#id_singular_span").html(data.noun.singular_form);
                 $("#id_plural_span").html(data.noun.plural_form);
                 $("#id_translation_span").html(data.noun.translations_text);
@@ -114,6 +122,7 @@ $(document).ready(function()
                     $("#id_correction_correct").html(data.correction_hint);
                     $("#id_correction_overlay").show();
                     $("#id_correction_text").val('')
+                    $("#id_correction_text").focus();
                 }
             },
             data: JSON.stringify(

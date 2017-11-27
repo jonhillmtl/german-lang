@@ -6,3 +6,4 @@ git+https://github.com/jonhillmtl/django-jwt-utils
 djangorestframework
 djangorestframework-jsonapi
 git+https://github.com/jonhillmtl/text-header
+pyflakes
