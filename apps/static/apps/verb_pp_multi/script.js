@@ -1,14 +1,14 @@
 $(document).ready(function()
 {
-    get_gqm(verb_random_url, 'verb', 'verb_translation_multi', get_callback);
+    get_gqm(verb_random_url, 'verb', 'verb_pp_multi', get_callback);
 
     $(".translation").click(function()
     {
         check_translation_multi_answer(
-            verb_translation_multi_url,
-            $(this).data('translation_id'),
+            verb_pp_multi_url, 
+            $(this).data('pp'),
             'verb',
-            'verb_translation_multi',
+            'verb_pp_multi',
             check_callback
         );
     });
@@ -17,7 +17,7 @@ $(document).ready(function()
     {
         if(data.correct)
         {
-            get_gqm(verb_random_url, 'verb', 'verb_translation_multi', get_callback);
+            get_gqm(verb_random_url, 'verb', 'verb_pp_multi', get_callback);
         }
     }
 
@@ -30,8 +30,8 @@ $(document).ready(function()
         var index = 0;
         $("#id_buttons").children('button').each(function()
         {
-            $(this).data('translation_id', current_gqm.possible_translations[index].id)
-            $(this).text(current_gqm.possible_translations[index].translation);
+            $(this).data('pp', current_gqm.possible_past_participles[index])
+            $(this).text(current_gqm.possible_past_participles[index]);
             index++;
         });
     }

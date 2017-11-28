@@ -51,6 +51,7 @@ function refresh_stats()
 
 var verb_translation_multi_url = null;
 var verb_random_url = null;
+var verb_pp_multi_url = null;
 
 var noun_translation_multi_url = null;
 var noun_random_url = null;
@@ -59,7 +60,8 @@ function init_urls(
     verb_translation_multi,
     verb_random,
     noun_translation_multi,
-    noun_random
+    noun_random,
+    verb_pp_multi
 )
 {
     verb_translation_multi_url = verb_translation_multi;
@@ -67,27 +69,25 @@ function init_urls(
 
     noun_translation_multi_url = noun_translation_multi;
     noun_random_url = noun_random;
+
+    verb_pp_multi_url = verb_pp_multi;
 }
 
 var current_gqm = null;
-var current_gqm_type = null;
 
-function check_translation_multi_answer(translation_id, callback)
+function check_translation_multi_answer(url, answer, gqm_type, mode, callback)
 {
-    url = '';
     post_data = {
-        'translation_id': translation_id
+        'answer': answer,
     }
     
-    if(current_gqm_type == 'verb')
+    if(gqm_type == 'verb')
     {
-        url = verb_translation_multi_url;
         post_data['verb_id'] = current_gqm.id;
     }
-    else if(current_gqm_type == 'noun')
+    else
     {
-        url = verb_translation_multi_url;
-        post_data['noun_id'] = current_gqm.id;        
+        post_data['noun_id'] = current_gqm.id;
     }
 
     $.post({
@@ -100,20 +100,11 @@ function check_translation_multi_answer(translation_id, callback)
     });
 }
 
-function get_gqm(type, mode, callback)
+function get_gqm(url, type, mode, callback)
 {
-    url = '';
-    if(type == 'verb')
-    {
-        url = verb_random_url;
-    }
-    else if(type == 'noun')
-    {
-        url = noun_random_url;
-    }
-
     url = url + '?mode=' + mode;
-
+    console.log(url);
+    
     $.ajax({
         url: url,
         method: 'GET',
@@ -121,7 +112,6 @@ function get_gqm(type, mode, callback)
         success: function(data)
         {
             current_gqm = data[type];
-            current_gqm_type = type;
             callback(data);
         }
     });

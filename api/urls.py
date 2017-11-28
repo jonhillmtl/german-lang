@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from . import views
-from .views import noun_gender, noun_translation_multi, noun_pluralization, noun_translation, verb_translation_multi
+from .views import noun_gender, noun_translation_multi, noun_pluralization, \
+                   noun_translation, verb_translation_multi, verb_pp_multi
 
 urlpatterns = [
 
@@ -60,10 +61,20 @@ urlpatterns = [
     # url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
     
     # POST
+    
+    # verb_translation_multi
     url(
         r'verbs/translation/multi/check/$',
         verb_translation_multi.check,
         name='verb_translation_multi_check'
+    ),
+    
+    # verb_pp_multi
+    url(
+        r'verbs/pp/multi/check/$',
+        verb_pp_multi.check,
+        name='verb_pp_multi_check'
     )
+    
     
 ]

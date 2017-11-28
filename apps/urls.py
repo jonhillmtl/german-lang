@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^nouns/translation/$', views.noun_translation, name='noun_translation'),   
 
     url(r'^verbs/translation/multi/$', views.verb_translation_multi, name='verb_translation_multi'),   
+    url(r'^verbs/pastparticiple/multi/$', views.verb_pp_multi, name='verb_pp_multi'),   
+
 ]

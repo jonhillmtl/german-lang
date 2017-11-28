@@ -370,6 +370,26 @@ class Verb(GrammarQueryModel, TimeStampedModel):
     auxiliary = models.CharField(max_length=32, default='')
     type = models.CharField(max_length=16, default='')
 
+    def check_past_participle(self, pp):
+        # TODO JHILL: make more lenient
+        return self.past_participle == pp
+
+    @property
+    def possible_past_participles(self):
+        translation = self.past_participle
+        fill_count = 7
+
+        # TODO JHILL: this could be prettier
+        random_verbs = random.sample(
+            list(Verb.objects.all()),
+            fill_count
+        )
+
+        random_verbs = [v.past_participle for v in random_verbs]
+        random_verbs.append(translation)
+
+        return random.sample(random_verbs, 8)
+
 class Preposition(GrammarQueryModel, TimeStampedModel):
     pass
 

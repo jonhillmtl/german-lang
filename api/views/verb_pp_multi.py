@@ -27,14 +27,14 @@ def check(request):
 
     try:
         json_data = json.loads(request.body)
-        correct = verb.check_translation_id(json_data['answer'])
+        correct = verb.check_past_participle(json_data['answer'])
 
         answer = Answer(
             verb=verb,
             correct=correct,
             user=request.user,
-            mode='verb_translation_multi',
-            correct_answer=[nt.id for nt in verb.translation_set.all()],
+            mode='verb_pp_multi',
+            correct_answer=verb.past_participle,
             answer=json_data,
             correction=False)
         answer.save()

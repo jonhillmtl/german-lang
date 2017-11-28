@@ -27,7 +27,7 @@ def check(request):
 
     try:
         json_data = json.loads(request.body)
-        correct = noun.check_translation_id(json_data['translation_id'])
+        correct = noun.check_translation_id(json_data['answer'])
 
         answer = Answer(
             noun=noun,

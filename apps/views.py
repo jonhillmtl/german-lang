@@ -14,3 +14,6 @@ def noun_translation(request):
     
 def verb_translation_multi(request):
     return render(request, 'apps/verb_translation_multi.html')
+    
+def verb_pp_multi(request):
+    return render(request, 'apps/verb_pp_multi.html')

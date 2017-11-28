@@ -1,23 +1,26 @@
 $(document).ready(function()
 {
-    get_gqm('noun', 'noun_translation_multi', get_callback);
+    get_gqm(noun_random_url, 'noun', 'noun_translation_multi', get_callback);
 
     $(".translation").click(function()
     {
         check_translation_multi_answer(
+            noun_translation_multi_url,
             $(this).data('translation_id'),
+            'noun',
+            'noun_translation_multi',
             check_callback
         );
     });
-    
+
     function check_callback(data)
     {
         if(data.correct)
         {
-            get_gqm('noun', 'noun_translation_multi', get_callback);
+            get_gqm(noun_random_url, 'noun', 'noun_translation_multi', get_callback);
         }
     }
-    
+
     function get_callback(data)
     {
         $("#id_singular_span").html(current_gqm.singular_form);
