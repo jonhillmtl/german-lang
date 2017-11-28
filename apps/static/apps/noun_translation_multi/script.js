@@ -4,22 +4,6 @@ $(document).ready(function()
 
     get_noun();
 
-    function update_colors(gender)
-    {
-        var controls = [$("#id_plural_span"), $("#id_singular_span")];
-
-        for(index = 0; index < controls.length; index++)
-        {
-            // TODO JHILL: factor that class up into a different css file
-            text = controls[index];
-            text.removeClass('gender_text_f');
-            text.removeClass('gender_text_m');
-            text.removeClass('gender_text_n');
-
-            text.addClass('gender_text_' + gender);
-        }
-    }
-    
     $(".translation").click(function()
     {
         var url = 'http://0.0.0.0:8080/api/nouns/translation/multi/check/';
@@ -55,7 +39,8 @@ $(document).ready(function()
                 current_noun = data.noun;
                 console.log(data);
 
-                update_colors(current_noun.gender);
+                var controls = [$("#id_plural_span"), $("#id_singular_span")];
+                update_colors(controls, current_noun.gender);
 
                 $("#id_singular_span").html(current_noun.gendered_singular);
                 $("#id_plural_span").html(current_noun.gendered_plural);

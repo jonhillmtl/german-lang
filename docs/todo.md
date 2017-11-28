@@ -22,3 +22,8 @@
 
 - onenter for text
 
+- level/chapter combinations
+
+- user preferences
+
+- clean up the grammar_query_stub.cls thing

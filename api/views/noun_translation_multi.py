@@ -73,7 +73,6 @@ def correction(request):
 
         return JsonResponse(dict(
             success=correct,
-            correct_answer=noun.gender,
             answer=json_data
         ), safe=False)
     except AssertionError as e:

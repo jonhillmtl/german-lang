@@ -6,22 +6,6 @@ $(document).ready(function()
     get_noun();
 
     // TODO JHILL: factor out somewhere
-    function update_colors(gender)
-    {
-        var controls = [$("#id_singular_span"), $("#id_plural_span"), $("#id_plural_text")];
-
-        for(index = 0; index < controls.length; index++)
-        {
-            // TODO JHILL: factor that class up into a different css file
-            text = controls[index];
-            text.removeClass('gender_text_f');
-            text.removeClass('gender_text_m');
-            text.removeClass('gender_text_n');
-
-            text.addClass('gender_text_' + gender);
-        }
-    }
-
     $('#id_plural_text').bind("enterKey", function(e)
     {
         var url = 'http://0.0.0.0:8080/api/nouns/pluralization/check/';
@@ -73,7 +57,8 @@ $(document).ready(function()
                 current_noun = data.noun;
                 console.log(data.choice_mode);
 
-                update_colors(current_noun.gender);
+                var controls = [$("#id_singular_span"), $("#id_plural_span"), $("#id_plural_text")];
+                update_colors(controls, current_noun.gender);
 
                 $("#id_singular_span").html(current_noun.gendered_singular);
                 $("#id_plural_span").html('');

@@ -5,21 +5,6 @@ $(document).ready(function()
     refresh_stats();
     get_noun();
 
-    function update_correction_colors(gender)
-    {
-        var controls = [$("#id_correction_text"), $("#id_correction_correct")];
-
-        for(index = 0; index < controls.length; index++)
-        {
-            text = controls[index];
-            text.removeClass('gender_text_f');
-            text.removeClass('gender_text_m');
-            text.removeClass('gender_text_n');
-
-            text.addClass('gender_text_' + gender);
-        }
-    }
-
     $("#id_neutral_answer").click(function(){
         submit_answer('n');
     });
@@ -69,23 +54,6 @@ $(document).ready(function()
         });
     });
 
-    function refresh_stats()
-    {
-        url = 'http://0.0.0.0:8080/api/nouns/gender/stats/';
-        $.ajax({
-            url: url,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data)
-            {
-                $("#id_mode_percentage").text(data.mode_percentage);
-                $("#id_all_time_percentage").text(data.all_time_percentage);
-                $("#id_last_24h_percentage").text(data.last_24h_percentage);
-                $("#id_mode_last_24h_percentage").text(data.mode_last_24h_percentage);
-            }
-        });
-    }
-
     function get_noun()
     {
         url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_gender';
@@ -120,7 +88,8 @@ $(document).ready(function()
                 }
                 else
                 {
-                    update_correction_colors(data.correct_answer);
+                    var controls = [$("#id_correction_correct"), $("#id_correction_text")];
+                    update_colors(controls, current_noun.gender);
                     $("#id_correction_correct").html(data.correction_hint);
                     $("#id_correction_overlay").show();
                     $("#id_correction_text").val('')

@@ -9,10 +9,14 @@ class Command(BaseCommand):
             for line in f.readlines()[1:]:
                 values = line.split(',')
 
-                # TODO JHILL: add translations
-
                 verb_text = values[0]
-                print(values)
+                
+                # TODO JHILL: add translations
+                print(values[9])
+                if values[9] != '1':
+                    print("skipping {}".format(verb_text))
+                    # continue
+
                 verb = Verb.objects.filter(verb=verb_text).first()
                 if verb is None:
                     print("adding {}".format(verb_text))

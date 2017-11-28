@@ -172,7 +172,7 @@ class GrammarQueryModel(models.Model):
             incorrect_count=Cast(Count(Case(When(correct=False, then=False))), FloatField())
         ).annotate(
             total=(F('correct_count') + F('incorrect_count'))
-        ).order_by("total").values_list('noun_id', flat=True)
+        ).order_by("total").values_list(grammar_query_stub.cls + '_id', flat=True)
 
         return cls.objects.filter(id__in=query), "rarely_done"
 
@@ -183,7 +183,7 @@ class GrammarQueryModel(models.Model):
         
         query = Answer.objects.filter(
             **params,
-        ).values(grammar_query_stub.cls).values_list('noun_id', flat=True)
+        ).values(grammar_query_stub.cls).values_list(grammar_query_stub.cls + '_id', flat=True)
 
         return cls.objects.exclude(id__in=query), "never_done"
 
@@ -204,9 +204,9 @@ class GrammarQueryModel(models.Model):
             total__gt=0
         ).annotate(
             average=(F('correct_count') / F('total') * 100)
-        ).order_by("average").values_list('noun_id', flat=True)
+        ).order_by("average").values_list(grammar_query_stub.cls + '_id', flat=True)
 
-        return cls.objects.filter(pk__in=query), "weak"
+        return cls.objects.filter(id__in=query), "weak"
 
     @classmethod
     def recently_wrong(cls, grammar_query_stub):
@@ -218,24 +218,42 @@ class GrammarQueryModel(models.Model):
             correct=False
         ).order_by('-created_at').values(grammar_query_stub.cls).values_list('noun_id', flat=True)
 
-        return cls.objects.filter(pk__in=query), "recently_wrong"
+        return cls.objects.filter(id__in=query), "recently_wrong"
 
+    # TODO JHILL: this function is a mess, clean it up
     @property
     def possible_translations(self):
-        translations = self.translation_set.filter()
-        fill_count = 8 - len(translations)
+        translation = self.translation_set.order_by('?').first()
+        fill_count = 7
 
-        random_translations = random.sample(list(Translation.objects.filter(form='s').all()), fill_count)
-        translations = list(chain(translations, random_translations))
+        # TODO JHILL: thisc ould be prettier
+        params = dict()
+        if self.__class__ == Noun:
+            params['noun__isnull'] = False
+        elif self.__class__ == Verb:
+            params['verb__isnull'] = False
 
-        return [dict(id=t.id, translation=t.translation) for t in random.sample(translations, 8)]
-        
+        random_translations = random.sample(
+            list(Translation.objects.filter(**params).all()),
+            fill_count
+        )
+        random_translations.append(translation)
+        translations = random.sample(random_translations, 8)
+
+        return [dict(id=t.id, translation=t.translation) for t in  translations]
+
     @property
     def translations_text(self):
         translations = self.translation_set.all()
         return ", ".join([pt.translation for pt in translations])
 
     def check_translation_id(self, translation_id):
+        """ 
+        check to see if this GrammarQueryModel is translated by the translation
+        represented by translation_id
+        :param translation_id: the id of the translation to filter for
+        :return bool: true if it was in the set, false if not
+        """
         return self.translation_set.filter(id=translation_id).first() is not None
 
 
@@ -366,7 +384,6 @@ class Adverb(GrammarQueryModel, TimeStampedModel):
 
 class Phrase(GrammarQueryModel, TimeStampedModel):
     pass
-    
 
 class Translation(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)

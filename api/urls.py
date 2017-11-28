@@ -24,13 +24,13 @@ urlpatterns = [
 
     # POST
     url(
-        r'nouns/translations/multi/check/$',
+        r'nouns/translation/multi/check/$',
         noun_translation_multi.check,
         name='noun_translation_multi_check'
     ),
 
     url(
-        r'nouns/translations/multi/correction/$',
+        r'nouns/translation/multi/correction/$',
         noun_translation_multi.correction,
         name='noun_translation_multi_correction'
     ),

@@ -61,8 +61,6 @@ def random_verb(request):
     query_stub = GrammarQueryStub(mode=mode, user=request.user)
     verb, choice_mode = Verb.random(grammar_query_stub=query_stub)
 
-    text_header(verb)
-
     data = dict(
         verb=VerbSerializer(verb).data,
         success=True,

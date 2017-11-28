@@ -41,8 +41,6 @@ def check(request):
 
         return JsonResponse(dict(
             correct=correct,
-            correct_answer=[nt.id for nt in verb.translation_set.all()],
-            correction_hint="",
             success=True
         ), safe=False)
     except AssertionError as e:
