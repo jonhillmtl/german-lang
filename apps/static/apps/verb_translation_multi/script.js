@@ -1,52 +1,34 @@
 $(document).ready(function()
 {
-    var current_verb = null;
-
-    get_verb();
+    get_gqm('verb', 'verb_translation_multi', get_callback);
 
     $(".translation").click(function()
     {
-        var url = 'http://0.0.0.0:8080/api/verbs/translation/multi/check/';
-
-        $.post({
-            url: url,
-            success: function(data)
-            {
-                if(data.correct)
-                {
-                    get_verb();
-                }
-            },
-            data: JSON.stringify(
-                {
-                    'verb_id': current_verb.id,
-                    'translation_id': $(this).data('translation_id')
-                }
-            )
-        });
+        check_translation_multi_answer(
+            $(this).data('translation_id'),
+            check_callback
+        );
     });
-
-    function get_verb()
+    
+    function check_callback(data)
     {
-        url = 'http://0.0.0.0:8080/api/verbs/?mode=verb_translation_multi';
-        $.ajax({
-            url: url,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data)
-            {
-                current_verb = data.verb;
-                console.log(data);
-                $("#id_verb_span").html(current_verb.verb);
-                
-                var index = 0;
-                $("#id_buttons").children('button').each(function()
-                {
-                    $(this).data('translation_id', current_verb.possible_translations[index].id)
-                    $(this).text(current_verb.possible_translations[index].translation);
-                    index++;
-                });
-            }
+        if(data.correct)
+        {
+            get_gqm('verb', 'verb_translation_multi', get_callback);
+        }
+    }
+    
+    function get_callback(data)
+    {
+        console.log(data);
+        $("#id_verb_span").html(current_gqm.verb);
+        
+        var index = 0;
+        $("#id_buttons").children('button').each(function()
+        {
+            $(this).data('translation_id', current_gqm.possible_translations[index].id)
+            $(this).text(current_gqm.possible_translations[index].translation);
+            index++;
         });
     }
 });

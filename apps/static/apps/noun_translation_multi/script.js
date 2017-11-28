@@ -1,58 +1,35 @@
 $(document).ready(function()
 {
-    var current_noun = null;
-
-    get_noun();
+    get_gqm('noun', 'noun_translation_multi', get_callback);
 
     $(".translation").click(function()
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/translation/multi/check/';
-
-        $.post({
-            url: url,
-            success: function(data)
-            {
-                if(data.correct)
-                {
-                    get_noun();
-                }
-            },
-            data: JSON.stringify(
-                {
-                    'noun_id': current_noun.id,
-                    'translation_id': $(this).data('translation_id')
-                }
-            )
-        });
-        
+        check_translation_multi_answer(
+            $(this).data('translation_id'),
+            check_callback
+        );
     });
-
-    function get_noun()
+    
+    function check_callback(data)
     {
-        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_translation_multi';
-        $.ajax({
-            url: url,
-            method: 'GET',
-            dataType: 'json',
-            success: function(data)
-            {
-                current_noun = data.noun;
-                console.log(data);
+        if(data.correct)
+        {
+            get_gqm('noun', 'noun_translation_multi', get_callback);
+        }
+    }
+    
+    function get_callback(data)
+    {
+        $("#id_singular_span").html(current_gqm.singular_form);
+        $("#id_plural_span").html(current_gqm.plural_form);
 
-                var controls = [$("#id_plural_span"), $("#id_singular_span")];
-                update_colors(controls, current_noun.gender);
-
-                $("#id_singular_span").html(current_noun.gendered_singular);
-                $("#id_plural_span").html(current_noun.gendered_plural);
-                
-                var index = 0;
-                $("#id_buttons").children('button').each(function()
-                {
-                    $(this).data('translation_id', current_noun.possible_translations[index].id)
-                    $(this).text(current_noun.possible_translations[index].translation);
-                    index++;
-                });
-            }
+        // TODO JHILL: factor up and out of here
+        var index = 0;
+        $("#id_buttons").children('button').each(function()
+        {
+            $(this).data('translation_id', current_gqm.possible_translations[index].id)
+            $(this).text(current_gqm.possible_translations[index].translation);
+            index++;
         });
     }
 });

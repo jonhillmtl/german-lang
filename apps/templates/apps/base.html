@@ -20,6 +20,14 @@
         
         <script type="text/javascript">
             init_authentication("{{ jwt_token }}");
+            
+            init_urls(
+                "{% url 'verb_translation_multi_check' %}",
+                "{% url 'random_verb' %}",
+                "{% url 'noun_translation_multi_check' %}",
+                "{% url 'random_noun' %}"
+
+            );
         </script>
     </head>
     

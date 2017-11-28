@@ -226,7 +226,7 @@ class GrammarQueryModel(models.Model):
         translation = self.translation_set.order_by('?').first()
         fill_count = 7
 
-        # TODO JHILL: thisc ould be prettier
+        # TODO JHILL: this could be prettier
         params = dict()
         if self.__class__ == Noun:
             params['noun__isnull'] = False
