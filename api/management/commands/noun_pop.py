@@ -7,7 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         with open("./data/nouns.csv", "r") as f:
             for line in f.readlines()[1:]:
-                values = line.split(',')
+                values = line.split(';')
 
                 # TODO JHILL: add translations
 
@@ -20,13 +20,27 @@ class Command(BaseCommand):
                     noun = Noun()
                 else:
                     print("updating {}: {}".format(noun.id, noun.singular_form))
-
+                
+                gender = values[2].strip().lower()
+                if gender == 'das':
+                    gender = 'n'
+                elif gender == 'die':
+                    gender = 'f'
+                elif gender == 'der':
+                    gender = 'm'
+                elif gender not in ['n', 'f', 'm']:
+                    assert False, "gender {} not recognized".format(gender)
+                
                 noun.singular_form = singular_form
                 noun.plural_form = values[1]
-                noun.gender = values[2]
+                noun.gender = gender
                 noun.language_code = 'de_DE'
                 noun.level = values[5]
                 noun.chapter = values[6]
+
+                tags = [v.strip().lower() for v in values[7].split(",")]
+                noun.tags = tags
+                print(tags)
 
                 noun.save()
 

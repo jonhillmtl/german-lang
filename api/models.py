@@ -1,14 +1,14 @@
-from django.db import models
 from django.contrib.auth.models import User
-import datetime
+from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import ArrayField
+from django.db import models
 from django.db.models import Count,  Case, When, Sum, F, Value, FloatField, CharField
 from django.db.models.functions import Cast
-import random
-
-from django.contrib.postgres.fields import JSONField
 from itertools import chain
-
 from text_header import text_header
+
+import datetime
+import random
 
 def normalize_answer(answer):
     if answer is None:
@@ -125,6 +125,29 @@ class GrammarQueryModel(models.Model):
     level = models.CharField(max_length=4, null=True, choices=COURSE_LEVELS, default=None)
     chapter = models.IntegerField(null=True, default=None)
     language_code = models.CharField(max_length=5)
+    tags = ArrayField(base_field=CharField(max_length=32), default=list)
+
+    # TODO JHILL: cache this!
+    @classmethod
+    def levels(cls):
+        nouns = Noun.objects.values('level', 'chapter').distinct()
+        verbs = Noun.objects.values('level', 'chapter').distinct()
+
+        return nouns.union(verbs).order_by('level', 'chapter')
+
+    # TODO JHILL: cache this!
+    @classmethod
+    def all_tags(cls):
+        nouns = Noun.objects.values('tags').distinct()
+        verbs = Noun.objects.values('tags').distinct()
+
+        all_tags = nouns.union(verbs)
+
+        tags = []
+        for all_tag in all_tags:
+            for _, tag in all_tag.items():
+                tags.extend(tag)
+        return set(tags)
 
     class Meta:
         abstract = True

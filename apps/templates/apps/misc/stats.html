@@ -1,0 +1,15 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/noun_gender/style.css' %}" />
+    <script type="text/javascript" src="{% static 'apps/noun_gender/script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Levels</h1>
+    {{ levels|pprint }}
+
+    <h1>Tags</h1>
+    {{ tags|pprint }}
+{% endblock %}

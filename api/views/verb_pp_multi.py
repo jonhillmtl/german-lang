@@ -36,7 +36,8 @@ def check(request):
             mode='verb_pp_multi',
             correct_answer=verb.past_participle,
             answer=json_data,
-            correction=False)
+            correction=False
+        )
         answer.save()
 
         return JsonResponse(dict(
