@@ -5,7 +5,7 @@ class Command(BaseCommand):
     help = 'Populates the nouns'
 
     def handle(self, *args, **options):
-        with open("./data/nouns.csv", "r") as f:
+        with open("./data/de_DE/nouns.csv", "r") as f:
             for line in f.readlines()[1:]:
                 values = line.split(';')
 

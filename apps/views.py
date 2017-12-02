@@ -23,6 +23,7 @@ def verb_pp_multi(request):
 def stats(request):
     grammar_query_stub = GrammarQueryStub(user=request.user)
     weak_nouns = Noun.weak(grammar_query_stub)
+
     return render(request, 'apps/misc/stats.html', dict(
         weak_nouns=weak_nouns
     ))

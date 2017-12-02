@@ -5,7 +5,7 @@ class Command(BaseCommand):
     help = 'Populates the verbs'
 
     def handle(self, *args, **options):
-        with open("./data/verbs.csv", "r") as f:
+        with open("./data/de_DE/verbs.csv", "r") as f:
             for line in f.readlines()[1:]:
                 values = line.split(',')
 

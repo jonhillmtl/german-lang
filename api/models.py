@@ -240,7 +240,7 @@ class GrammarQueryModel(models.Model):
         query = Answer.objects.filter(
             **params,
             correct=False
-        ).order_by('-created_at').values(grammar_query_stub.cls).values_list('noun_id', flat=True)
+        ).order_by('-created_at').values(grammar_query_stub.cls).values_list(grammar_query_stub.cls + '_id', flat=True)
 
         return cls.objects.filter(id__in=query)
 
