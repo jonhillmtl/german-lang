@@ -196,9 +196,9 @@ class GrammarQueryModel(models.Model):
             incorrect_count=Cast(Count(Case(When(correct=False, then=False))), FloatField())
         ).annotate(
             total=(F('correct_count') + F('incorrect_count'))
-        ).order_by("total").values_list(grammar_query_stub.cls + '_id', flat=True)
+        ).order_by("total")
 
-        return cls.objects.filter(id__in=query)
+        return cls.objects.filter(id__in=query.values_list(grammar_query_stub.cls + '_id', flat=True))
 
     @classmethod
     def never_done(cls, grammar_query_stub):
