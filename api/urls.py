@@ -5,6 +5,8 @@ from .views import noun_gender, noun_translation_multi, noun_pluralization, \
                    noun_translation, verb_translation_multi, verb_pp_multi
 
 urlpatterns = [
+    # stats
+    url(r'stats/$', views.stats, name='noun_gender_stats'),
 
     # nouns
     
@@ -13,9 +15,6 @@ urlpatterns = [
     url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
 
     # noun_gender mode
-    # TODO JHILL: are these regexes right at the beginning?
-    # GET
-    url(r'nouns/gender/stats/$', views.stats, name='noun_gender_stats'),
 
     # POST
     url(r'nouns/gender/check/$', noun_gender.check, name='noun_gender_check'),   
@@ -55,26 +54,23 @@ urlpatterns = [
     ),
 
     # verbs
-    
+
     # GET
-    url(r'^verbs/$', views.random_verb, name='random_verb'),   
-    # url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
-    
+    url(r'^verbs/$', views.random_verb, name='random_verb'),
+
     # POST
-    
+
     # verb_translation_multi
     url(
         r'verbs/translation/multi/check/$',
         verb_translation_multi.check,
         name='verb_translation_multi_check'
     ),
-    
+
     # verb_pp_multi
     url(
         r'verbs/pp/multi/check/$',
         verb_pp_multi.check,
         name='verb_pp_multi_check'
     )
-    
-    
 ]

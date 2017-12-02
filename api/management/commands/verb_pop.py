@@ -10,12 +10,6 @@ class Command(BaseCommand):
                 values = line.split(',')
 
                 verb_text = values[0]
-                
-                # TODO JHILL: add translations
-                print(values[9])
-                if values[9] != '1':
-                    print("skipping {}".format(verb_text))
-                    # continue
 
                 verb = Verb.objects.filter(verb=verb_text).first()
                 if verb is None:

@@ -88,14 +88,14 @@ class GrammarQueryStub(object):
 
         return params
 
-
+# expand to handle multiple qgm_types
 class UserStats(object):
     user = None
     def __init__(self, user):
         self.user = user
 
-    def _percentage_query(self, mode=None, start_time=None, end_time=None):
-        params = self._build_query_params(mode, start_time, end_time)
+    def _percentage_query(self, grammar_query_stub):
+        params = grammar_query_stub.build_query_params()
 
         correct = Answer.objects.filter(
             **params,
@@ -114,12 +114,19 @@ class UserStats(object):
         return correct / total * 100.0
 
     def all_time_percentage(self, mode=None):
-        return self._percentage_query(mode=mode)
+        grammar_query_stub = GrammarQueryStub(user=self.user, mode=mode)
+        return self._percentage_query(grammar_query_stub)
 
     def last_24h_percentage(self, mode=None):
-        return self._percentage_query(
-            mode=mode,
-            start_time=datetime.datetime.now() - datetime.timedelta(days=1))
+        # TODO JHILL: fix this
+        grammar_query_stub = GrammarQueryStub(user=self.user, mode=mode)
+        return self._percentage_query(grammar_query_stub)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    levels = JSONField(default=list, blank=True, null=True)
+    tags = JSONField(default=list, blank=True, null=True)
+
 
 class GrammarQueryModel(models.Model):
     level = models.CharField(max_length=4, null=True, choices=COURSE_LEVELS, default=None)
@@ -128,6 +135,7 @@ class GrammarQueryModel(models.Model):
     tags = ArrayField(base_field=CharField(max_length=32), default=list)
 
     # TODO JHILL: cache this!
+    # there might be a prettier way to do this
     @classmethod
     def levels(cls):
         nouns = Noun.objects.values('level', 'chapter').distinct()
@@ -136,6 +144,7 @@ class GrammarQueryModel(models.Model):
         return nouns.union(verbs).order_by('level', 'chapter')
 
     # TODO JHILL: cache this!
+    # there might be a prettier way to do this
     @classmethod
     def all_tags(cls):
         nouns = Noun.objects.values('tags').distinct()
@@ -147,7 +156,7 @@ class GrammarQueryModel(models.Model):
         for all_tag in all_tags:
             for _, tag in all_tag.items():
                 tags.extend(tag)
-        return set(tags)
+        return sorted(list(set(tags)))
 
     class Meta:
         abstract = True
@@ -155,29 +164,21 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def random(cls, grammar_query_stub):
         # TODO JHILL: move somewhere nicer
-        return cls.objects.order_by('?').first(), "random"
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
         funcs = [
-            cls.never_done,
-            cls.never_done,
             cls.never_done,
             cls.rarely_done,
             cls.recently_wrong,
             cls.weak
         ]
 
-        models, choice_mode = random.choice(funcs)(grammar_query_stub)
-
-        if models.count() == 0:
-            models, choice_mode = cls.rarely_done(grammar_query_stub)
-
-        models = models.filter(chapter__gt='8')
+        func = random.choice(funcs)
+        models = func(grammar_query_stub)
+        choice_mode = str(func.__name__)
 
         if models.count() == 0:
             models, choice_mode = cls.objects.order_by('?'), "random"
-
-        models = models.filter(chapter__gt='8')
 
         model = random.choice(models[0:grammar_query_stub.count])
         return model, choice_mode
@@ -197,7 +198,7 @@ class GrammarQueryModel(models.Model):
             total=(F('correct_count') + F('incorrect_count'))
         ).order_by("total").values_list(grammar_query_stub.cls + '_id', flat=True)
 
-        return cls.objects.filter(id__in=query), "rarely_done"
+        return cls.objects.filter(id__in=query)
 
     @classmethod
     def never_done(cls, grammar_query_stub):
@@ -208,7 +209,7 @@ class GrammarQueryModel(models.Model):
             **params,
         ).values(grammar_query_stub.cls).values_list(grammar_query_stub.cls + '_id', flat=True)
 
-        return cls.objects.exclude(id__in=query), "never_done"
+        return cls.objects.exclude(id__in=query)
 
     @classmethod
     def weak(cls, grammar_query_stub):
@@ -229,7 +230,7 @@ class GrammarQueryModel(models.Model):
             average=(F('correct_count') / F('total') * 100)
         ).order_by("average").values_list(grammar_query_stub.cls + '_id', flat=True)
 
-        return cls.objects.filter(id__in=query), "weak"
+        return cls.objects.filter(id__in=query)
 
     @classmethod
     def recently_wrong(cls, grammar_query_stub):
@@ -241,7 +242,7 @@ class GrammarQueryModel(models.Model):
             correct=False
         ).order_by('-created_at').values(grammar_query_stub.cls).values_list('noun_id', flat=True)
 
-        return cls.objects.filter(id__in=query), "recently_wrong"
+        return cls.objects.filter(id__in=query)
 
     # TODO JHILL: this function is a mess, clean it up
     @property
@@ -260,6 +261,7 @@ class GrammarQueryModel(models.Model):
             list(Translation.objects.filter(**params).all()),
             fill_count
         )
+
         random_translations.append(translation)
         translations = random.sample(random_translations, 8)
 

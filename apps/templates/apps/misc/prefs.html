@@ -1,0 +1,36 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+
+{% endblock %}
+
+{% block content %}
+    <form method="POST" action="{% url 'prefs' %}">
+        {% csrf_token %}
+        {{ request.user.profile.levels }}
+        <h1>Levels</h1>
+        <ul>
+            {% for level in levels %}
+                <li>
+                    <input type="checkbox" value="{{ level }}" name="level"
+                     {% if level in request.user.profile.levels %}checked {% endif %}>
+                    Level {{ level.level }} Chapter {{ level.chapter }}
+                </li>
+            {% endfor %}
+        </ul>
+    
+        <h1>Tags</h1>
+        <ul>
+            {% for tag in tags %}
+                <li>
+                    <input type="checkbox" value="{{ tag }}" name="tag"
+                     {% if tag in request.user.profile.tags %}checked {% endif %}>
+                    {{ tag }}
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <input type="submit" value="save" />
+    </form>
+{% endblock %}

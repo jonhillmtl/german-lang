@@ -107,13 +107,11 @@ def noun_answer_gender_check(request):
 def stats(request):
     # TODO JHILL: Move this onto the user object, make it queryable like crazy
     us = UserStats(request.user)
+    mode = request.GET.get('mode', None)
+    gqm_type = request.GET.get('gqm_type', None)
 
     return JsonResponse(dict(
-        # mode_percentage=us.all_time_percentage('noun_gender'),
-        # all_time_percentage=us.all_time_percentage(),
-
-        # mode_last_24h_percentage=us.last_24h_percentage('noun_gender'),
-        # last_24h_percentage=us.last_24h_percentage(),
-        
+        mode_percentage=us.all_time_percentage(mode),
+        all_time_percentage=us.all_time_percentage(),
         succces=True
     ))

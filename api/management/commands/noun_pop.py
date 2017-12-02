@@ -30,7 +30,7 @@ class Command(BaseCommand):
                     gender = 'm'
                 elif gender not in ['n', 'f', 'm']:
                     assert False, "gender {} not recognized".format(gender)
-                
+
                 noun.singular_form = singular_form
                 noun.plural_form = values[1]
                 noun.gender = gender
@@ -39,7 +39,11 @@ class Command(BaseCommand):
                 noun.chapter = values[6]
 
                 tags = [v.strip().lower() for v in values[7].split(",")]
-                noun.tags = tags
+                if tags != ['']:
+                    noun.tags = tags
+                else:
+                    noun.tags = []
+
                 print(tags)
 
                 noun.save()

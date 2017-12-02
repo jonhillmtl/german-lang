@@ -32,9 +32,14 @@ function update_colors(controls, gender)
 }
 
 // TODO JHILL: mode, of course
-function refresh_stats()
+function refresh_stats(mode, gqm_type)
 {
-    url = 'http://0.0.0.0:8080/api/nouns/gender/stats/';
+    return;
+    
+    // TODO JHILL: make this configurable
+    url = 'http://0.0.0.0:8080/api/stats?mode={}&gqm_type={}';
+    url = url.format(mode, gqm_type);
+
     $.ajax({
         url: url,
         method: 'GET',
@@ -43,8 +48,6 @@ function refresh_stats()
         {
             $("#id_mode_percentage").text(data.mode_percentage);
             $("#id_all_time_percentage").text(data.all_time_percentage);
-            $("#id_last_24h_percentage").text(data.last_24h_percentage);
-            $("#id_mode_last_24h_percentage").text(data.mode_last_24h_percentage);
         }
     });
 }
