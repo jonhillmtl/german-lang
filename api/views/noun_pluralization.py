@@ -35,15 +35,15 @@ def check(request):
             correct=correct,
             user=request.user,
             mode='noun_pluralization',
-            correct_answer=noun.gendered_plural,
+            correct_answer=noun.gendered_nominative_plural,
             answer=json_data,
             correction=correction)
         answer.save()
 
         return JsonResponse(dict(
             correct=correct,
-            correct_answer=noun.gendered_plural,
-            correction_hint=noun.gendered_plural,
+            correct_answer=noun.gendered_nominative_plural,
+            correction_hint=noun.gendered_nominative_plural,
             success=True
         ), safe=False)
     except AssertionError as e:

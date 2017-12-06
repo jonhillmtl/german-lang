@@ -4,9 +4,18 @@ from .models import Noun, Verb
 class NounSerializer(serializers.ModelSerializer):
     class Meta:
         model = Noun
-        fields = ('id', 'singular_form', 'plural_form', 'gender', 'level',
-                  'chapter', 'gendered_singular', 'gendered_plural', 'translations_text',
-                  'possible_translations')
+        fields = (
+            'id',
+            'singular_form',
+            'plural_form',
+            'gender',
+            'level',
+            'chapter',
+            'gendered_nominative_singular',
+            'gendered_nominative_plural',
+            'translations_text',
+            'possible_translations'
+        )
 
 class VerbSerializer(serializers.ModelSerializer):
     class Meta:

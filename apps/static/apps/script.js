@@ -22,12 +22,12 @@ function update_colors(controls, gender)
     for(index = 0; index < controls.length; index++)
     {
         // TODO JHILL: factor that class up into a different css file
-        text = controls[index];
-        text.removeClass('gender_text_f');
-        text.removeClass('gender_text_m');
-        text.removeClass('gender_text_n');
+        control = controls[index];
+        control.removeClass('gender_text_f');
+        control.removeClass('gender_text_m');
+        control.removeClass('gender_text_n');
 
-        text.addClass('gender_text_' + gender);
+        control.addClass('gender_text_' + gender);
     }
 }
 
@@ -106,8 +106,7 @@ function check_translation_multi_answer(url, answer, gqm_type, mode, callback)
 function get_gqm(url, type, mode, callback)
 {
     url = url + '?mode=' + mode;
-    console.log(url);
-    
+
     $.ajax({
         url: url,
         method: 'GET',

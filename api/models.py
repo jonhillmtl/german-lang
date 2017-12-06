@@ -4,8 +4,10 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import Count,  Case, When, Sum, F, Value, FloatField, CharField
 from django.db.models.functions import Cast
+
 from itertools import chain
 from text_header import text_header
+from enum import Enum, unique
 
 import datetime
 import random
@@ -56,6 +58,17 @@ COURSE_LEVELS = (
     ('b2.1', 'b2.2'),
     ('c1', 'c1')
 )
+
+@unique
+class Mode(Enum):
+    NOUN_GENDER = 'noun_gender'
+    NOUN_PLURALIZATION = 'noun_pluralization'
+    NOUN_TRANSLATION = 'noun_translation'
+    NOUN_TRANSLATION_MULTI = 'noun_translation_multi'
+
+    VERB_PP_MULTI = 'verb_pp_multi'
+    VERB_TRANSLATION_MULTI = 'verb_translation_multi'
+
 
 class GrammarQueryStub(object):
     mode = None
@@ -196,9 +209,11 @@ class GrammarQueryModel(models.Model):
             incorrect_count=Cast(Count(Case(When(correct=False, then=False))), FloatField())
         ).annotate(
             total=(F('correct_count') + F('incorrect_count'))
-        ).order_by("total")
-
-        return cls.objects.filter(id__in=query.values_list(grammar_query_stub.cls + '_id', flat=True))
+        ).order_by("total").values_list(grammar_query_stub.cls + '_id')
+        
+        id_list = [m[0] for m in query[0:grammar_query_stub.count]]
+        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
+        return cls.objects.filter(id__in=query).order_by(preserved)
 
     @classmethod
     def never_done(cls, grammar_query_stub):
@@ -241,8 +256,11 @@ class GrammarQueryModel(models.Model):
             **params,
             correct=False
         ).order_by('-created_at').values(grammar_query_stub.cls).values_list(grammar_query_stub.cls + '_id', flat=True)
-
-        return cls.objects.filter(id__in=query)
+        id_list =list(query)[0:grammar_query_stub.count]
+        
+        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
+        print(preserved)
+        return cls.objects.filter(id__in=query).order_by(preserved)
 
     # TODO JHILL: this function is a mess, clean it up
     @property
@@ -312,14 +330,14 @@ class Noun(GrammarQueryModel, TimeStampedModel):
         )
 
     @property
-    def gendered_singular(self):
+    def gendered_nominative_singular(self):
         return "{} {}".format(
             GERMAN_GENDER_DEFINITE_ARTICLES.get(self.gender, ""),
             self.singular_form
         )
 
     @property
-    def gendered_plural(self):
+    def gendered_nominative_plural(self):
         if self.plural_form == '':
             return ''
 
@@ -330,7 +348,7 @@ class Noun(GrammarQueryModel, TimeStampedModel):
 
     def check_plural(self, plural):
         # TODO JHILL: make more lenient
-        return self.gendered_plural == plural
+        return self.gendered_nominative_plural == plural
 
     def check_gender_correction(self, correction):
         # TODO JHILL: make more lenient
@@ -462,5 +480,4 @@ class Answer(TimeStampedModel):
         return "({}) ({})".format(
             self.correct,
             self.correction)
-            
 

@@ -8,7 +8,7 @@
 {% block content %}
     <form method="POST" action="{% url 'prefs' %}">
         {% csrf_token %}
-        {{ request.user.profile.levels }}
+
         <h1>Levels</h1>
         <ul>
             {% for level in levels %}

@@ -21,7 +21,7 @@ $(document).ready(function()
                 }
                 else
                 {
-                    $("#id_plural_span").html(current_noun.gendered_plural);
+                    $("#id_plural_span").html(current_noun.gendered_nominative_plural);
                     $("#id_translation_text").val('');
                     $("#id_translation_text").focus();
                     $("#id_translation_span").html(current_noun.translations_text);
@@ -59,10 +59,10 @@ $(document).ready(function()
                 console.log(data);
 
                 var controls = [$("#id_plural_span"), $("#id_singular_span")];
-                update_colors(current_noun.gender);
+                update_colors(controls, current_noun.gender);
 
-                $("#id_singular_span").html(current_noun.gendered_singular);
-                $("#id_plural_span").html(current_noun.gendered_plural);
+                $("#id_singular_span").html(current_noun.gendered_nominative_singular);
+                $("#id_plural_span").html(current_noun.gendered_nominative_plural);
 
                 $("#id_translation_text").val('');
                 $("#id_translation_text").focus();
