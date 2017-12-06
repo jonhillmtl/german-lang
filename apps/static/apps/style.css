@@ -5,6 +5,33 @@ body
 
 /******************************************************************************************************
 *
+* menu
+*
+*/
+div.menu ul
+{
+    border: 1px solid black;
+    float: left;
+    list-style: none;
+    margin: 0px;
+    width: 140px;
+    padding: 4px;
+}
+
+div.menu ul li a
+{
+    text-decoration: none;
+    color: black;
+}
+
+div.menu ul li a:hover
+{
+    color: #333333;
+    font-weight: 800;
+}
+
+/******************************************************************************************************
+*
 * divs
 *
 */
