@@ -66,7 +66,6 @@ def correction(request):
             correct=correct,
             user=request.user,
             mode='noun_gender',
-            correct_answer=noun.gender_correction,
             answer=json_data,
             correction=True)
         answer.save()

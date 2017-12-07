@@ -1,5 +1,9 @@
 $(document).ready(function()
 {
+    var article_mode = 'definite';
+    var case_mode = 'nominative';
+    var articled_key = article_mode + '_' + case_mode + '_singular';
+
     var current_noun = null;
 
     refresh_stats();
@@ -64,11 +68,12 @@ $(document).ready(function()
             success: function(data)
             {
                 console.log(data.noun);
-
-                $("#id_singular_span").html(data.noun.singular_form);
-                $("#id_plural_span").html(data.noun.plural_form);
-                $("#id_translation_span").html(data.noun.translations_text);
                 current_noun = data.noun;
+                
+                $("#id_singular_span").html(current_noun.singular_form);
+                $("#id_plural_span").html(current_noun.plural_form);
+                $("#id_translation_span").html(current_noun.translations_text);
+                $("#id_correction_correct").html(current_noun.articled[articled_key]);
                 $("#id_level").text(current_noun.level);
                 $("#id_chapter").text(current_noun.chapter);
             }
@@ -91,7 +96,6 @@ $(document).ready(function()
                 {
                     var controls = [$("#id_correction_correct"), $("#id_correction_text")];
                     update_colors(controls, current_noun.gender);
-                    $("#id_correction_correct").html(data.correction_hint);
                     $("#id_correction_overlay").show();
                     $("#id_correction_text").val('')
                     $("#id_correction_text").focus();

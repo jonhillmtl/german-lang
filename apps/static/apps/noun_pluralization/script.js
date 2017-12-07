@@ -2,6 +2,9 @@ $(document).ready(function()
 {
     var current_noun = null;
     var correction = false;
+    
+    var article = 'definite';
+    var case = 'nominative';
 
     get_noun();
 

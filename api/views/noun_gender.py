@@ -42,7 +42,6 @@ def check(request):
         return JsonResponse(dict(
             correct=correct,
             correct_answer=noun.gender,
-            correction_hint=noun.gender_correction,
             noun=NounSerializer(noun).data,
             success=True
         ), safe=False)
@@ -66,7 +65,6 @@ def correction(request):
             correct=correct,
             user=request.user,
             mode='noun_gender',
-            correct_answer=noun.gender_correction,
             answer=json_data,
             correction=True)
         answer.save()

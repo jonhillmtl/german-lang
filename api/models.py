@@ -369,25 +369,19 @@ class Noun(GrammarQueryModel, TimeStampedModel):
             language_code=self.language_code,
             append_noun=True)
 
-    @property
-    def gender_correction(self):
-        # TODO JHILL: this won't work in all cases
-        return self._articled(
-            Article.DEFINITE,
-            Case.NOMINATIVE,
-            singular=True,
-            append_noun=True
-        )
-
     def check_plural(self, plural):
         # TODO JHILL: make more lenient
         # TODO JHILL: well, this depends on other things now
         return False
         # return self.gendered_definite_nominative_plural == plural
 
-    def check_gender_correction(self, correction):
-        # TODO JHILL: make more lenient
-        return self.gender_correction == correction
+    def check_gender_correction(self, correction, article='definite', case='nominative'):
+        key = "{}_{}_{}".format(
+            article,
+            case,
+            'singular'
+        )
+        return self.articled[key] == correction
 
     def check_gender(self, gender):
         return self.gender == gender
