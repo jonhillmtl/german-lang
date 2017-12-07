@@ -23,7 +23,6 @@ $(document).ready(function()
 
     function get_callback(data)
     {
-        console.log(data);
         $("#id_verb_span").html(current_gqm.verb);
         
         // TODO JHILL: factor up and out of here

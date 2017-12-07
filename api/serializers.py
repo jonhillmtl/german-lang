@@ -11,8 +11,8 @@ class NounSerializer(serializers.ModelSerializer):
             'gender',
             'level',
             'chapter',
-            'gendered_nominative_singular',
-            'gendered_nominative_plural',
+            'articles',
+            'articled',
             'translations_text',
             'possible_translations'
         )

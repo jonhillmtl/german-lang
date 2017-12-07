@@ -1,0 +1,70 @@
+{
+    "nominative" :
+    {
+        "definite" :
+        {
+            "f": "die",
+            "m": "der",
+            "n": "das",
+            "p": "die"
+        },
+        "indefinite" :
+        {
+            "f": "eine",
+            "m": "ein",
+            "n": "ein",
+            "p": "keine"
+        }
+    },
+    "accusative" :
+    {
+        "definite" :
+        {
+            "f": "die",
+            "m": "den",
+            "n": "das",
+            "p": "die"
+        },
+        "indefinite" :
+        {
+            "f": "eine",
+            "m": "einen",
+            "n": "ein",
+            "p": "keine"
+        }
+    },
+    "dative" :
+    {
+        "definite" :
+        {
+            "f": "der",
+            "m": "dem",
+            "n": "dem",
+            "p": "den"
+        },
+        "indefinite" :
+        {
+            "f": "einer",
+            "m": "einem",
+            "n": "einem",
+            "p": "keinen"
+        }
+    },
+    "genitive" :
+    {
+        "definite" :
+        {
+            "f": "der",
+            "m": "des",
+            "n": "des",
+            "p": "der"
+        },
+        "indefinite" :
+        {
+            "f": "einer",
+            "m": "eines",
+            "n": "eines",
+            "p": "keiner"
+        }
+    }
+}

@@ -63,11 +63,12 @@ $(document).ready(function()
             dataType: 'json',
             success: function(data)
             {
+                console.log(data.noun);
+
                 $("#id_singular_span").html(data.noun.singular_form);
                 $("#id_plural_span").html(data.noun.plural_form);
                 $("#id_translation_span").html(data.noun.translations_text);
                 current_noun = data.noun;
-                console.log(data.choice_mode);
                 $("#id_level").text(current_noun.level);
                 $("#id_chapter").text(current_noun.chapter);
             }

@@ -2,13 +2,15 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import Count,  Case, When, Sum, F, Value, FloatField, CharField
+from django.db.models import Count, When, Sum, F, Value, FloatField, CharField
+from django.db.models import Case as FilterCase
 from django.db.models.functions import Cast
 
 from itertools import chain
 from text_header import text_header
 from enum import Enum, unique
 
+import json
 import datetime
 import random
 
@@ -17,20 +19,6 @@ def normalize_answer(answer):
         return None
 
     return answer.lower().rstrip().lstrip()
-
-# TODO JHILL: clean up
-GERMAN_GENDER_DEFINITE_ARTICLES = {
-    'n': 'das',
-    'f': 'die',
-    'm': 'der'
-}
-
-# TODO JHILL: clean up
-GERMAN_GENDER_INDEFINITE_ARTICLES = {
-    'n': 'ein',
-    'f': 'eine',
-    'm': 'ein'
-}
 
 GENDERS = (
     ('m', 'masculine'),
@@ -58,6 +46,18 @@ COURSE_LEVELS = (
     ('b2.1', 'b2.2'),
     ('c1', 'c1')
 )
+
+@unique
+class Article(Enum):
+    DEFINITE = 'definite'
+    INDEFINITE = 'indefinite'
+
+@unique
+class Case(Enum):
+    NOMINATIVE = 'nominative'
+    ACCUSATIVE = 'accusative'
+    DATIVE = 'dative'
+    GENITIVE = 'genitive'
 
 @unique
 class Mode(Enum):
@@ -204,15 +204,15 @@ class GrammarQueryModel(models.Model):
         query = Answer.objects.filter(
             **params,
         ).values(grammar_query_stub.cls).annotate(
-            correct_count=Cast(Count(Case(When(correct=True, then=True))), FloatField())
+            correct_count=Cast(Count(FilterCase(When(correct=True, then=True))), FloatField())
         ).annotate(
-            incorrect_count=Cast(Count(Case(When(correct=False, then=False))), FloatField())
+            incorrect_count=Cast(Count(FilterCase(When(correct=False, then=False))), FloatField())
         ).annotate(
             total=(F('correct_count') + F('incorrect_count'))
         ).order_by("total").values_list(grammar_query_stub.cls + '_id')
-        
+
         id_list = [m[0] for m in query[0:grammar_query_stub.count]]
-        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
+        preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
         return cls.objects.filter(id__in=query).order_by(preserved)
 
     @classmethod
@@ -234,9 +234,9 @@ class GrammarQueryModel(models.Model):
         query = Answer.objects.filter(
             **params,
         ).values(grammar_query_stub.cls).annotate(
-            correct_count=Cast(Count(Case(When(correct=True, then=True))), FloatField())
+            correct_count=Cast(Count(FilterCase(When(correct=True, then=True))), FloatField())
         ).annotate(
-            incorrect_count=Cast(Count(Case(When(correct=False, then=False))), FloatField())
+            incorrect_count=Cast(Count(FilterCase(When(correct=False, then=False))), FloatField())
         ).annotate(
             total=(F('correct_count') + F('incorrect_count'))
         ).filter(
@@ -256,10 +256,9 @@ class GrammarQueryModel(models.Model):
             **params,
             correct=False
         ).order_by('-created_at').values(grammar_query_stub.cls).values_list(grammar_query_stub.cls + '_id', flat=True)
-        id_list =list(query)[0:grammar_query_stub.count]
-        
-        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
-        print(preserved)
+
+        id_list = list(query)[0:grammar_query_stub.count]        
+        preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
         return cls.objects.filter(id__in=query).order_by(preserved)
 
     # TODO JHILL: this function is a mess, clean it up
@@ -283,7 +282,7 @@ class GrammarQueryModel(models.Model):
         random_translations.append(translation)
         translations = random.sample(random_translations, 8)
 
-        return [dict(id=t.id, translation=t.translation) for t in  translations]
+        return [dict(id=t.id, translation=t.translation) for t in translations]
 
     @property
     def translations_text(self):
@@ -308,6 +307,42 @@ class TimeStampedModel(models.Model):
         abstract = True
 
 
+# TODO JHILL: cache
+def _articles(singular_form=None, plural_form=None, gender=None, language_code='de_DE', append_noun=False):
+    articles = dict()
+
+    with open("./data/{}/articles.json".format(language_code)) as f:
+        article_data = json.loads(f.read())
+
+        for article in Article:
+            for case in Case:
+                for singular in [True, False]:
+                    key = "{}_{}_{}".format(
+                        article.value,
+                        case.value,
+                        'singular' if singular else 'plural'
+                    )
+                    gender = gender if singular else 'p'
+                    try:
+                        if append_noun:
+                            value = "{} {}".format(
+                                article_data[case.value][article.value][gender],
+                                singular_form if singular else plural_form
+                            )
+                        else:
+                            value = "{}".format(
+                                article_data[case.value][article.value][gender],
+                            )
+                    except KeyError:
+                        value = None
+                    except json.decoder.JSONDecodeError:
+                        value = None
+
+                    if value is not None:
+                        articles[key] = value
+
+    return articles
+
 class Noun(GrammarQueryModel, TimeStampedModel):
     singular_form = models.CharField(max_length=64)
     plural_form = models.CharField(max_length=64)
@@ -321,34 +356,34 @@ class Noun(GrammarQueryModel, TimeStampedModel):
             language_code=target_language_code
         ).all()]
 
+    @classmethod
+    def articles(self):
+        return _articles()
+
+    @property
+    def articled(self):
+        return _articles(
+            gender=self.gender,
+            plural_form=self.plural_form,
+            singular_form=self.singular_form,
+            language_code=self.language_code,
+            append_noun=True)
+
     @property
     def gender_correction(self):
-        # TODO JHILL: definitely want to have some sort of language_code switcher here
-        return "{} {}".format(
-            GERMAN_GENDER_DEFINITE_ARTICLES.get(self.gender, ""),
-            self.singular_form
-        )
-
-    @property
-    def gendered_nominative_singular(self):
-        return "{} {}".format(
-            GERMAN_GENDER_DEFINITE_ARTICLES.get(self.gender, ""),
-            self.singular_form
-        )
-
-    @property
-    def gendered_nominative_plural(self):
-        if self.plural_form == '':
-            return ''
-
-        return "{} {}".format(
-            GERMAN_GENDER_DEFINITE_ARTICLES.get("f", "f"),
-            self.plural_form
+        # TODO JHILL: this won't work in all cases
+        return self._articled(
+            Article.DEFINITE,
+            Case.NOMINATIVE,
+            singular=True,
+            append_noun=True
         )
 
     def check_plural(self, plural):
         # TODO JHILL: make more lenient
-        return self.gendered_nominative_plural == plural
+        # TODO JHILL: well, this depends on other things now
+        return False
+        # return self.gendered_definite_nominative_plural == plural
 
     def check_gender_correction(self, correction):
         # TODO JHILL: make more lenient
