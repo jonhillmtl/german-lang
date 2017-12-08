@@ -14,6 +14,9 @@ def noun_pluralization(request):
 def noun_translation(request):
     return render(request, 'apps/noun_translation.html')
 
+def noun_article_missing(request):
+    return render(request, 'apps/noun_article_missing.html')
+
 def verb_translation_multi(request):
     return render(request, 'apps/verb_translation_multi.html')
 

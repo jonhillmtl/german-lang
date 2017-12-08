@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^nouns/translation/multi/$', views.noun_translation_multi, name='noun_translation_multi'),
     url(r'^nouns/pluralization/$', views.noun_pluralization, name='noun_pluralization'),
     url(r'^nouns/translation/$', views.noun_translation, name='noun_translation'),
+    url(r'^nouns/article/missing/$', views.noun_article_missing, name='noun_article_missing'),
 
     url(r'^verbs/translation/multi/$', views.verb_translation_multi, name='verb_translation_multi'),
     url(r'^verbs/pastparticiple/multi/$', views.verb_pp_multi, name='verb_pp_multi'),

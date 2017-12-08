@@ -22,6 +22,7 @@ import random
 @api_view(['POST'])
 def check(request):
     # TODO JHILL: handle 404 gracefuly
+    # TODO JHILL: also needs to handle modes
     json_data = json.loads(request.body)
     noun = Noun.objects.get(pk=json_data['noun_id'])
 

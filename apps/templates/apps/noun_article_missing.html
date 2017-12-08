@@ -1,0 +1,147 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/noun_article_missing/style.css' %}" />
+    <script type="text/javascript" src="{% static 'apps/noun_article_missing/script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="flash">
+        <span id="id_singular_span" class="singular_form"></span>
+    </div>
+
+    <div class="flash">
+        <span id="id_plural_span" class="plural_form"></span>
+    </div>
+
+    <div class="translation">
+        (<span id="id_translation_span"></span>)
+    </div>
+
+    <div style="clear: both"></div>
+
+    <div>
+        <table>
+            <tr>
+                <th></th>
+                <th>Nominative</th>
+                <th>Accusative</th>
+                <th>Dative</th>
+                <th>Genitive</th>
+            <tr/>
+            <tr id="id_m_row" class="hideable_gender_row" style="display: none">
+                <td>Masculine</td>
+                <td>
+                    <input type="text" id="id_m_nominative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_m_nominative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_m_accusative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_m_accusative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_m_dative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_m_dative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_m_genitive_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_m_genitive_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+            </tr>
+            <tr id="id_n_row" class="hideable_gender_row" style="display: none">
+                <td>Neutral</td>
+                <td>
+                    <input type="text" id="id_n_nominative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_n_nominative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_n_accusative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_n_accusative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_n_dative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_n_dative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_n_genitive_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_n_genitive_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+            </tr>
+            <tr id="id_f_row" class="hideable_gender_row" style="display: none">
+                <td>Feminine</td>
+                <td>
+                    <input type="text" id="id_f_nominative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_f_nominative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_f_accusative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_f_accusative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_f_dative_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_f_dative_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_f_genitive_definite_singular"> 
+                        <span class="singular_form"></span><br>
+                    <input type="text" id="id_f_genitive_indefinite_plural"> 
+                        <span class="singular_form"></span><br>
+                </td>
+            </tr>
+            <tr id="id_p_row">
+                <td>Plural</td>
+                <td>
+                    <input type="text" id="id_p_nominative_definite_singular"> 
+                        <span class="plural_form"></span><br>
+                    <input type="text" id="id_p_nominative_indefinite_plural"> 
+                        <span class="plural_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_p_accusative_definite_singular"> 
+                        <span class="plural_form"></span><br>
+                    <input type="text" id="id_p_accusative_indefinite_plural"> 
+                        <span class="plural_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_p_dative_definite_singular"> 
+                        <span class="plural_form"></span><br>
+                    <input type="text" id="id_p_dative_indefinite_plural"> 
+                        <span class="plural_form"></span><br>
+                </td>
+                <td>
+                    <input type="text" id="id_p_genitive_definite_singular"> 
+                        <span class="plural_form"></span><br>
+                    <input type="text" id="id_p_genitive_indefinite_plural"> 
+                        <span class="plural_form"></span><br>
+                </td>
+            </tr>
+
+        </table>
+        
+    </div>
+
+    {% include 'apps/sections/score.html' %}
+{% endblock %}

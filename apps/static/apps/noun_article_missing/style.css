@@ -1,0 +1,14 @@
+table
+{
+    border: 1px solid black;
+}
+
+table tr th
+{
+    width: 160px;
+}
+
+table tr td input
+{
+    width: 60px;
+}

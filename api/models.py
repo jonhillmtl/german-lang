@@ -318,28 +318,35 @@ def _articles(singular_form=None, plural_form=None, gender=None, language_code='
             for case in Case:
                 for singular in [True, False]:
                     key = "{}_{}_{}".format(
-                        article.value,
                         case.value,
+                        article.value,
                         'singular' if singular else 'plural'
                     )
-                    gender = gender if singular else 'p'
+
+                    if singular is False:
+                        use_gender = 'p'
+                    else:
+                        use_gender = gender
+
                     try:
                         if append_noun:
                             value = "{} {}".format(
-                                article_data[case.value][article.value][gender],
+                                article_data[case.value][article.value][use_gender],
                                 singular_form if singular else plural_form
                             )
                         else:
                             value = "{}".format(
-                                article_data[case.value][article.value][gender],
+                                article_data[case.value][article.value][use_gender],
                             )
+                        
+                        if value is not None:
+                            articles[key] = value
+                        
                     except KeyError:
-                        value = None
+                        pass
                     except json.decoder.JSONDecodeError:
-                        value = None
+                        pass
 
-                    if value is not None:
-                        articles[key] = value
 
     return articles
 
