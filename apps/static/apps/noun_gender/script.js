@@ -2,7 +2,7 @@ $(document).ready(function()
 {
     var article_mode = 'definite';
     var case_mode = 'nominative';
-    var articled_key = article_mode + '_' + case_mode + '_singular';
+    var articled_key = case_mode + '_' + article_mode + '_singular';
 
     var current_noun = null;
 
@@ -67,8 +67,10 @@ $(document).ready(function()
             dataType: 'json',
             success: function(data)
             {
+                console.log(data.choice_mode);
                 console.log(data.noun);
                 current_noun = data.noun;
+                console.log(articled_key);
                 
                 $("#id_singular_span").html(current_noun.singular_form);
                 $("#id_plural_span").html(current_noun.plural_form);

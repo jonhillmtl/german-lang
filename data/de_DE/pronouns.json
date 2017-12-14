@@ -1,0 +1,32 @@
+{
+    "nominative" : [
+        "ich",
+        "du",
+        "er",
+        "sie",
+        "es",
+        "wir",
+        "ihr",
+        "sie/Sie"
+    ],
+    "accusative" : [
+        "mich",
+        "dich",
+        "ihn",
+        "sie",
+        "es",
+        "uns",
+        "euch",
+        "sie/Sie"
+    ],
+    "dative" : [
+        "mir",
+        "dir",
+        "ihm",
+        "ihr",
+        "ihm",
+        "uns",
+        "euch",
+        "ihnen/Ihnen"
+    ]
+}

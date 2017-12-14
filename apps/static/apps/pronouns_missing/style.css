@@ -1,0 +1,17 @@
+table
+{
+    border: 1px solid black;
+}
+
+table tr th
+{
+    width: 261px;
+}
+
+table tr td input
+{
+    width: 261px;
+    height: 60px;
+    text-align: center;
+    font-size: 60px;
+}

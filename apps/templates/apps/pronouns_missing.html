@@ -1,0 +1,39 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/pronouns_missing/style.css' %}" />
+    <script type="text/javascript" src="{% static 'apps/pronouns_missing/script.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <table>
+            <tr>
+                <th>Nominative</th>
+                <th>Accusative</th>
+                <th>Dative</th>
+            <tr/>
+
+            <tr>
+                <td>
+                    <input type="text" class="case_input" id="id_nominative_input" value="ihnen"> 
+                </td>
+
+                <td>
+                    <input type="text" class="case_input" id="id_accusative_input" value="ihnen"> 
+                </td>
+
+                <td>
+                    <input type="text" class="case_input" id="id_dative_input" value="ihnen"> 
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        var pronouns = {{ pronouns|safe }};
+    </script>
+
+    {% include 'apps/sections/score.html' %}
+{% endblock %}

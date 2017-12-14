@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^verbs/translation/multi/$', views.verb_translation_multi, name='verb_translation_multi'),
     url(r'^verbs/pastparticiple/multi/$', views.verb_pp_multi, name='verb_pp_multi'),
 
+    url(r'^pronouns/missing/$', views.pronouns_missing, name='pronouns_missing'),
+
 ]

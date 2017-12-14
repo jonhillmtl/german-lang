@@ -23,6 +23,19 @@ def verb_translation_multi(request):
 def verb_pp_multi(request):
     return render(request, 'apps/verb_pp_multi.html')
 
+def pronouns_missing(request):
+    language_code = 'de_DE'
+    f = open("./data/{}/pronouns.json".format(language_code))
+    pronouns = f.read()
+
+    return render(
+        request,
+        'apps/pronouns_missing.html',
+        dict(
+            pronouns=pronouns
+        )
+    )
+
 def stats(request):
     grammar_query_stub = GrammarQueryStub(user=request.user)
     weak_nouns = Noun.weak(grammar_query_stub)

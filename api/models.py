@@ -181,7 +181,7 @@ class GrammarQueryModel(models.Model):
 
         funcs = [
             cls.never_done,
-            cls.rarely_done,
+            # cls.rarely_done,
             cls.recently_wrong,
             cls.weak
         ]
@@ -189,6 +189,8 @@ class GrammarQueryModel(models.Model):
         func = random.choice(funcs)
         models = func(grammar_query_stub)
         choice_mode = str(func.__name__)
+
+        models = models.filter(chapter__gte=15)
 
         if models.count() == 0:
             models, choice_mode = cls.objects.order_by('?'), "random"
@@ -384,8 +386,8 @@ class Noun(GrammarQueryModel, TimeStampedModel):
 
     def check_gender_correction(self, correction, article='definite', case='nominative'):
         key = "{}_{}_{}".format(
-            article,
             case,
+            article,
             'singular'
         )
         return self.articled[key] == correction
