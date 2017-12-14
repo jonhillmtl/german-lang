@@ -4,7 +4,7 @@ $(document).ready(function()
     var correction = false;
     
     var article = 'definite';
-    var case = 'nominative';
+    var case_mode = 'nominative';
 
     get_noun();
 
@@ -24,7 +24,8 @@ $(document).ready(function()
                 }
                 else
                 {
-                    $("#id_plural_span").html(current_noun.gendered_definite_nominative_plural);
+                    console.log(current_noun.articled.nominative_definite_plural);
+                    $("#id_plural_span").html(current_noun.articled.nominative_definite_plural);
                     $("#id_plural_text").val('');
                     $("#id_plural_text").focus();
                     correction = true;
@@ -58,15 +59,16 @@ $(document).ready(function()
             success: function(data)
             {
                 current_noun = data.noun;
+                console.log(current_noun)
 
                 var controls = [$("#id_singular_span"), $("#id_plural_span"), $("#id_plural_text")];
                 update_colors(controls, current_noun.gender);
 
-                $("#id_singular_span").html(current_noun.gendered_definite_nominative_singular);
-                $("#id_plural_span").html('');
+                $("#id_singular_span").html(current_noun.articled.nominative_definite_singular);
                 $("#id_translation_span").html(current_noun.translations_text);
                 $("#id_plural_text").val('');
                 $("#id_plural_text").focus();
+                $("#id_plural_span").html("");
             }
         });
     }

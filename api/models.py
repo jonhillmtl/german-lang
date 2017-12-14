@@ -267,7 +267,7 @@ class GrammarQueryModel(models.Model):
     @property
     def possible_translations(self):
         translation = self.translation_set.order_by('?').first()
-        fill_count = 7
+        fill_count = 3
 
         # TODO JHILL: this could be prettier
         params = dict()
@@ -282,7 +282,7 @@ class GrammarQueryModel(models.Model):
         )
 
         random_translations.append(translation)
-        translations = random.sample(random_translations, 8)
+        translations = random.sample(random_translations, 4)
 
         return [dict(id=t.id, translation=t.translation) for t in translations]
 
@@ -381,8 +381,7 @@ class Noun(GrammarQueryModel, TimeStampedModel):
     def check_plural(self, plural):
         # TODO JHILL: make more lenient
         # TODO JHILL: well, this depends on other things now
-        return False
-        # return self.gendered_definite_nominative_plural == plural
+        return self.articled['nominative_definite_plural'] == plural
 
     def check_gender_correction(self, correction, article='definite', case='nominative'):
         key = "{}_{}_{}".format(
@@ -458,7 +457,7 @@ class Verb(GrammarQueryModel, TimeStampedModel):
     @property
     def possible_past_participles(self):
         translation = self.past_participle
-        fill_count = 7
+        fill_count = 3
 
         # TODO JHILL: this could be prettier
         random_verbs = random.sample(
@@ -469,7 +468,7 @@ class Verb(GrammarQueryModel, TimeStampedModel):
         random_verbs = [v.past_participle for v in random_verbs]
         random_verbs.append(translation)
 
-        return random.sample(random_verbs, 8)
+        return random.sample(random_verbs, 4)
 
 class Preposition(GrammarQueryModel, TimeStampedModel):
     pass
