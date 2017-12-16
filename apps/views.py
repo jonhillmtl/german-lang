@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from api.models import GrammarQueryModel, GrammarQueryStub, Noun
 import json
+from django.http import HttpResponse
 
 def noun_gender(request):
     return render(request, 'apps/noun_gender.html')
@@ -31,6 +32,23 @@ def pronouns_missing(request):
     return render(
         request,
         'apps/pronouns_missing.html',
+        dict(
+            pronouns=pronouns
+        )
+    )
+
+def pos_pronouns_missing(request):
+    language_code = 'de_DE'
+    f = open("./data/{}/pos_pronouns.json".format(language_code))
+    pronouns = f.read()
+    try:
+        jsoned = json.loads(pronouns)
+    except ValueError:
+        return HttpResponse("nope")
+
+    return render(
+        request,
+        'apps/pos_pronouns_missing.html',
         dict(
             pronouns=pronouns
         )

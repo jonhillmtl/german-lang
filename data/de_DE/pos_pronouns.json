@@ -1,0 +1,138 @@
+{
+    "pronoun": [
+        "ich",
+        "du",
+        "er",
+        "sie",
+        "es",
+        "wir",
+        "ihr",
+        "Sie"
+    ],
+    "nominative" : {
+        "masculine": [
+            "mein",
+            "dein", 
+            "sein",
+            "ihr",
+            "sein",
+            "unser",
+            "euer",
+            "ihr"
+        ],
+        "neutral" : [
+            "mein",
+            "dein", 
+            "sein",
+            "ihr",
+            "sein",
+            "unser",
+            "euer",
+            "ihr"
+        ],
+        "feminine" : [
+            "meine",
+            "deine", 
+            "seine",
+            "ihre",
+            "seine",
+            "unsere",
+            "eure",
+            "ihre"
+        ],
+        "plural" : [
+            "meine",
+            "deine", 
+            "seine",
+            "ihre",
+            "seine",
+            "unsere",
+            "eure",
+            "ihre"
+        ]
+    },
+    "accusative" : {
+        "masculine": [
+            "meinen",
+            "deinen", 
+            "seinen",
+            "ihren",
+            "seinen",
+            "unseren",
+            "euren",
+            "ihren"
+        ],
+        "neutral" : [
+            "mein",
+            "dein", 
+            "sein",
+            "ihr",
+            "sein",
+            "unser",
+            "euer",
+            "ihr"
+        ],
+        "feminine" : [
+            "meine",
+            "deine", 
+            "seine",
+            "ihre",
+            "seine",
+            "unsere",
+            "eure",
+            "ihre"
+        ],
+        "plural" : [
+            "meine",
+            "deine", 
+            "seine",
+            "ihre",
+            "seine",
+            "unsere",
+            "eure",
+            "ihre"
+        ]
+    },
+    "dative" : {
+        "masculine" : [
+            "meinem",
+            "deinem", 
+            "seinem",
+            "ihrem",
+            "seinem",
+            "unserem",
+            "eurem",
+            "ihrem"
+        ],
+        "neutral" : [
+            "meinem",
+            "deinem", 
+            "seinem",
+            "ihrem",
+            "seinem",
+            "unserem",
+            "eurem",
+            "ihrem"
+        ],
+        "feminine" : [
+            "meiner",
+            "deiner", 
+            "seiner",
+            "ihrer",
+            "seiner",
+            "unserer",
+            "eurer",
+            "ihrer"
+        ],
+        "plural" : [
+            "meinen",
+            "deinen", 
+            "seinen",
+            "ihren",
+            "seinen",
+            "unseren",
+            "euren",
+            "ihren"
+        ]
+    }
+}

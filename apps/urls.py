@@ -16,5 +16,5 @@ urlpatterns = [
     url(r'^verbs/pastparticiple/multi/$', views.verb_pp_multi, name='verb_pp_multi'),
 
     url(r'^pronouns/missing/$', views.pronouns_missing, name='pronouns_missing'),
-
+    url(r'^pronouns/possesive/missing/$', views.pos_pronouns_missing, name='pos_pronouns_missing'),
 ]

@@ -315,7 +315,8 @@ def _articles(singular_form=None, plural_form=None, gender=None, language_code='
 
     with open("./data/{}/articles.json".format(language_code)) as f:
         article_data = json.loads(f.read())
-
+        import pprint
+        pprint.pprint(article_data)
         for article in Article:
             for case in Case:
                 for singular in [True, False]:
@@ -340,14 +341,13 @@ def _articles(singular_form=None, plural_form=None, gender=None, language_code='
                             value = "{}".format(
                                 article_data[case.value][article.value][use_gender],
                             )
-                        
+                    
                         if value is not None:
                             articles[key] = value
-                        
-                    except KeyError:
-                        pass
-                    except json.decoder.JSONDecodeError:
-                        pass
+                    except KeyError as e:
+                        print("hi", e)
+                    except json.decoder.JSONDecodeError as e:
+                        print("2", e)
 
 
     return articles

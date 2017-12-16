@@ -24,7 +24,8 @@ $(document).ready(function()
     function get_callback(data)
     {
         $("#id_verb_span").html(current_gqm.verb);
-        
+        $("#id_pp_span").html(current_gqm.past_participle);
+                
         // TODO JHILL: factor up and out of here
         var index = 0;
         $("#id_buttons").children('button').each(function()

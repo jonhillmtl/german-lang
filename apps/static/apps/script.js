@@ -19,6 +19,7 @@ $(document).ready(function()
 
 function update_colors(controls, gender)
 {
+    console.log(gender);
     for(index = 0; index < controls.length; index++)
     {
         // TODO JHILL: factor that class up into a different css file
@@ -26,6 +27,7 @@ function update_colors(controls, gender)
         control.removeClass('gender_text_f');
         control.removeClass('gender_text_m');
         control.removeClass('gender_text_n');
+        control.removeClass('gender_text_p');
 
         control.addClass('gender_text_' + gender);
     }

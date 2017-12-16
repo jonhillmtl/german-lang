@@ -14,10 +14,16 @@ class NounSerializer(serializers.ModelSerializer):
             'articles',
             'articled',
             'translations_text',
-            'possible_translations'
+            'possible_translations',
         )
 
 class VerbSerializer(serializers.ModelSerializer):
     class Meta:
         model = Verb
-        fields = ('id', 'verb', 'past_participle', 'possible_translations', 'possible_past_participles', )
+        fields = (
+            'id',
+            'verb',
+            'past_participle',
+            'possible_translations',
+            'possible_past_participles',
+            'translations_text')

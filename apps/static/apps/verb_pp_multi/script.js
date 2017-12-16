@@ -24,6 +24,8 @@ $(document).ready(function()
     function get_callback(data)
     {
         $("#id_verb_span").html(current_gqm.verb);
+        console.log(current_gqm);
+        $("#id_translation_span").html(current_gqm.translations_text);
         
         // TODO JHILL: factor up and out of here
         var index = 0;

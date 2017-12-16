@@ -1,6 +1,7 @@
 body
 {
     font-family: Arial;
+    background-color: #98AFC7;
 }
 
 /******************************************************************************************************
@@ -165,6 +166,11 @@ input.large
 .gender_text_m
 {
     color: #4169E1;
+}
+
+.gender_text_p
+{
+    color: yellow;
 }
 
 input#id_correction_text

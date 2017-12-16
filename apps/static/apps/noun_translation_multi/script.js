@@ -23,8 +23,9 @@ $(document).ready(function()
 
     function get_callback(data)
     {
-        $("#id_singular_span").html(current_gqm.singular_form);
-        $("#id_plural_span").html(current_gqm.plural_form);
+        $("#id_singular_span").html(current_gqm.articled.nominative_definite_singular);
+        $("#id_plural_span").html(current_gqm.articled.nominative_definite_plural);
+        update_colors([$("#id_singular_span"), $("#id_plural_span")], current_gqm.gender);
 
         // TODO JHILL: factor up and out of here
         var index = 0;

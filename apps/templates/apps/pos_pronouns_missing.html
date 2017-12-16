@@ -2,20 +2,29 @@
 {% load static %}
 
 {% block head_includes %}
-    <link rel="stylesheet" type="text/css" href="{% static 'apps/pronouns_missing/style.css' %}" />
-    <script type="text/javascript" src="{% static 'apps/pronouns_missing/script.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/pos_pronouns_missing/style.css' %}" />
+    <script type="text/javascript" src="{% static 'apps/pos_pronouns_missing/script.js' %}"></script>
 {% endblock %}
 
 {% block content %}
     <div>
+        <div class="flash">
+            <span id="id_pronoun_span"></span>
+        </div>
+        
         <table>
             <tr>
+                <th>Gender</th>
                 <th>Nominative</th>
                 <th>Accusative</th>
                 <th>Dative</th>
+                
             <tr/>
 
             <tr>
+                <td>
+                    <span id="id_gender_span"></span>
+                </td>
                 <td>
                     <input type="text" class="case_input" id="id_nominative_input"> 
                 </td>
