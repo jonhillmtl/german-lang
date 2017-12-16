@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^stats/$', views.stats, name='stats'),
     url(r'^prefs/$', views.prefs, name='prefs'),
 
+    url(r'^nouns/flash/$', views.noun_flash, name='noun_flash'),
     url(r'^nouns/gender/$', views.noun_gender, name='noun_gender'),
     url(r'^nouns/translation/multi/$', views.noun_translation_multi, name='noun_translation_multi'),
     url(r'^nouns/pluralization/$', views.noun_pluralization, name='noun_pluralization'),

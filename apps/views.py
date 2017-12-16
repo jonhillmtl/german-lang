@@ -3,6 +3,9 @@ from api.models import GrammarQueryModel, GrammarQueryStub, Noun
 import json
 from django.http import HttpResponse
 
+def noun_flash(request):
+    return render(request, 'apps/noun_flash.html')
+
 def noun_gender(request):
     return render(request, 'apps/noun_gender.html')
 

@@ -179,6 +179,7 @@ class GrammarQueryModel(models.Model):
         # TODO JHILL: move somewhere nicer
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
+        """
         funcs = [
             cls.never_done,
             # cls.rarely_done,
@@ -189,13 +190,15 @@ class GrammarQueryModel(models.Model):
         func = random.choice(funcs)
         models = func(grammar_query_stub)
         choice_mode = str(func.__name__)
+        """
+        # models = models.filter(chapter__gte=15)
 
-        models = models.filter(chapter__gte=15)
+        models, choice_mode = cls.objects.filter(chapter__gte=15), "random"
 
         if models.count() == 0:
             models, choice_mode = cls.objects.order_by('?'), "random"
 
-        model = random.choice(models[0:grammar_query_stub.count])
+        model = random.choice(models)
         return model, choice_mode
 
     @classmethod
@@ -315,8 +318,6 @@ def _articles(singular_form=None, plural_form=None, gender=None, language_code='
 
     with open("./data/{}/articles.json".format(language_code)) as f:
         article_data = json.loads(f.read())
-        import pprint
-        pprint.pprint(article_data)
         for article in Article:
             for case in Case:
                 for singular in [True, False]:
