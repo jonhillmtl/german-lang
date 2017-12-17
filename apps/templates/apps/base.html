@@ -13,7 +13,7 @@
         <script src="{% static 'apps/jquery.cookie.js' %}"></script>
 
         {% block head_includes %}
-        
+
         {% endblock %}
 
         <title>
@@ -23,18 +23,22 @@
     
     <body>
         <div class="header">
-            {% include 'apps/sections/menu.html' %}
+            {% if request.user.is_authenticated %}
+                {% include 'apps/sections/menu.html' %}
+            {% endif %}
         </div>
+
         <div class="main">
             <div class="header-title">
                 <h1>
                 {% block header_title %}
-                
+
                 {% endblock %}
                 </h1>
             </div>
 
             {% block content %}
+
             {% endblock %}
         </div>
         

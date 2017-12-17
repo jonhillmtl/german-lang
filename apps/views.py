@@ -2,31 +2,43 @@ from django.shortcuts import render, redirect
 from api.models import GrammarQueryModel, GrammarQueryStub, Noun
 import json
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 
+@login_required
 def noun_flash(request):
     return render(request, 'apps/noun_flash.html')
 
+@login_required
 def noun_gender(request):
     return render(request, 'apps/noun_gender.html')
 
+@login_required
 def noun_translation_multi(request):
     return render(request, 'apps/noun_translation_multi.html')
 
+@login_required
 def noun_pluralization(request):
     return render(request, 'apps/noun_pluralization.html')
 
+@login_required
 def noun_translation(request):
     return render(request, 'apps/noun_translation.html')
 
+@login_required
 def noun_article_missing(request):
     return render(request, 'apps/noun_article_missing.html')
 
+@login_required
 def verb_translation_multi(request):
     return render(request, 'apps/verb_translation_multi.html')
 
+@login_required
 def verb_pp_multi(request):
     return render(request, 'apps/verb_pp_multi.html')
 
+@login_required
 def pronouns_missing(request):
     language_code = 'de_DE'
     f = open("./data/{}/pronouns.json".format(language_code))
@@ -40,6 +52,7 @@ def pronouns_missing(request):
         )
     )
 
+@login_required
 def pos_pronouns_missing(request):
     language_code = 'de_DE'
     f = open("./data/{}/pos_pronouns.json".format(language_code))
@@ -57,6 +70,24 @@ def pos_pronouns_missing(request):
         )
     )
 
+def signup(request):
+    if request.method == 'GET':
+        form = UserCreationForm()
+    else:
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            
+            return redirect('index')
+    return render(request, 'registration/signup.html', {'form': form})
+
+@login_required
 def stats(request):
     grammar_query_stub = GrammarQueryStub(user=request.user)
     weak_nouns = Noun.weak(grammar_query_stub)
@@ -65,6 +96,7 @@ def stats(request):
         weak_nouns=weak_nouns
     ))
 
+@login_required
 def prefs(request):
     if request.method == 'GET':
         levels = GrammarQueryModel.levels()

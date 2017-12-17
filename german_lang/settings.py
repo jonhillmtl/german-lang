@@ -190,3 +190,7 @@ JWT_AUTH_NO_USER_STORE = False
 
 # we are using django-rest-framework, so we need to return tuples from our Auth backend
 JWT_AUTH_RETURN_TUPLES = True
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = 'login'
