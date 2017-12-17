@@ -266,7 +266,6 @@ class GrammarQueryModel(models.Model):
         preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
         return cls.objects.filter(id__in=query).order_by(preserved)
 
-    # TODO JHILL: this function is a mess, clean it up
     @property
     def possible_translations(self):
         translation = self.translation_set.order_by('?').first()
@@ -332,24 +331,18 @@ def _articles(singular_form=None, plural_form=None, gender=None, language_code='
                     else:
                         use_gender = gender
 
-                    try:
-                        if append_noun:
-                            value = "{} {}".format(
-                                article_data[case.value][article.value][use_gender],
-                                singular_form if singular else plural_form
-                            )
-                        else:
-                            value = "{}".format(
-                                article_data[case.value][article.value][use_gender],
-                            )
-                    
-                        if value is not None:
-                            articles[key] = value
-                    except KeyError as e:
-                        print("hi", e)
-                    except json.decoder.JSONDecodeError as e:
-                        print("2", e)
-
+                    if append_noun:
+                        value = "{} {}".format(
+                            article_data[case.value][article.value][use_gender],
+                            singular_form if singular else plural_form
+                        )
+                    else:
+                        value = "{}".format(
+                            article_data[case.value][article.value][use_gender],
+                        )
+                
+                    if value is not None:
+                        articles[key] = value
 
     return articles
 
@@ -366,9 +359,11 @@ class Noun(GrammarQueryModel, TimeStampedModel):
             language_code=target_language_code
         ).all()]
 
-    @classmethod
+    @property
     def articles(self):
-        return _articles()
+        return _articles(
+            gender=self.gender
+        )
 
     @property
     def articled(self):

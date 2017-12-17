@@ -1,6 +1,18 @@
 from rest_framework import serializers
 from .models import Noun, Verb
 
+class NounFlashSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Noun
+        fields = (
+            'id',
+            'singular_form',
+            'plural_form',
+            'gender',
+            'translations_text',
+            'articled'
+        )
+
 class NounSerializer(serializers.ModelSerializer):
     class Meta:
         model = Noun

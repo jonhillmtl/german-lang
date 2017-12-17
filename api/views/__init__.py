@@ -12,12 +12,18 @@ from rest_framework.renderers import JSONRenderer
 
 from rest_framework.views import APIView
 
-from ..serializers import NounSerializer, VerbSerializer
+from ..serializers import NounSerializer, VerbSerializer, NounFlashSerializer
 from ..models import Noun, Answer, UserStats, GrammarQueryStub, Verb
 
 import json
 import random
 from text_header import text_header
+
+@api_view(['GET'])
+def nouns(request):
+    return JsonResponse(data=dict(
+        nouns=NounFlashSerializer(Noun.objects.all(), many=True).data
+    ))
 
 @api_view(['GET'])
 def random_noun(request):
