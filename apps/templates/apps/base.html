@@ -26,31 +26,7 @@
     
     <body>
         <div class="header">
-            <div class="menu">
-                <ul>
-                    <li><a href="{% url 'noun_flash' %}">Flash</a> </li>
-                    <li><a href="{% url 'noun_gender' %}">Genders</a> </li>
-                    <li><a href="{% url 'noun_translation' %}">Translation</a></li>
-                    <li><a href="{% url 'noun_translation_multi' %}">Translation Multi</a></li>
-                    <li><a href="{% url 'noun_pluralization' %}">Pluralization</a></li>
-                    <li><a href="{% url 'noun_article_missing' %}">Article - Missing</a></li>
-                </ul>
-
-                <ul>
-                    <li><a href="{% url 'verb_translation_multi' %}">Translation Multi</a></li>
-                    <li><a href="{% url 'verb_pp_multi' %}">Past Participle Multi</a></li>
-                </ul>
-
-                <ul>
-                    <li><a href="{% url 'pronouns_missing' %}">Pronouns</a></li>
-                    <li><a href="{% url 'pos_pronouns_missing' %}">Possesive Pronouns</a></li>
-                </ul>
-
-                <ul>
-                    <li><a href="{% url 'stats' %}">Stats</a></li>
-                    <li><a href="{% url 'prefs' %}">Prefs</a></li>
-                </ul>
-            </div>
+            {% include 'apps/sections/menu.html' %}
             <div style="clear: both"></div>
             <div class="header-title">
                 <h1>

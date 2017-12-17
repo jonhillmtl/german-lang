@@ -1,0 +1,41 @@
+            <div class="menu">
+                <div class="dropdown">
+                    <button>Nouns</button>
+                    
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'noun_flash' %}">Flash</a> </li>
+                        <li><a href="{% url 'noun_gender' %}">Genders</a> </li>
+                        <li><a href="{% url 'noun_translation' %}">Translation</a></li>
+                        <li><a href="{% url 'noun_translation_multi' %}">Translation Multi</a></li>
+                        <li><a href="{% url 'noun_pluralization' %}">Pluralization</a></li>
+                        <li><a href="{% url 'noun_article_missing' %}">Article - Missing</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button>Verbs</button>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'verb_translation_multi' %}">Translation Multi</a></li>
+                        <li><a href="{% url 'verb_pp_multi' %}">Past Participle Multi</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button>Articles</button>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'pronouns_missing' %}">Pronouns</a></li>
+                        <li><a href="{% url 'pos_pronouns_missing' %}">Possesive Pronouns</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button>Account</button>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'stats' %}">Stats</a></li>
+                        <li><a href="{% url 'prefs' %}">Prefs</a></li>
+                    </ul>
+                </div>
+            </div>

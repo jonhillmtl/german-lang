@@ -9,9 +9,14 @@ body
 * menu
 *
 */
+div.menu
+{
+    margin: 0px auto;
+    width: 800px;
+}
+
 div.menu ul
 {
-    border: 1px solid black;
     float: left;
     list-style: none;
     margin: 0px;
@@ -28,7 +33,59 @@ div.menu ul li a
 div.menu ul li a:hover
 {
     color: #333333;
-    font-weight: 800;
+}
+
+.dropdown {
+    position: relative;
+
+    /** Make it fit tightly around it's children */
+    display: inline-block;
+    
+    z-index: 9999;
+}
+
+.dropdown button 
+{
+    background: #A9C0D8;
+    color: #FFFFFF;
+    border: none;
+    margin: 0;
+    padding: 0.4em;
+    font-size: 1em;
+}
+
+.dropdown .dropdown-menu {
+    position: absolute;
+
+    /**
+     * Set the top of the dropdown menu to be positioned 100%
+     * from the top of the container, and aligned to the left.
+     */
+    top: 100%;
+    left: 0;
+
+    /** Allow no empty space between this and .dropdown */
+    margin: 0;
+    
+    display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+
+    /** Show dropdown menu */
+    display: block;
+}
+
+.dropdown a 
+{
+    display: block;
+    text-decoration: none;
+    background: #A9C0D8;
+    padding: 10px;
+    border-width:1px 0px 0px 0px;
+    border-style: solid;
+    border-color: gray;
+    color: white;
 }
 
 /******************************************************************************************************
@@ -56,6 +113,7 @@ div.buttons
 {
     height: 120px;
     margin: 20px 0px;
+    padding: 1px;
     width: 800px;
 }
 
@@ -69,7 +127,7 @@ div.text_input
 div.buttons button
 {
     height: 120px;
-    width: 250px;
+    width: 263px;
     font-size: 20px;
     padding: 0px;
 }
@@ -118,6 +176,19 @@ div.correction_overlay div.correction
     font-size: 60px;
     text-align: center;
     padding: 30px 0px;
+}
+
+div.metadata
+{
+    width: 780px;
+    background-color: #A9C0D8;
+    margin: 20px 0px;
+    padding: 10px;
+}
+
+div.missing
+{
+    margin: 20px 0px;
 }
 
 /******************************************************************************************************

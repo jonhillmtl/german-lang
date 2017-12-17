@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div>
+    <div class="missing">
         <div class="flash">
             <span id="id_pronoun_span"></span>
         </div>
@@ -45,4 +45,6 @@
     </script>
 
     {% include 'apps/sections/score.html' %}
+    {% include 'apps/sections/metadata.html' %}
+
 {% endblock %}

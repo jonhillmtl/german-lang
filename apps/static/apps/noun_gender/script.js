@@ -73,8 +73,6 @@ $(document).ready(function()
                 $("#id_plural_span").html(current_noun.plural_form);
                 $("#id_translation_span").html(current_noun.translations_text);
                 $("#id_correction_correct").html(current_noun.articled[articled_key]);
-                $("#id_level").text(current_noun.level);
-                $("#id_chapter").text(current_noun.chapter);
             }
         });
     }

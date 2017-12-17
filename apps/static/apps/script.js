@@ -98,3 +98,9 @@ function get_gqm(url, type, mode, callback)
     });
 }
 
+function refresh_metadata(current_gqm)
+{
+    $("#id_level").text(current_gqm.level);
+    $("#id_chapter").text(current_gqm.chapter);
+}
+
