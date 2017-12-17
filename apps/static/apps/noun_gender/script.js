@@ -70,7 +70,14 @@ $(document).ready(function()
                 current_noun = data.noun;
 
                 $("#id_singular_span").html(current_noun.singular_form);
-                $("#id_plural_span").html(current_noun.plural_form);
+                if(current_noun.plural_form != '')
+                {
+                    $("#id_plural_span").html(current_noun.articled.nominative_definite_plural);
+                }
+                else
+                {
+                    $("#id_plural_span").html('');
+                }
                 $("#id_translation_span").html(current_noun.translations_text);
                 $("#id_correction_correct").html(current_noun.articled[articled_key]);
             }
