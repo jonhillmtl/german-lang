@@ -111,7 +111,7 @@ div.flash
 
 div.buttons
 {
-    height: 120px;
+    height: 60px;
     margin: 20px 0px;
     padding: 1px;
     width: 800px;
@@ -126,7 +126,7 @@ div.text_input
 
 div.buttons button
 {
-    height: 120px;
+    height: 60px;
     width: 263px;
     font-size: 20px;
     padding: 0px;
