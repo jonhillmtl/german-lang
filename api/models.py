@@ -9,6 +9,7 @@ from django.db.models.functions import Cast
 from itertools import chain
 from text_header import text_header
 from enum import Enum, unique
+from difflib import SequenceMatcher
 
 import json
 import datetime
@@ -302,6 +303,13 @@ class GrammarQueryModel(models.Model):
         """
         return self.translation_set.filter(id=translation_id).first() is not None
 
+    def check_translation(self, translation):
+        translation = translation.lower().strip()
+        for trans in self.translation_set.all():
+            ratio = SequenceMatcher(None, translation, trans.translation).ratio()
+            if ratio >= 0.85:
+                return True
+        return False
 
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -389,11 +397,6 @@ class Noun(GrammarQueryModel, TimeStampedModel):
 
     def check_gender(self, gender):
         return self.gender == gender
-
-    # TODO JHILL: move to grammar query model?
-    def check_translation(self, translation):
-        # TODO JHILL: make more lenient
-        return self.translation_set.filter(translation=translation).first() is not None
 
     def check_answers(self, data):
         target_language_code = data.get('target_language_code', None)
