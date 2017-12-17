@@ -24,7 +24,7 @@ $(document).ready(function()
 
     function get_noun()
     {
-        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_gender';
+        url = 'http://0.0.0.0:8080/api/noun/?mode=noun_article_missing';
         $.ajax({
             url: url,
             method: 'GET',

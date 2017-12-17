@@ -51,7 +51,7 @@ $(document).ready(function()
 
     function get_noun()
     {
-        url = 'http://0.0.0.0:8080/api/nouns/?mode=noun_pluralization';
+        url = 'http://0.0.0.0:8080/api/noun/?mode=noun_pluralization';
         $.ajax({
             url: url,
             method: 'GET',
