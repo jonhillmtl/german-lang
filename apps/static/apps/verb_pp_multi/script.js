@@ -1,11 +1,11 @@
 $(document).ready(function()
 {
-    get_gqm(verb_random_url, 'verb', 'verb_pp_multi', get_callback);
+    get_gqm(url_manifest['random_verb'], 'verb', 'verb_pp_multi', get_callback);
 
     $(".translation").click(function()
     {
         check_translation_multi_answer(
-            verb_pp_multi_url, 
+            url_manifest['verb_pp_multi_check'], 
             $(this).data('pp'),
             'verb',
             'verb_pp_multi',
@@ -17,14 +17,13 @@ $(document).ready(function()
     {
         if(data.correct)
         {
-            get_gqm(verb_random_url, 'verb', 'verb_pp_multi', get_callback);
+            get_gqm(url_manifest['random_verb'], 'verb', 'verb_pp_multi', get_callback);
         }
     }
 
     function get_callback(data)
     {
         $("#id_verb_span").html(current_gqm.verb);
-        console.log(current_gqm);
         $("#id_translation_span").html(current_gqm.translations_text);
         
         // TODO JHILL: factor up and out of here

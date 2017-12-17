@@ -8,6 +8,7 @@
             src="https://code.jquery.com/jquery-3.2.1.js"
             integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
             crossorigin="anonymous"></script>
+        <script src="{% static 'apps/url_manifest.js' %}"></script>
         <script src="{% static 'apps/script.js' %}"></script>
 
         {% block head_includes %}
@@ -20,15 +21,6 @@
         
         <script type="text/javascript">
             init_authentication("{{ jwt_token }}");
-            
-            init_urls(
-                "{% url 'verb_translation_multi_check' %}",
-                "{% url 'random_verb' %}",
-                "{% url 'noun_translation_multi_check' %}",
-                "{% url 'random_noun' %}",
-                "{% url 'verb_pp_multi_check' %}"
-
-            );
         </script>
     </head>
     
@@ -71,5 +63,7 @@
             {% block content %}
             {% endblock %}
         </div>
+        
+        {% include 'apps/sections/url_manifest.html' %}
     </body> 
 </html>

@@ -7,19 +7,20 @@ function init_authentication(token)
 
 $(document).ready(function()
 {
+    var headers =
+    { 
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        'Authorization': authentication_token,
+        'Content-Type':'application/json'
+    };
+
     $.ajaxSetup({
-        headers:
-        { 
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            'Authorization': authentication_token,
-            'Content-Type':'application/json'
-        }
+        headers
     });
 });
 
 function update_colors(controls, gender)
 {
-    console.log(gender);
     for(index = 0; index < controls.length; index++)
     {
         // TODO JHILL: factor that class up into a different css file
@@ -52,30 +53,6 @@ function refresh_stats(mode, gqm_type)
             $("#id_all_time_percentage").text(data.all_time_percentage);
         }
     });
-}
-
-var verb_translation_multi_url = null;
-var verb_random_url = null;
-var verb_pp_multi_url = null;
-
-var noun_translation_multi_url = null;
-var noun_random_url = null;
-
-function init_urls(
-    verb_translation_multi,
-    verb_random,
-    noun_translation_multi,
-    noun_random,
-    verb_pp_multi
-)
-{
-    verb_translation_multi_url = verb_translation_multi;
-    verb_random_url = verb_random;
-
-    noun_translation_multi_url = noun_translation_multi;
-    noun_random_url = noun_random;
-
-    verb_pp_multi_url = verb_pp_multi;
 }
 
 var current_gqm = null;

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     
     'rest_framework',
     'rest_framework_json_api',
@@ -74,7 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'german_lang.context_processors.jwt_token_processor'
+                'german_lang.context_processors.jwt_token_processor',
+                'german_lang.context_processors.url_manifest_processor'
             ],
         },
     },

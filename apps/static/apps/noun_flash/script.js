@@ -5,7 +5,6 @@ $(document).ready(function()
     
     function flash_noun()
     {
-        console.log(nouns.length);
         var random_index = Math.floor(Math.random() * nouns.length);
         current_noun = nouns[random_index];
         

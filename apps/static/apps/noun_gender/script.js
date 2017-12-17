@@ -31,7 +31,7 @@ $(document).ready(function()
 
     $('#id_correction_text').bind("enterKey", function(e)
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/gender/correction/';
+        var url = url_manifest['noun_gender_correction'];
         $.post({
             url: url,
             success: function(data)
@@ -60,18 +60,15 @@ $(document).ready(function()
 
     function get_noun()
     {
-        url = 'http://0.0.0.0:8080/api/noun/?mode=noun_gender';
+        var url = url_manifest['random_noun'] + '?mode=noun_gender';
         $.ajax({
             url: url,
             method: 'GET',
             dataType: 'json',
             success: function(data)
             {
-                console.log(data.choice_mode);
-                console.log(data.noun);
                 current_noun = data.noun;
-                console.log(articled_key);
-                
+
                 $("#id_singular_span").html(current_noun.singular_form);
                 $("#id_plural_span").html(current_noun.plural_form);
                 $("#id_translation_span").html(current_noun.translations_text);
@@ -84,7 +81,8 @@ $(document).ready(function()
 
     function submit_answer(gender)
     {
-        var url = 'http://0.0.0.0:8080/api/nouns/gender/check/';
+        var url = url_manifest['noun_gender_check'];
+        
         $.post({
             url: url,
             success: function(data)

@@ -24,7 +24,6 @@ $(document).ready(function()
         ];
 
         current_missing = Math.floor(Math.random() * 3);
-        console.log(current_missing);
         
         for(var i = 0; i < 3; i++)
         {

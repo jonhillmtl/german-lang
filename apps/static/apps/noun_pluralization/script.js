@@ -24,7 +24,6 @@ $(document).ready(function()
                 }
                 else
                 {
-                    console.log(current_noun.articled.nominative_definite_plural);
                     $("#id_plural_span").html(current_noun.articled.nominative_definite_plural);
                     $("#id_plural_text").val('');
                     $("#id_plural_text").focus();
@@ -59,7 +58,6 @@ $(document).ready(function()
             success: function(data)
             {
                 current_noun = data.noun;
-                console.log(current_noun)
 
                 var controls = [$("#id_singular_span"), $("#id_plural_span"), $("#id_plural_text")];
                 update_colors(controls, current_noun.gender);

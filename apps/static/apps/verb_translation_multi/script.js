@@ -1,11 +1,11 @@
 $(document).ready(function()
 {
-    get_gqm(verb_random_url, 'verb', 'verb_translation_multi', get_callback);
+    get_gqm(url_manifest['random_verb'], 'verb', 'verb_translation_multi', get_callback);
 
     $(".translation").click(function()
     {
         check_translation_multi_answer(
-            verb_translation_multi_url,
+            url_manifest['verb_translation_multi_check'],
             $(this).data('translation_id'),
             'verb',
             'verb_translation_multi',
@@ -17,7 +17,7 @@ $(document).ready(function()
     {
         if(data.correct)
         {
-            get_gqm(verb_random_url, 'verb', 'verb_translation_multi', get_callback);
+            get_gqm(url_manifest['random_verb'], 'verb', 'verb_translation_multi', get_callback);
         }
     }
 

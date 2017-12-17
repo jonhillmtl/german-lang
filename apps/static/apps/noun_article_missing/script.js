@@ -31,9 +31,7 @@ $(document).ready(function()
             dataType: 'json',
             success: function(data)
             {
-                console.log(data.noun);
                 current_noun = data.noun;
-                console.log(current_noun);
 
                 $("#id_gender_span").html(current_noun.gender);
                 $(".id_singular_span").text(current_noun.articled.nominative_definite_singular);
@@ -53,7 +51,7 @@ $(document).ready(function()
                    current_noun.articles.genitive_definite_singular,
                    current_noun.articles.genitive_indefinite_singular
                 ];
-                console.log(articles);
+
                 update_colors([
                     $(".singular_form"),
                     $(".plural_form"),
