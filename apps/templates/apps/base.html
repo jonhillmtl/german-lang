@@ -27,15 +27,16 @@
     <body>
         <div class="header">
             {% include 'apps/sections/menu.html' %}
-            <div style="clear: both"></div>
+        </div>
+        <div class="main">
             <div class="header-title">
                 <h1>
                 {% block header_title %}
+                
                 {% endblock %}
                 </h1>
             </div>
-        </div>
-        <div class="main">
+
             {% block content %}
             {% endblock %}
         </div>
