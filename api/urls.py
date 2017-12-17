@@ -12,7 +12,7 @@ urlpatterns = [
     
     # GET
     url(r'^nouns/$', views.nouns, name='nouns'),
-    url(r'^noun/$', views.random_noun, name='random_noun'),   
+    url(r'^noun/$', views.noun_random, name='noun_random'),   
     url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
 
     # noun_gender mode
@@ -57,7 +57,7 @@ urlpatterns = [
     # verbs
 
     # GET
-    url(r'^verbs/$', views.random_verb, name='random_verb'),
+    url(r'^verbs/$', views.verb_random, name='verb_random'),
 
     # POST
 

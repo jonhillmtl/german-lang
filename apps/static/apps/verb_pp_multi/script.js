@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    get_gqm(url_manifest['random_verb'], 'verb', 'verb_pp_multi', get_callback);
+    get_gqm(url_manifest['verb_random'], 'verb', 'verb_pp_multi', get_callback);
 
     $(".translation").click(function()
     {
@@ -17,7 +17,7 @@ $(document).ready(function()
     {
         if(data.correct)
         {
-            get_gqm(url_manifest['random_verb'], 'verb', 'verb_pp_multi', get_callback);
+            get_gqm(url_manifest['verb_random'], 'verb', 'verb_pp_multi', get_callback);
         }
     }
 

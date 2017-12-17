@@ -60,7 +60,7 @@ $(document).ready(function()
 
     function get_noun()
     {
-        var url = url_manifest['random_noun'] + '?mode=noun_gender';
+        var url = url_manifest['noun_random'] + '?mode=noun_gender';
         $.ajax({
             url: url,
             method: 'GET',

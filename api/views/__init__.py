@@ -26,7 +26,7 @@ def nouns(request):
     ))
 
 @api_view(['GET'])
-def random_noun(request):
+def noun_random(request):
     # TODO JHILL: need to specify language code, or provide a default
     # need to specify a mode for this
     # TODO JHILL: make into a general purpose view for all GrammarQueryModels
@@ -55,7 +55,7 @@ def random_noun(request):
     return JsonResponse(data, safe=False)
 
 @api_view(['GET'])
-def random_verb(request):
+def verb_random(request):
     # TODO JHILL: need to specify language code, or provide a default
     # need to specify a mode for this
     # TODO JHILL: make into a general purpose view for all GrammarQueryModels

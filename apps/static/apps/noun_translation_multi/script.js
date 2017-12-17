@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    get_gqm(url_manifest['random_noun'], 'noun', 'noun_translation_multi', get_callback);
+    get_gqm(url_manifest['noun_random'], 'noun', 'noun_translation_multi', get_callback);
 
     $(".translation").click(function()
     {
@@ -17,7 +17,7 @@ $(document).ready(function()
     {
         if(data.correct)
         {
-            get_gqm(url_manifest['random_noun'], 'noun', 'noun_translation_multi', get_callback);
+            get_gqm(url_manifest['noun_random'], 'noun', 'noun_translation_multi', get_callback);
         }
     }
 

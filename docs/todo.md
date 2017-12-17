@@ -4,7 +4,7 @@
 - move random to model
     -> done
 
-- simplify random_noun
+- simplify noun_random
     -> done
     
 - add a flash app for just showing words
