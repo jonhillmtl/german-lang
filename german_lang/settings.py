@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.middleware.AuthenticationMiddleware'
 ]
 
 # TODO TEMPLATE-USER: you can rename the "template" folder to something else,
@@ -75,7 +76,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'german_lang.context_processors.jwt_token_processor',
                 'german_lang.context_processors.url_manifest_processor'
             ],
         },

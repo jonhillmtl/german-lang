@@ -10,6 +10,7 @@
             crossorigin="anonymous"></script>
         <script src="{% static 'apps/url_manifest.js' %}"></script>
         <script src="{% static 'apps/script.js' %}"></script>
+        <script src="{% static 'apps/jquery.cookie.js' %}"></script>
 
         {% block head_includes %}
         
@@ -18,10 +19,6 @@
         <title>
             German Flash Card Games
         </title>
-        
-        <script type="text/javascript">
-            init_authentication("{{ jwt_token }}");
-        </script>
     </head>
     
     <body>
