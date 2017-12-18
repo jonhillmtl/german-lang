@@ -1,7 +1,8 @@
 body
 {
     font-family: Arial;
-    background-color: #98AFC7;
+    background: linear-gradient(#98AFC7, #EEEEEF) no-repeat, #EEEEEF;
+    background-size: 100% 800px;
 }
 
 /******************************************************************************************************
@@ -215,20 +216,18 @@ ul.splash-boxes
 ul.splash-boxes li
 {
     list-style: none;
-    height: 198px;
+    height: 28px;
     width: 188px;
     margin: 0px 10px 10px 0px;
     float: left;
     border: 1px solid black;
     background-size: 200px 200px;
-}
-
-ul.splash-boxes li a
-{
+    text-align: center;
+    padding: 80px 0px;
     text-decoration: none;
     color: white;
-}
 
+}
 
 /******************************************************************************************************
 *

@@ -4,9 +4,11 @@
     <ul class="splash-boxes">
         {% for menu in menu_items %}
             {% for item in menu.items %}
-                <li style="background-image: url('/static/images/{{ item.1 }}.png')">
-                    <a href="{% url item.1 %}">{{ item.0 }}</a>
-                </li>
+                <a href="{% url item.1 %}">
+                    <li style="background-image: url('/static/images/{{ item.1 }}.png')">
+                        {{ menu.name }} - {{ item.0 }}
+                    </li>
+                </a>
             {% endfor %}
         {% endfor %}
     </ul>
