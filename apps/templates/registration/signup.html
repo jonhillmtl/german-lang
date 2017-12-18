@@ -1,20 +1,30 @@
 {% extends 'apps/base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
+    <form method="post">
+        {% csrf_token %}
+        <table class="form">
+            {% for field in form %}
+                <tr>
+                    <td>
+                        {{ field.label }}
+                    </td>
+                    <td>
+                        {{ field }}
+                        {% for error in field.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </td>
+                </tr>
+            
+            {% endfor %}
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Sign up</button>
+                </td>
+            </tr>
+        </table>
+    </form>
   
   <a href="{% url 'login' %}">Login</a>
   

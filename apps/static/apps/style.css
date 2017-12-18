@@ -204,6 +204,63 @@ div.header-title
 
 /******************************************************************************************************
 *
+* splash-boxes
+*
+*/
+ul.splash-boxes
+{
+    padding: 0px;
+}
+
+ul.splash-boxes li
+{
+    list-style: none;
+    height: 198px;
+    width: 188px;
+    margin: 0px 10px 10px 0px;
+    float: left;
+    border: 1px solid black;
+    background-size: 200px 200px;
+}
+
+ul.splash-boxes li a
+{
+    text-decoration: none;
+    color: white;
+}
+
+
+/******************************************************************************************************
+*
+* table
+*
+*/
+table.form
+{
+    width: 100%;
+}
+
+table.form tr td
+{
+    width: 50%;
+    font-size: 20px;
+    text-align: right;
+}
+
+table.form tr td input
+{
+    width: 100%;
+    font-size: 20px;
+}
+
+table.form tr td button
+{
+    width: 100%;
+    font-size: 40px;
+}
+
+/******************************************************************************************************
+*
 * other
 *
 */
@@ -262,3 +319,5 @@ input#id_correction_text
     font-size: 50px;
     text-align:center;
 }
+
+
