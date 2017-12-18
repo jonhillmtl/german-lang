@@ -1,0 +1,35 @@
+[
+    {
+        "name": "Nouns",
+        "items" : [
+            ["Flash", "noun_flash"],
+            ["Gender", "noun_gender"],
+            ["Translation", "noun_translation"],
+            ["Translation Multi", "noun_translation_multi"],
+            ["Pluralization", "noun_pluralization"],
+            ["Articles", "noun_article_missing"]
+        ]
+    },
+    {
+        "name": "Verbs",
+        "items" : [
+            ["Translation", "verb_translation_multi"],
+            ["Past Participle", "verb_pp_multi"]
+        ]
+    },
+    {
+        "name": "Articles",
+        "items" : [
+            ["Pronouns", "pronouns_missing"],
+            ["Possessive Pronouns", "pos_pronouns_missing"]
+        ]
+    },
+    {
+        "name": "Account",
+        "items" : [
+            ["Stats", "stats"],
+            ["Prefs", "prefs"],
+            ["Logout", "logout"]
+        ]
+    }
+]

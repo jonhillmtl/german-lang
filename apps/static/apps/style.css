@@ -24,15 +24,9 @@ div.menu ul
     padding: 4px;
 }
 
-div.menu ul li a
-{
-    text-decoration: none;
-    color: black;
-}
-
 div.menu ul li a:hover
 {
-    color: #333333;
+    color: #EEEEEE;
 }
 
 .dropdown {
@@ -86,6 +80,18 @@ div.menu ul li a:hover
     border-style: solid;
     border-color: gray;
     color: white;
+}
+
+.dropdown a.current-url
+{
+    font-weight: 800;
+    color: #888888;
+}
+
+.dropdown a.current-url
+{
+    font-weight: 800;
+    color: #888888;
 }
 
 /******************************************************************************************************
