@@ -60,11 +60,17 @@ function check_translation_multi_answer(url, answer, gqm_type, mode, callback)
     {
         post_data['verb_id'] = current_gqm.id;
     }
+    else if(gqm_type == 'adjective')
+    {
+        post_data['adjective_id'] = current_gqm.id;
+    }
     else
     {
         post_data['noun_id'] = current_gqm.id;
     }
 
+    console.log(post_data);
+    console.log(url);
     $.post({
         url: url,
         success: function(data)

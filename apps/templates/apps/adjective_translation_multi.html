@@ -1,0 +1,30 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" 
+          href="{% static 'apps/adjective_translation_multi/style.css' %}" />
+    <script type="text/javascript" 
+            src="{% static 'apps/adjective_translation_multi/script.js' %}"></script>
+{% endblock %}
+
+{% block header_title %}
+    Multiple Choice Adjective Translation
+{% endblock %}
+
+{% block content %}
+    <div class="flash">
+        <span id="id_adjective_span"></span>
+    </div>
+
+    <div id="id_buttons" class="buttons">
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
+        <button class="translation"></button>
+    </div>
+
+    {% include 'apps/sections/score.html' %}
+    {% include 'apps/sections/metadata.html' %}
+
+{% endblock %}

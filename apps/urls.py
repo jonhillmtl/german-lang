@@ -24,4 +24,7 @@ urlpatterns = [
 
     url(r'^pronouns/missing/$', views.pronouns_missing, name='pronouns_missing'),
     url(r'^pronouns/possesive/missing/$', views.pos_pronouns_missing, name='pos_pronouns_missing'),
+
+    url(r'^adjective/translation/multi/$', views.adjective_translation_multi, name='adjective_translation_multi'),
+
 ]

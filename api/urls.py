@@ -2,12 +2,25 @@ from django.conf.urls import url
 
 from . import views
 from .views import noun_gender, noun_translation_multi, noun_pluralization, \
-                   noun_translation, verb_translation_multi, verb_pp_multi
+                   noun_translation, verb_translation_multi, verb_pp_multi, \
+                   adjective_translation_multi
 
 urlpatterns = [
     # stats
     url(r'stats/$', views.stats, name='noun_gender_stats'),
 
+    # adjectives
+
+    # GET
+    url(r'^adjective/$', views.adjective_random, name='adjective_random'),   
+
+    # POST
+    url(
+        r'adjectives/translation/multi/check/$',
+        adjective_translation_multi.check,
+        name='adjective_translation_multi_check'
+    ),
+    
     # nouns
     
     # GET

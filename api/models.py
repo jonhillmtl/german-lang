@@ -278,6 +278,8 @@ class GrammarQueryModel(models.Model):
             params['noun__isnull'] = False
         elif self.__class__ == Verb:
             params['verb__isnull'] = False
+        elif self.__class__ == Adjective:
+            params['adjective__isnull'] = False
 
         random_translations = random.sample(
             list(Translation.objects.filter(**params).all()),
@@ -476,7 +478,7 @@ class Pronoun(GrammarQueryModel, TimeStampedModel):
     pass
 
 class Adjective(GrammarQueryModel, TimeStampedModel):
-    pass
+    adjective = models.CharField(max_length=64, default='')
 
 class Adverb(GrammarQueryModel, TimeStampedModel):
     pass
@@ -487,11 +489,13 @@ class Phrase(GrammarQueryModel, TimeStampedModel):
 class Translation(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
     verb = models.ForeignKey(Verb, null=True)
-
+    adjective = models.ForeignKey(Adjective, null=True)
+    
     translation = models.CharField(max_length=512)
     form = models.CharField(max_length=1, choices=NOUN_FORMS)
     language_code = models.CharField(max_length=5, default='en_US')
 
+    # TODO JHILL: improve
     def __str__(self):
         return "{}: {} ({}) ({})".format(
             self.noun,
@@ -503,6 +507,7 @@ class Translation(TimeStampedModel):
 class Answer(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
     verb = models.ForeignKey(Verb, null=True)
+    adjective = models.ForeignKey(Adjective, null=True)
 
     user = models.ForeignKey(User)
     correct = models.BooleanField(default=False)
@@ -512,6 +517,7 @@ class Answer(TimeStampedModel):
     correction = models.BooleanField(default=False)
     correct_answer = models.CharField(max_length=512, default='')
 
+    # TODO JHILL: improve
     def __str__(self):
         return "({}) ({})".format(
             self.correct,

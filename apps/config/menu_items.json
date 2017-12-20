@@ -18,6 +18,12 @@
         ]
     },
     {
+        "name": "Adjectives",
+        "items" : [
+            ["Translation", "adjective_translation_multi"]
+        ]
+    },
+    {
         "name": "Articles",
         "items" : [
             ["Pronouns", "pronouns_missing"],
