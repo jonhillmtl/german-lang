@@ -3,11 +3,23 @@ from django.conf.urls import url
 from . import views
 from .views import noun_gender, noun_translation_multi, noun_pluralization, \
                    noun_translation, verb_translation_multi, verb_pp_multi, \
-                   adjective_translation_multi
+                   adjective_translation_multi, phrase_translation_multi
 
 urlpatterns = [
     # stats
     url(r'stats/$', views.stats, name='noun_gender_stats'),
+
+    # phrases
+
+    # GET
+    url(r'^phrase/$', views.phrase_random, name='phrase_random'),   
+
+    # POST
+    url(
+        r'phrase/translation/multi/check/$',
+        phrase_translation_multi.check,
+        name='phrase_translation_multi_check'
+    ),
 
     # adjectives
 
@@ -41,12 +53,6 @@ urlpatterns = [
         r'nouns/translation/multi/check/$',
         noun_translation_multi.check,
         name='noun_translation_multi_check'
-    ),
-
-    url(
-        r'nouns/translation/multi/correction/$',
-        noun_translation_multi.correction,
-        name='noun_translation_multi_correction'
     ),
 
     # noun_pluralization mode

@@ -73,6 +73,9 @@ def pos_pronouns_missing(request):
 def adjective_translation_multi(request):
     return render(request, 'apps/adjective_translation_multi.html')
 
+def phrase_translation_multi(request):
+    return render(request, 'apps/phrase_translation_multi.html')
+
 def signup(request):
     if request.method == 'GET':
         form = UserCreationForm()

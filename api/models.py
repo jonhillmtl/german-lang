@@ -280,6 +280,9 @@ class GrammarQueryModel(models.Model):
             params['verb__isnull'] = False
         elif self.__class__ == Adjective:
             params['adjective__isnull'] = False
+        elif self.__class__ == Phrase:
+            params['phrase__isnull'] = False
+
 
         random_translations = random.sample(
             list(Translation.objects.filter(**params).all()),
@@ -484,13 +487,17 @@ class Adverb(GrammarQueryModel, TimeStampedModel):
     pass
 
 class Phrase(GrammarQueryModel, TimeStampedModel):
-    pass
+    phrase = models.TextField(default='')
+
+    def __str__(self):
+        return "{}".format(self.phrase)
 
 class Translation(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
     verb = models.ForeignKey(Verb, null=True)
     adjective = models.ForeignKey(Adjective, null=True)
-    
+    phrase = models.ForeignKey(Phrase, null=True)
+
     translation = models.CharField(max_length=512)
     form = models.CharField(max_length=1, choices=NOUN_FORMS)
     language_code = models.CharField(max_length=5, default='en_US')
@@ -508,6 +515,7 @@ class Answer(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
     verb = models.ForeignKey(Verb, null=True)
     adjective = models.ForeignKey(Adjective, null=True)
+    phrase = models.ForeignKey(Phrase, null=True)
 
     user = models.ForeignKey(User)
     correct = models.BooleanField(default=False)

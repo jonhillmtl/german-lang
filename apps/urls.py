@@ -27,4 +27,6 @@ urlpatterns = [
 
     url(r'^adjective/translation/multi/$', views.adjective_translation_multi, name='adjective_translation_multi'),
 
+    url(r'^phrase/translation/multi/$', views.phrase_translation_multi, name='phrase_translation_multi'),
+
 ]

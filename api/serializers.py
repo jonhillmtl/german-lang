@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Noun, Verb, Adjective
+from .models import Noun, Verb, Adjective, Phrase
 
 class NounFlashSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,6 +35,18 @@ class AdjectiveSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'adjective',
+            'level',
+            'chapter',
+            'translations_text',
+            'possible_translations',
+        )
+        
+class PhraseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Phrase
+        fields = (
+            'id',
+            'phrase',
             'level',
             'chapter',
             'translations_text',

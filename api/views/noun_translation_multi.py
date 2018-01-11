@@ -52,30 +52,3 @@ def check(request):
             error=str(e)
         ))
 
-@api_view(['POST'])
-def correction(request):
-    json_data = json.loads(request.body)
-    noun = Noun.objects.get(pk=json_data['noun_id'])
-
-    try:
-        json_data = json.loads(request.body)
-        correct = noun.check_gender_correction(json_data['correction'])
-
-        answer = Answer(
-            noun=noun,
-            correct=correct,
-            user=request.user,
-            mode='noun_gender',
-            answer=json_data,
-            correction=True)
-        answer.save()
-
-        return JsonResponse(dict(
-            success=correct,
-            answer=json_data
-        ), safe=False)
-    except AssertionError as e:
-        return JsonResponse(dict(
-            success=False,
-            error=str(e)
-        ))

@@ -27,7 +27,6 @@ $(document).ready(function()
             increment = -20;
         }
         delay += increment;
-        console.log(delay);
 
         setTimeout(flash_noun, delay);
     }

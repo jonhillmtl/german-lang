@@ -12,8 +12,8 @@ from rest_framework.renderers import JSONRenderer
 
 from rest_framework.views import APIView
 
-from ..serializers import NounSerializer, VerbSerializer, NounFlashSerializer, AdjectiveSerializer
-from ..models import Noun, Answer, UserStats, GrammarQueryStub, Verb, Adjective
+from ..serializers import NounSerializer, VerbSerializer, NounFlashSerializer, AdjectiveSerializer, PhraseSerializer
+from ..models import Noun, Answer, UserStats, GrammarQueryStub, Verb, Adjective, Phrase
 
 import json
 import random
@@ -91,6 +91,28 @@ def adjective_random(request):
 
     data = dict(
         adjective=AdjectiveSerializer(adjective).data,
+        success=True,
+        choice_mode=choice_mode,
+        mode=mode
+    )
+
+    return JsonResponse(data, safe=False)
+    
+@api_view(['GET'])
+def phrase_random(request):
+    # TODO JHILL: need to specify language code, or provide a default
+    # need to specify a mode for this
+    # TODO JHILL: make into a general purpose view for all GrammarQueryModels
+    # very important here!
+    assert request.method == 'GET'
+
+    mode = request.GET.get('mode', None)
+
+    query_stub = GrammarQueryStub(mode=mode, user=request.user)
+    phrase, choice_mode = Phrase.random(grammar_query_stub=query_stub)
+
+    data = dict(
+        phrase=PhraseSerializer(phrase).data,
         success=True,
         choice_mode=choice_mode,
         mode=mode

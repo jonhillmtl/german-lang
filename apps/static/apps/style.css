@@ -139,6 +139,22 @@ div.buttons button
     padding: 0px;
 }
 
+div.buttons-wide
+{
+    width: 100%;
+    padding: 1px;
+    margin: 20px 0px;
+}
+
+div.buttons-wide button
+{
+    width: 100%;
+    height: 60px;
+    font-size: 20px;
+    padding: 0px;
+
+}
+
 div.translation
 {
     width: 800px;

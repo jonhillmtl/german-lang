@@ -24,6 +24,13 @@
         ]
     },
     {
+        "name": "Phrases",
+        "items" : [
+            ["Translation", "phrase_translation_multi"]
+        ]
+    },
+
+    {
         "name": "Articles",
         "items" : [
             ["Pronouns", "pronouns_missing"],
