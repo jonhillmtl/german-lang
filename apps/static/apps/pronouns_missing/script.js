@@ -57,11 +57,13 @@ $(document).ready(function()
         if(answer == selected_pronouns[current_missing])
         {
             set_pronouns();
+            increment_count(true);
         }
         else
         {
             $(this).val("");
             $(this).prop('placeholder', selected_pronouns[current_missing]);
+            increment_count(false);
         }
     });
 

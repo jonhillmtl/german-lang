@@ -5,6 +5,7 @@ class Command(BaseCommand):
     help = 'Populates the nouns'
 
     def handle(self, *args, **options):
+        added_count = 0
         with open("./data/de_DE/nouns.csv", "r") as f:
             for line in f.readlines()[1:]:
                 values = line.split(';')
@@ -12,14 +13,19 @@ class Command(BaseCommand):
                 # TODO JHILL: add translations
 
                 singular_form = values[0]
+                if singular_form == '':
+                    continue
+
                 singular_form = singular_form.strip()
 
                 noun = Noun.objects.filter(singular_form=singular_form).first()
                 if noun is None:
                     print("adding {}".format(singular_form))
                     noun = Noun()
+                    added_count = added_count + 1
                 else:
-                    print("updating {}: {}".format(noun.id, noun.singular_form))
+                    print("(skipping) {}: {}".format(noun.id, noun.singular_form))
+                    continue
                 
                 gender = values[2].strip().lower()
                 if gender == 'das':
@@ -67,3 +73,4 @@ class Command(BaseCommand):
                         language_code='en_US')
                     nt.save()
                 noun.save()
+        print("added {}".format(added_count))

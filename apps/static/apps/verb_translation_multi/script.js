@@ -18,6 +18,11 @@ $(document).ready(function()
         if(data.correct)
         {
             get_gqm(url_manifest['verb_random'], 'verb', 'verb_translation_multi', get_callback);
+            increment_count(true);
+        }
+        else
+        {
+            increment_count(false);
         }
     }
 

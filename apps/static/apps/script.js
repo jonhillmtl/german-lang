@@ -10,7 +10,26 @@ $(document).ready(function()
     $.ajaxSetup({
         headers
     });
+    
+    update_time();
 });
+
+var current_time = 0;
+function update_time()
+{
+    setInterval(function () 
+    {
+        current_time += 1;
+        var minutes = Math.floor(current_time / 60);
+        var seconds = current_time % 60;
+        
+        var time = minutes + "m " + seconds + "s";
+        $("#id_total_time").text(time);
+    
+        var correct_minute = current_time / 60;
+        $("#id_correct_minute").text(correct_count / correct_minute);
+    }, 1000);
+}
 
 function update_colors(controls, gender)
 {
@@ -103,5 +122,20 @@ function refresh_metadata(current_gqm)
 {
     $("#id_level").text(current_gqm.level);
     $("#id_chapter").text(current_gqm.chapter);
+}
+
+var correct_count = 0;
+var total_count = 0;
+
+function increment_count(correct)
+{
+    total_count += 1;
+    if(correct)
+    {
+        correct_count += 1;
+    }
+    
+    $("#id_correct_count").text(correct_count);
+    $("#id_total_count").text(total_count);
 }
 

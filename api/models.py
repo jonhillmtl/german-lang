@@ -192,12 +192,9 @@ class GrammarQueryModel(models.Model):
         models = func(grammar_query_stub)
         choice_mode = str(func.__name__)
         """
-        # models = models.filter(chapter__gte=15)
+        models, choice_mode = cls.objects.filter(level='a2.2').order_by('?'), "random"
 
-        models, choice_mode = cls.objects.filter(chapter__gte=15), "random"
-
-        if models.count() == 0:
-            models, choice_mode = cls.objects.order_by('?'), "random"
+        # models, choice_mode = cls.objects.order_by('?'), "random"
 
         model = random.choice(models)
         return model, choice_mode

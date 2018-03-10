@@ -7,9 +7,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         with open("./data/de_DE/verbs.csv", "r") as f:
             for line in f.readlines()[1:]:
-                values = line.split(',')
+                values = line.split(';')
 
                 verb_text = values[0]
+                if verb_text == '':
+                    continue
 
                 verb = Verb.objects.filter(verb=verb_text).first()
                 if verb is None:
@@ -20,12 +22,12 @@ class Command(BaseCommand):
 
                 verb.verb = verb_text
                 verb.language_code = 'de_DE'
-                verb.past_participle = values[4]
-                verb.auxiliary = values[6]
-                verb.level = values[7]
-                verb.chapter = values[8] if values[8] != '' else 0
+                verb.past_participle = values[2]
+                verb.auxiliary = values[3]
+                verb.level = values[4]
+                verb.chapter = values[5] if values[5] != '' else 0
                 verb.save()
-                
+
                 for nt in verb.translation_set.all():
                     nt.delete()
 

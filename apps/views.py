@@ -54,7 +54,9 @@ def pronouns_missing(request):
 
 @login_required
 def pos_pronouns_missing(request):
+    # TODO JHILL: get language code from cookie
     language_code = 'de_DE'
+
     f = open("./data/{}/pos_pronouns.json".format(language_code))
     pronouns = f.read()
     try:

@@ -1,113 +1,586 @@
-verb,en_US,separable,irregular,past participle,type,auxiliary,level,chapter,valid
-laufen,to run,0,1,gelaufen,,sein,a1.1,1,1
-sehen,to see,0,1,gesehen,,haben,a1.1,1,1
-gehen,to go,0,1,gegangen,,haben,a1.1,1,1
-anfangen,to begin,1,1,angefangen,,haben,a1.1,12,1
-aufhören,to stop,1,1,aufgehört,,haben,a1.1,12,1
-feiern,to celebrate,0,0,gefeiert,,haben,a1.1,12,1
-dauern,to last,0,0,gedauert,,haben,a1.1,12,1
-gefallen,to like,0,1,gefallen,,haben,a1.1,12,1
-geben,to give,0,1,gegeben,,haben,a1.1,12,1
-fliegen,to fly,0,0,geflogen,,sein,a1.1,12,1
-springen,to jump,0,0,gesprungen,,sein,a1.1,12,1
-studieren,to study,0,0,studiert,,haben,a1.1,12,1
-buchstabieren,to spell,0,1,buchstabiert,weak,haben,a1.1,1,1
-glauben,to believe,0,0,geglaubt,weak,haben,a1.1,2,1
-machen,to make,0,0,gemacht,weak,haben,a1.1,2,1
-arbeiten,to work,0,0,gearbeitet,weak,haben,a1.1,2,1
-studieren,to study,0,0,studiert,weak,haben,a1.1,2,1
-haben,to have,0,1,gehabt,,haben,a1.1,2,1
-sprechen,to speak,0,1,gesprochen,strong,haben,a1.1,3,1
-kosten,to cost,,,gekostet,,haben,a1.1,4,
-brauchen,to need,,,gebraucht,,haben,a1.1,,
-finden,to find,,,gefunden,,haben,a1.1,,
-sagen,to say,,,gesagt,,haben,a1.1,,
-bieten,to offer,,,geboten,,haben,a1.1,,
-schreiben,to write,,,geschrieben,,haben,a1.1,,
-gehen,to go,,,gegangen,,sein,a1.1,,
-suchen,to search,,,gesucht,,haben,a1.1,,
-können,to be able to,,,gekonnt,,haben,a1.1,,
-rauchen,to smoke,,,geraucht,,haben,a1.1,,
-sehen,to see,,,gesehen,,haben,a1.1,,
-wissen,to know,,,gewusst,,haben,a1.1,,
-kennen,to know,,,gekannt,,haben,a1.1,,
-essen,to eat,,,gegessen,,haben,a1.1,,
-schmecken,to taste,,,geschmeckt,,haben,a1.1,,
-trinken,to drink,,,getrunken,,haben,a1.1,,
-anrufen,to call,,,angerufen,,haben,a1.1,,
-bekommen,to get,,,bekommen,,haben,a1.1,,
-einkaufen,to shop,,,eingekauft,,haben,a1.1,,
-fernsehen,to watch tv,,,ferngesehen,,haben,a1.1,,
-mitbringen,to bring with,,,mitgebracht,,haben,a1.1,,
-nehmen,to take,,,genommen,,haben,a1.1,,
-denken,to think,,,gedacht,,haben,a1.1,,
-meinen,to mean,,,gemeint,,haben,a1.1,,
-schlafen,to sleep,,,geschlafen,,haben,a1.1,,
-fliehen,to flee,,,geflohen,,sein,a1.1,,
-tanzen,to dance,,,getanzt,,haben,a1.1,,
-kochen,to cook,,,gekocht,,haben,a1.1,1,1
-tragen,to carry,,,getragen,,haben,a1.1,1,
-lesen,to read,,,gelesen,,haben,a1.1,1,
-verstehen,to understand,,,verstanden,,haben,a1.1,1,
-öffnen,to open,,,geöffnet,,haben,a1.1,1,
-schließen,to close,,,geschlossen,,haben,a1.1,1,
-spielen,to play,,,gespielt,,haben,a1.1,1,
-sitzen,to sit,,,gesessen,,haben,a1.1,1,
-stapeln,to stack,,,gestapelt,,haben,a1.1,1,
-arrangieren,to arrange,,,arrangiert,,haben,a1.1,1,
-organisieren,to organize,,,organisiert,,haben,a1.1,1,
-beschützen,to protect,1,,beschützt,,haben,a1.1,1,
-bestellen,to order,,,bestellt,,haben,a1.1,1,
-stellen,to put,,,gestelt,,haben,a1.1,1,
-legen,to put,,,gelegt,,haben,a1.1,1,
-drehen,to turn,,,gedreht,,haben,a1.1,1,
-lachen,to laugh,,,gelacht,,haben,a1.1,1,
-weinen,to cry,,,geweint,,haben,a1.1,1,
-kämpfen,to fight,,,gekämpft,,haben,a1.1,1,
-streiten,to argue,,,gestritten,,haben,a1.1,1,
-küssen,to kiss,,,geküsst,,haben,a1.1,1,
-hören,to hear,,,gehört,,haben,a1.1,1,
-wählen,to pick,,,gewählt,,haben,a1.1,1,
-klettern,to climb,,,geklettert,,haben,a1.1,1,
-wandern,to hike,,,gewandert,,haben,a1.1,1,
-duschen,to shower,,,geduscht,,haben,a1.1,1,
-waschen,to wash,,,gewaschen,,haben,a1.1,1,
-umdrehen,to flip,,,umgedreht,,haben,a1.1,1,
-überzeugen,to coerce,,,überzeugt,,haben,a1.1,1,
-hoffen,to hope,,,gehofft,,haben,a1.1,1,
-verderben,to spoil,,,verdorben,,sein,a1.1,1,
-besiegen,to defeat,,,besiegt,,haben,a1.1,1,
-bezaubern,to entrance,,,bezaubert,,haben,a1.1,1,
-pinkeln,to urinate,,,gepinkelt,,haben,a1.1,1,
-wegwerfen,to throw away,,,weggeworfen,,haben,a1.1,1,
-sich weigern,to refuse,,,geweigert,,sein,a1.1,1,
-antworten,to answer,,,geantwortet,,haben,a1.1,1,
-ersticken,to choke,,,erstickt,,haben,a1.1,1,
-zuschlagen,to slam,,,zugeschlagen,,haben,a1.1,1,
-beeindrucken,to impress,,,beeindruckt,,haben,a1.1,1,
-definieren,to define,,,definiert,,haben,a1.1,1,
-bestreiten,to deny,,,bestritten,,haben,a1.1,1,
-erfinden,to invent,,,erfunden,,haben,a1.1,1,
-ermöglichen,to enable,,,ermöglicht,,haben,a1.1,1,
-tippen,to type,,,getippt,,haben,a1.1,1,
-durchlesen,to peruse,1,,durchgelesen,,haben,a1.1,1,
-anmachen,to turn on,,,angemacht,,haben,a1.1,1,
-ausmachen,to turn off,,,ausgemacht,,haben,a1.1,1,
-scheinen,to shine,,,geschienen,,haben,a1.1,1,
-ablenken,to deflect,,,abgelenken,,haben,a1.1,1,
-andeuten,to imply,,,angedeut,,haben,a1.1,1,
-tauschhandeln,to barter,,,getauschhandelt,,haben,a1.1,1,
-streicheln,to pet,,,gestreichelt,,haben,a1.1,1,
-anzünden,to ignite,,,angezündet,,haben,a1.1,1,
-löschen,to exhaust,,,gelöscht,,haben,a1.1,1,
-reiten,to ride,,,geritten,,haben,a1.1,1,
-aufsteigen,to mount,1,,aufgestiegen,,haben,a1.1,1,
-gewinnen,to win,,,gewonnen,,haben,a1.1,1,
-drücken,to push,,,gedrückt,,haben,,,
-ziehen,to pull,,,gezogen,,haben,,,
-handeln,to trade,,,gehandelt,,haben,,,
-teilen,to share,,,geteilt,,haben,,,
-malen,to paint,,,gemalen,,haben,,,
-nageln,to nail,,,genagelt,,haben,,,
-schrauben,to screw,,,geschraubt,,haben,,,
-sägen,to saw,,,gesägt,,,,,
+verb;en_US;past participle;auxiliary;level;chapter
+laufen;to run;gelaufen;sein;a1.1;1
+sehen;to see;gesehen;haben;a1.1;1
+gehen;to go;gegangen;haben;a1.1;1
+buchstabieren;to spell;buchstabiert;haben;a1.1;1
+glauben;to believe;geglaubt;haben;a1.1;2
+machen;to make;gemacht;haben;a1.1;2
+arbeiten;to work;gearbeitet;haben;a1.1;2
+studieren;to study;studiert;haben;a1.1;2
+haben;to have;gehabt;haben;a1.1;2
+sprechen;to speak;gesprochen;haben;a1.1;3
+kosten;to cost;gekostet;haben;a1.1;4
+brauchen;to need;gebraucht;haben;a1.1;4
+finden;to find;gefunden;haben;a1.1;4
+sagen;to say;gesagt;haben;a1.1;4
+bieten;to offer;geboten;haben;a1.1;4
+schreiben;to write;geschrieben;haben;a1.1;4
+gehen;to go;gegangen;sein;a1.1;4
+suchen;to search;gesucht;haben;a1.1;4
+können;to be able to;gekonnt;haben;a1.1;4
+rauchen;to smoke;geraucht;haben;a1.1;4
+sehen;to see;gesehen;haben;a1.1;4
+wissen;to know;gewusst;haben;a1.1;4
+kennen;to know;gekannt;haben;a1.1;4
+essen;to eat;gegessen;haben;a1.1;4
+schmecken;to taste;geschmeckt;haben;a1.1;4
+trinken;to drink;getrunken;haben;a1.1;4
+anrufen;to call;angerufen;haben;a1.1;4
+bekommen;to get;bekommen;haben;a1.1;4
+einkaufen;to shop;eingekauft;haben;a1.1;4
+fernsehen;to watch tv;ferngesehen;haben;a1.1;4
+mitbringen;to bring with;mitgebracht;haben;a1.1;4
+nehmen;to take;genommen;haben;a1.1;4
+denken;to think;gedacht;haben;a1.1;4
+meinen;to mean;gemeint;haben;a1.1;4
+schlafen;to sleep;geschlafen;haben;a1.1;4
+fliehen;to flee;geflohen;sein;a1.1;4
+tanzen;to dance;getanzt;haben;a1.1;4
+anfangen;to begin;angefangen;haben;a1.1;12
+aufhören;to stop;aufgehört;haben;a1.1;12
+feiern;to celebrate;gefeiert;haben;a1.1;12
+dauern;to last;gedauert;haben;a1.1;12
+gefallen;to like;gefallen;haben;a1.1;12
+geben;to give;gegeben;haben;a1.1;12
+fliegen;to fly;geflogen;sein;a1.1;12
+springen;to jump;gesprungen;sein;a1.1;12
+studieren;to study;studiert;haben;a1.1;12
+abbiegen;;abgebogen;haben;a1.2;13
+beschreiben;to describe;beschrieben;haben;a1.2;13
+weiterfahren;to go further;weitergefahren;sein;a1.2;13
+wenden;to turn around;gewendet;haben;a1.2;13
+zurückfahren;to go back;züruckgefahren;sein;a1.2;13
+fragen;to ask;gefragt;haben;a1.2;13
+stimmen;to be right;gestimmt;haben;a1.2;13
+entscheiden;to decide;entschieden;haben;a1.2;13
+kochen;to cook;gekocht;haben;a1.2;14
+tragen;to carry;getragen;haben;a1.2;14
+lesen;to read;gelesen;haben;a1.2;14
+verstehen;to understand;verstanden;haben;a1.2;14
+öffnen;to open;geöffnet;haben;a1.2;14
+schließen;to close;geschlossen;haben;a1.2;14
+spielen;to play;gespielt;haben;a1.2;14
+sitzen;to sit;gesessen;haben;a1.2;14
+stapeln;to stack;gestapelt;haben;a1.2;14
+arrangieren;to arrange;arrangiert;haben;a1.2;14
+organisieren;to organize;organisiert;haben;a1.2;14
+beschützen;to protect;beschützt;haben;a1.2;14
+bestellen;to order;bestellt;haben;a1.2;14
+stellen;to put;gestelt;haben;a1.2;14
+legen;to put;gelegt;haben;a1.2;14
+drehen;to turn;gedreht;haben;a1.2;14
+lachen;to laugh;gelacht;haben;a1.2;14
+weinen;to cry;geweint;haben;a1.2;14
+kämpfen;to fight;gekämpft;haben;a1.2;14
+streiten;to argue;gestritten;haben;a1.2;14
+küssen;to kiss;geküsst;haben;a1.2;14
+hören;to hear;gehört;haben;a1.2;14
+wählen;to pick;gewählt;haben;a1.2;14
+klettern;to climb;geklettert;haben;a1.2;14
+wandern;to hike;gewandert;haben;a1.2;14
+duschen;to shower;geduscht;haben;a1.2;14
+waschen;to wash;gewaschen;haben;a1.2;14
+umdrehen;to flip;umgedreht;haben;a1.2;14
+überzeugen;to coerce;überzeugt;haben;a1.2;14
+hoffen;to hope;gehofft;haben;a1.2;14
+verderben;to spoil;verdorben;sein;a1.2;14
+besiegen;to defeat;besiegt;haben;a1.2;14
+bezaubern;to entrance;bezaubert;haben;a1.2;14
+pinkeln;to urinate;gepinkelt;haben;a1.2;14
+wegwerfen;to throw away;weggeworfen;haben;a1.2;14
+sich weigern;to refuse;geweigert;sein;a1.2;14
+antworten;to answer;geantwortet;haben;a1.2;14
+ersticken;to choke;erstickt;haben;a1.2;14
+zuschlagen;to slam;zugeschlagen;haben;a1.2;14
+beeindrucken;to impress;beeindruckt;haben;a1.2;14
+definieren;to define;definiert;haben;a1.2;14
+bestreiten;to deny;bestritten;haben;a1.2;14
+erfinden;to invent;erfunden;haben;a1.2;14
+ermöglichen;to enable;ermöglicht;haben;a1.2;14
+tippen;to type;getippt;haben;a1.2;14
+durchlesen;to peruse;durchgelesen;haben;a1.2;14
+anmachen;to turn on;angemacht;haben;a1.2;14
+ausmachen;to turn off;ausgemacht;haben;a1.2;14
+scheinen;to shine;geschienen;haben;a1.2;14
+ablenken;to deflect;abgelenken;haben;a1.2;14
+andeuten;to imply;angedeut;haben;a1.2;14
+tauschhandeln;to barter;getauschhandelt;haben;a1.2;14
+streicheln;to pet;gestreichelt;haben;a1.2;14
+anzünden;to ignite;angezündet;haben;a1.2;14
+löschen;to exhaust;gelöscht;haben;a1.2;14
+reiten;to ride;geritten;haben;a1.2;14
+aufsteigen;to mount;aufgestiegen;haben;a1.2;14
+gewinnen;to win;gewonnen;haben;a1.2;14
+drücken;to push;gedrückt;haben;a1.2;14
+ziehen;to pull;gezogen;haben;a1.2;14
+handeln;to trade;gehandelt;haben;a1.2;14
+teilen;to share;geteilt;haben;a1.2;14
+malen;to paint;gemalen;haben;a1.2;14
+nageln;to nail;genagelt;haben;a1.2;14
+schrauben;to screw;geschraubt;haben;a1.2;14
+sägen;to saw;gesägt;haben;a1.2;14
+aussehen;to appear;ausgesehen;haben;a1.2;14
+vermieten;to rent;vermietet;haben;a1.2;14
+bezahlen;to pay;bezahlt;haben;a1.2;14
+stehen;to stand;gestanden;haben;a1.2;14
+danken;to thank;gedankt;haben;a1.2;15
+fahlen;to lack;gefehlt;haben;a1.2;15
+gehören;to belong;gehört;haben;a1.2;15
+bringen;to bring;gebracht;haben;a1.2;16
+funktionieren;to function;funktionert;haben;a1.2;16
+kümmern;to take care of;gekümmert;haben;a1.2;16
+reparieren;to repair;repariert;haben;a1.2;16
+schiken;to send;geschickt;haben;a1.2;16
+verschieben;to move;verschoben;haben;a1.2;16
+passen;to fit;gepasst;haben;a1.2;16
+kennenlernen;to get to know;kennengelernt;haben;a1.2;16
+mitnehmen;to take;mitgenommen;haben;a1.2;16
+tun;to do ;getan;haben;a1.2;16
+warten;to wait;gewartet;haben;a1.2;16
+abschließen;to lock;abgeschlossen;haben;a1.2;17
+anmelden;to register;angemeldet;haben;a1.2;17
+verdienen;to earn;verdient;haben;a1.2;17
+werden;to become;geworen;haben;a1.2;17
+wollen;to want;gewollt;haben;a1.2;17
+heiraten;to get married;geheiratet;haben;a1.2;17
+reisen;to travel;gereist;haben;a1.2;17
+putzen;to clean;geputzt;haben;a1.2;17
+husten;to cough;gehustet;haben;a1.2;18
+wehtun;to hurt;wegetan;haben;a1.2;19
+bleiben;to remain;geblieben;haben;a1.2;19
+sollen;to should;;;a1.2;19
+beschweren;to complain;beschwert;haben;a1.2;19
+erkennen;to recognize;erkannt;haben;a1.2;20
+geboren sein;to be born;geboren;sein;a1.2;20
+vergessen;to forget;vergessen;haben;a1.2;20
+abtrocknen;to dry;abgetrocknet;haben;a1.2;20
+abwaschen;to wash;abgewaschen;haben;a1.2;20
+spülen;to rinse;spülen;haben;a1.2;20
+hassen;to hate;gehasst;haben;a1.2;20
+zumachen;to close;zugemacht;haben;a1.2;20
+sammeln;to collect;gesammelt;haben;a2.1;1
+übernachten;to stay overnight;übernachtet;haben;a2.1;1
+verkaufen;to sell;verkauft;haben;a2.1;1
+zeichnen;to draw;gezeichnet;haben;a2.1;1
+aufmachen;to open;aufgemacht;haben;a2.1;1
+aufpassen;to watch out;aufgepasst;haben;a2.1;1
+klappen;to work;geklappt;haben;a2.1;1
+passieren;to happen;passiert;sein;a2.1;1
+rufen;to call;gerufen;haben;a2.1;1
+wachsen;gewachsen;to grow;haben;a2.1;2
+einrichten;to set up;engerichtet;haben;a2.1;2
+hängen;to hang;gehängt;haben;a2.1;2
+legen;to lay;gelegt;haben;a2.1;2
+liegen;to put;gelegen;haben;a2.1;2
+renovieren;to renovate;renoviert;haben;a2.1;2
+anbieten;to offer;angeboten;haben;a2.1;3
+beraten;to advise;beraten;haben;a2.1;3
+beginnen;to begin;begonnen;haben;a2.1;3
+buchen;to book;gebucht;haben;a2.1;3
+enden;to end;geendet;haben;a2.1;3
+erleben;to experience;erlebt;haben;a2.1;3
+mitmachen;to participate;mitgemacht;haben;a2.1;3
+besichtigen;to visit;beichtigt;haben;a2.1;3
+interessieren;to interest;interessiert;haben;a2.1;3
+wechseln;to switch;gewechselt;haben;a2.1;4
+zeigen;to demonstrate;gezeigt;haben;a2.1;4
+abgeben;to submit;abgegeben;haben;a2.1;4
+ärgern;to annoy;geärgert;haben;a2.1;4
+dagegen sein;to be against;dagegen gewesen;sein;a2.1;4
+freuen;to look forward to;gefreut;haben;a2.1;4
+stattfinden;to occur;stattgefunden;haben;a2.1;4
+zahlen;to pay;gezahlt;haben;a2.1;4
+halten von;to think of;gehalten;haben;a2.1;5
+hinfahren;to transport;hingefahren;sein;a2.1;5
+lassen;to let;gelassen;haben;a2.1;5
+mitkommen;to come along;mitgekommen;sein;a2.1;5
+verabreden;to arrange;verabredet;haben;a2.1;5
+vorschlagen;to propose;vorgeschlagen;haben;a2.1;6
+abnehmen;to lose weight;abgenommen;haben;a2.1;7
+ausruhen;to relax;ausgerucht;haben;a2.1;7
+trainierin;to train;trainiert;haben;a2.1;7
+wiegen;to weigh;gewogen;haben;a2.1;7
+empfehlen;to recommend;empföhlen;haben;a2.1;7
+teilnehmen;to share;teilgenommen;haben;a2.1;7
+bluten;to bleed;geblutet;haben;a2.1;8
+operieren;to operate;operiert;haben;a2.1;8
+sterben;to die;gestorben;sein;a2.1;8
+untersuchen;to investigate;untersucht;haben;a2.1;8
+verbinden;to connect;verbunden;haben;a2.1;8
+hinfallen;to fall down;hingefallen;sein;a2.1;8
+vertrauen;to trust;vertraut;haben;a2.1;10
+sinken;to sink;gesunken;sein;a2.1;10
+sparen;to save;gespart;haben;a2.1;10
+steigen;to rise;gestiegen;sein;a2.1;10
+reservierin;to reserve;reserviert;haben;a2.1;10
+reagieren;to react;reagiert;haben;a2.1;10
+herstellen;to produce;hergestellt;haben;a2.1;11
+verwenden;to use;verwendet;haben;a2.1;11
+wegerfen;to throw away;weggeworfen;haben;a2.1;11
+bedanken;to thank;bedankt;haben;a2.1;11
+wünschen;to wish;gewünscht;haben;a2.1;11
+erinnern;to recall;erinnert;haben;a2.1;11
+fühlen;to feel;gefühlt;haben;a2.1;11
+unterhalten;to support;unterhalten;haben;a2.1;11
+verlieren;to lose;verloren;haben;a2.1;11
+braten;to roast;gebraten;haben;a2.1;12
+ansehen;to look at;angesehen;haben;a2.1;12
+aussuchen;to choose;ausgesucht;haben;a2.1;12
+holen;to get;geholt;haben;a2.1;12
+überraschen;to suprise;überrascht;haben;a2.1;12
+verbrauchen;to consume;verbraucht;haben;a2.1;12
+vorbereiten;to prepare;vorbereitet;haben;a2.1;12
+wundern;to suprise;gewundert;haben;a2.1;12
+anschauen;to show;angeschaut;haben;a2.2;13
+aufschreiben;to write down;augeschrieben;haben;a2.2;13
+bewegen;to move;bewegt;haben;a2.2;13
+korrigieren;to correct;korrigiert;haben;a2.2;13
+lösen;to solve;gelöst;haben;a2.2;13
+merken;to note;gemerkt;haben;a2.2;13
+übersetzen;to translate;übersetzt;haben;a2.2;13
+wiederholen;to repeat;wiederholt;haben;a2.2;13
+planen;to plan;geplant;haben;a2.2;13
+verlieben;to fall in love with;verliebt;haben;a2.2;13
+verreisen;to travel;verreist;haben;a2.2;13
+;;;;a2.2;13
+einpacken;to wrap up;eingepackt;haben;a2.2;14
+packen;to pack;gepackt;haben;a2.2;14
+transportieren;to transport;transportiert;haben;a2.2;14
+unterschreiben;to sign;unterschrieben;haben;a2.2;14
+ankreuzen;to cross off;angekreuzt;haben;a2.2;14
+benutzen;to use;benutzt;haben;a2.2;14
+ergänzen;to complete;ergänzt;haben;a2.2;14
+gebrauchen;to apply;gebrauct;haben;a2.2;14
+gucken;to watch;geguckt;haben;a2.2;15
+produzieren;to produce;produziert;haben;a2.2;15
+bedeuten;to mean;bedeutet;haben;a2.2;15
+wecken;to wake up;geweckt;haben;a2.2;16
+zeigen;to demonstrate;gezeigt;haben;a2.2;16
+leihen;to borrow;geliehen;haben;a2.2;16
+tanken;to refuel;getankt;haben;a2.2;17
+überqueren;to cross;überquert;haben;a2.2;17
+ärgern über;to be mad about;geärgert;haben;a2.2;17
+denken an;to think about;gedacht;haben;a2.2;17
+freuen auf;to look forward to;gefreut;haben;a2.2;17
+sprechen über;to talk about;gesprochen;haben;a2.2;18
+träumen von;to dream of;geträumt;haben;a2.2;18
+treffen mit;to meet with;getroffen;haben;a2.2;18
+eröffnen;to open;eröffnet;haben;a2.2;19
+verlängern;to extend;verlängert;haben;a2.2;19
+verpassen;to miss;verpasst;haben;a2.2;19
+lohnen;to be worth;gelohnt;haben;a2.2;19
+probieren;to try;probiert;haben;a2.2;20
+recht haben;to be right;recht gehabt;haben;a2.2;20
+unternehmen;to undertake;unternommen;haben;a2.2;20
+weggehen;to go away;weggegangen;sein;a2.2;20
+abstimmen;to vote;abgestimmt;haben;a2.2;20
+absperren;to shut off;abgesperrt;haben;a2.2;21
+anfassen;to touch;angefasst;haben;a2.2;21
+stehlen;to steal;gestohlen;haben;a2.2;21
+ändern;to change;geändert;haben;a2.2;21
+brennen;to burn;gebrannt;haben;a2.2;21
+nähen;to sew;genäht;haben;a2.2;22
+reinigen;to clean;gereinigt;haben;a2.2;22
+schneiden;to cut;geschnitten;haben;a2.2;22
+waschen;to wash;gewaschen;haben;a2.2;22
+besitzen;to possess;besessen;;a2.2;22
+erreichen;to reach;erreicht;haben;a2.2;22
+mieten;to rent;gemietet;haben;a2.2;22
+teilen;to share;geteilt;haben;a2.2;22
+anklicken;to click;angeklickt;haben;a2.2;22
+bestätigen;to confirm;bestätigt;haben;a2.2;22
+wählen;to choose;gewählt;haben;a2.2;22
+kündigen;to cancel;gekündigt;haben;a2.2;23
+kopieren;to copy;kopiert;haben;a2.2;23
+stören;to disturb;gestört;haben;a2.2;23
+vorhaben;to plan;vorgehabt;haben;a2.2;24
+beantragen;to apply for;beantragt;haben;a2.2;24
+leiten;to conduct;geleitet;haben;a2.2;24
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
