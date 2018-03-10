@@ -18,6 +18,11 @@ $(document).ready(function()
         if(data.correct)
         {
             get_gqm(url_manifest['verb_random'], 'verb', 'verb_pp_multi', get_callback);
+            increment_count(true);
+        }
+        else
+        {
+            increment_count(false);
         }
     }
 
@@ -34,5 +39,6 @@ $(document).ready(function()
             $(this).text(current_gqm.possible_past_participles[index]);
             index++;
         });
+        refresh_metadata(current_gqm);
     }
 });

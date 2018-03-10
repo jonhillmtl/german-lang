@@ -10,7 +10,9 @@ class NounFlashSerializer(serializers.ModelSerializer):
             'plural_form',
             'gender',
             'translations_text',
-            'articled'
+            'articled',
+            'level',
+            'chapter',
         )
 
 class NounSerializer(serializers.ModelSerializer):
@@ -28,7 +30,8 @@ class NounSerializer(serializers.ModelSerializer):
             'translations_text',
             'possible_translations',
         )
-        
+
+
 class AdjectiveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Adjective
@@ -40,7 +43,8 @@ class AdjectiveSerializer(serializers.ModelSerializer):
             'translations_text',
             'possible_translations',
         )
-        
+
+
 class PhraseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Phrase
@@ -59,6 +63,8 @@ class VerbSerializer(serializers.ModelSerializer):
         model = Verb
         fields = (
             'id',
+            'level',
+            'chapter',
             'verb',
             'past_participle',
             'possible_translations',

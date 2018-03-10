@@ -13,20 +13,20 @@
     {
         "name": "Verbs",
         "items" : [
-            ["Translation", "verb_translation_multi"],
+            ["Translation Multi", "verb_translation_multi"],
             ["Past Participle", "verb_pp_multi"]
         ]
     },
     {
         "name": "Adjectives",
         "items" : [
-            ["Translation", "adjective_translation_multi"]
+            ["Translation Multi", "adjective_translation_multi"]
         ]
     },
     {
         "name": "Phrases",
         "items" : [
-            ["Translation", "phrase_translation_multi"]
+            ["Translation Multi", "phrase_translation_multi"]
         ]
     },
 

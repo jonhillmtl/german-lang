@@ -294,6 +294,7 @@ class GrammarQueryModel(models.Model):
     @property
     def translations_text(self):
         translations = self.translation_set.all()
+        translations.reverse()
         return ", ".join([pt.translation for pt in translations])
 
     def check_translation_id(self, translation_id):

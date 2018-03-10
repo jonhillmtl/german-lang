@@ -39,5 +39,7 @@ $(document).ready(function()
             $(this).text(current_gqm.possible_translations[index].translation);
             index++;
         });
+        
+        refresh_metadata(current_gqm);
     }
 });
