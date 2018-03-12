@@ -180,10 +180,9 @@ class GrammarQueryModel(models.Model):
         # TODO JHILL: move somewhere nicer
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
-        """
         funcs = [
             cls.never_done,
-            # cls.rarely_done,
+            cls.rarely_done,
             cls.recently_wrong,
             cls.weak
         ]
@@ -191,10 +190,12 @@ class GrammarQueryModel(models.Model):
         func = random.choice(funcs)
         models = func(grammar_query_stub)
         choice_mode = str(func.__name__)
-        """
-        models, choice_mode = cls.objects.filter(level='a2.2').order_by('?'), "random"
 
-        # models, choice_mode = cls.objects.order_by('?'), "random"
+        user = grammar_query_stub.user
+        levels = [a['level'] for a in user.profile.levels]
+        chapters = [a['chapter'] for a in user.profile.levels]
+        models = cls.objects
+        models = models.filter(level__in=levels).filter(chapter__in=chapters)
 
         model = random.choice(models)
         return model, choice_mode
@@ -216,7 +217,7 @@ class GrammarQueryModel(models.Model):
 
         id_list = [m[0] for m in query[0:grammar_query_stub.count]]
         preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
-        return cls.objects.filter(id__in=query).order_by(preserved)
+        return cls.objects.filter(id__in=query) # .order_by(preserved)
 
     @classmethod
     def never_done(cls, grammar_query_stub):
@@ -246,7 +247,7 @@ class GrammarQueryModel(models.Model):
             total__gt=0
         ).annotate(
             average=(F('correct_count') / F('total') * 100)
-        ).order_by("average").values_list(grammar_query_stub.cls + '_id', flat=True)
+        ) #.order_by("average").values_list(grammar_query_stub.cls + '_id', flat=True)
 
         return cls.objects.filter(id__in=query)
 

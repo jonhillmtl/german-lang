@@ -7,7 +7,9 @@
             ["Translation", "noun_translation"],
             ["Translation Multi", "noun_translation_multi"],
             ["Pluralization", "noun_pluralization"],
-            ["Articles", "noun_article_missing"]
+            ["Articles", "noun_article_missing"],
+            ["List", "noun_list"],
+            ["Random", "noun_random_feed"]
         ]
     },
     {

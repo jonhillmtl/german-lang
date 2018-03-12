@@ -1,0 +1,23 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/noun_list/style.css' %}" />
+    <script type="text/javascript" src="{% static 'apps/noun_list/script.js' %}"></script>
+{% endblock %}
+
+{% block header_title %}
+    Just Bathe In It
+{% endblock %}
+
+{% block content %}
+    
+    <div>
+        <ul>
+            {% for noun in nouns %}
+                <li>{{ noun.level }} {{ noun.chapter }} {{ noun }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+{% endblock %}

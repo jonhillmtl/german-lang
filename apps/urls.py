@@ -12,6 +12,9 @@ urlpatterns = [
     url(r'^stats/$', views.stats, name='stats'),
     url(r'^prefs/$', views.prefs, name='prefs'),
 
+    url(r'^nouns/list/$', views.noun_list, name='noun_list'),
+    url(r'^nouns/random/$', views.noun_random_feed, name='noun_random_feed'),
+
     url(r'^nouns/flash/$', views.noun_flash, name='noun_flash'),
     url(r'^nouns/gender/$', views.noun_gender, name='noun_gender'),
     url(r'^nouns/translation/multi/$', views.noun_translation_multi, name='noun_translation_multi'),

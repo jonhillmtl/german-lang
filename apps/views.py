@@ -7,6 +7,23 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 
 @login_required
+def noun_list(request):
+    nouns = Noun.objects.order_by('level', 'chapter', 'singular_form').all()
+
+    return render(request, 'apps/noun_list.html', dict(
+        nouns=nouns
+    ))
+
+@login_required
+def noun_random_feed(request):
+    query_stub = GrammarQueryStub(mode='random', user=request.user)
+    nouns = [Noun.random(query_stub)[0] for i in range(0, 50)]
+
+    return render(request, 'apps/noun_random_feed.html', dict(
+        nouns=nouns
+    ))
+
+@login_required
 def noun_flash(request):
     return render(request, 'apps/noun_flash.html')
 
