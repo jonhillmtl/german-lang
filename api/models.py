@@ -141,6 +141,14 @@ class Profile(models.Model):
     levels = JSONField(default=list, blank=True, null=True)
     tags = JSONField(default=list, blank=True, null=True)
 
+def level_chapter_valid(model, level_chapters):
+    return {'level': model.level, 'chapter': model.chapter} in level_chapters
+
+def filter_level_chapter(grammar_query_stub, models):
+    level_chapters = grammar_query_stub.user.profile.levels
+    models = models.all()
+    models = [m for m in models if level_chapter_valid(m, level_chapters)]
+    return models
 
 class GrammarQueryModel(models.Model):
     level = models.CharField(max_length=4, null=True, choices=COURSE_LEVELS, default=None)
@@ -179,7 +187,7 @@ class GrammarQueryModel(models.Model):
     def random(cls, grammar_query_stub):
         # TODO JHILL: move somewhere nicer
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
-
+        """
         funcs = [
             cls.never_done,
             cls.rarely_done,
@@ -190,12 +198,11 @@ class GrammarQueryModel(models.Model):
         func = random.choice(funcs)
         models = func(grammar_query_stub)
         choice_mode = str(func.__name__)
+        """
 
-        user = grammar_query_stub.user
-        levels = [a['level'] for a in user.profile.levels]
-        chapters = [a['chapter'] for a in user.profile.levels]
         models = cls.objects
-        models = models.filter(level__in=levels).filter(chapter__in=chapters)
+        models = filter_level_chapter(grammar_query_stub, models)
+        choice_mode = 'random'
 
         model = random.choice(models)
         return model, choice_mode

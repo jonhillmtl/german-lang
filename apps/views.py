@@ -17,7 +17,7 @@ def noun_list(request):
 @login_required
 def noun_random_feed(request):
     query_stub = GrammarQueryStub(mode='random', user=request.user)
-    nouns = [Noun.random(query_stub)[0] for i in range(0, 50)]
+    nouns = [Noun.random(query_stub)[0] for i in range(0, 100)]
 
     return render(request, 'apps/noun_random_feed.html', dict(
         nouns=nouns

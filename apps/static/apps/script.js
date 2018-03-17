@@ -112,8 +112,10 @@ function get_gqm(url, type, mode, callback)
         dataType: 'json',
         success: function(data)
         {
+            console.log(data);
             current_gqm = data[type];
             callback(data);
+            $("#id_choice_mode").html(data.choice_mode);
         }
     });
 }
@@ -137,5 +139,11 @@ function increment_count(correct)
     
     $("#id_correct_count").text(correct_count);
     $("#id_total_count").text(total_count);
+    
+    if(total_count > 0)
+    {
+        console.log(correct_count);
+        $("#id_percent_correct").text(correct_count / total_count * 100);
+    }
 }
 
