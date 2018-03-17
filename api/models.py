@@ -190,6 +190,7 @@ class GrammarQueryModel(models.Model):
         # TODO JHILL: move somewhere nicer
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
+        """
         funcs = [
             # cls.never_done,
             # cls.rarely_done,
@@ -200,8 +201,11 @@ class GrammarQueryModel(models.Model):
         func = random.choice(funcs)
         models = func(grammar_query_stub)
         choice_mode = str(func.__name__)
+        """
 
-        # models = filter_level_chapter(grammar_query_stub, models)
+        models = cls.objects
+        models = filter_level_chapter(grammar_query_stub, models)
+        choice_mode = 'filtered'
 
         model = random.choice(models)
         return model, choice_mode
@@ -599,7 +603,7 @@ class Answer(TimeStampedModel):
             self.correction)
 
 class AppSession(TimeStampedModel):
-    finished_at = models.DateTimeField(auto_now=True)
+    finished_at = models.DateTimeField(default=None, null=True, blank=True)
 
     answers = models.ManyToManyField(Answer)
 
@@ -611,7 +615,8 @@ class AppSession(TimeStampedModel):
     correct_count = models.IntegerField(default=0)
 
     def update(self, answer):
-        answers.append(answer)
+        self.answers.add(answer)
+
         self.total_count = self.total_count + 1
 
         if answer.correct:

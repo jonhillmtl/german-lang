@@ -12,12 +12,19 @@ from rest_framework.renderers import JSONRenderer
 
 from rest_framework.views import APIView
 
-from ..serializers import NounSerializer
-from ..models import Noun, Answer, UserStats
+from ..serializers import NounSerializer, AppSessionSerializer
+from ..models import Noun, Answer, UserStats, AppSession
 
 import json
 import random
 
+def _save_answer_to_session(request, answer):
+    session = AppSession.objects.get(pk=request.COOKIES.get('appsession_id'))
+
+    if session:
+        session.update(answer)
+
+    return session
 
 @api_view(['POST'])
 def check(request):
@@ -38,13 +45,17 @@ def check(request):
             answer=json_data,
             correction=False)
         answer.save()
+        
+        session = _save_answer_to_session(request, answer)
 
         return JsonResponse(dict(
             correct=correct,
             correct_answer=noun.gender,
             noun=NounSerializer(noun).data,
+            session=AppSessionSerializer(session).data,
             success=True
         ), safe=False)
+
     except AssertionError as e:
         return JsonResponse(dict(
             success=False,

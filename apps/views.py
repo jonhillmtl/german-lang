@@ -5,8 +5,18 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+import datetime
 
 def _render_app_session(request, app_name, template, context=dict()):
+    current_appsession_id = request.COOKIES.get('appsession_id')
+    if current_appsession_id is not None:
+        current_session = AppSession.objects.get(pk=current_appsession_id)
+        if current_session:
+            # TODO JHILL: a function instead? maybe delete it if it has
+            # no answers?
+            current_session.finished_at = datetime.datetime.now()
+            current_session.save()
+
     session = AppSession()
     session.app_name = app_name
     session.user = request.user
@@ -14,7 +24,9 @@ def _render_app_session(request, app_name, template, context=dict()):
 
     context['session_id'] = session.id
 
-    return render(request, template, context)
+    response = render(request, template, context)
+    response.set_cookie('appsession_id', session.id)
+    return response
 
 @login_required
 def noun_list(request):
