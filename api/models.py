@@ -494,8 +494,38 @@ nominative_declinations = {
 class Adjective(GrammarQueryModel, TimeStampedModel):
     adjective = models.CharField(max_length=64, default='')
 
-    # TODO JHILL: other cases, needs to be spun out into JSON file probably
     def declinate(self, noun):
+        language_code = 'de_DE'
+        with open("./data/{}/articles.json".format(language_code)) as f:
+            article_data = json.loads(f.read())
+
+        with open("./data/{}/declinations.json".format(language_code)) as f:
+            declination_data = json.loads(f.read())
+
+        declinations = dict()
+        for article in Article:
+            for case in Case:
+                key = "{}_{}".format(
+                    case.value,
+                    article.value
+                )
+
+                declinated = "{}{}".format(
+                    self.adjective, 
+                    declination_data[case.value][article.value][noun.gender])
+
+                value = "{} {} {}".format(
+                    article_data[case.value][article.value][noun.gender],
+                    declinated,
+                    noun.singular_form
+                )
+
+                declinations[key] = value
+
+        return declinations
+
+    # TODO JHILL: other cases, needs to be spun out into JSON file probably
+    def _declinate(self, noun):
         article = articles[noun.gender]
         declinated = ''
 
@@ -548,7 +578,6 @@ class Translation(TimeStampedModel):
             self.form,
             self.language_code)
 
-
 class Answer(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
     verb = models.ForeignKey(Verb, null=True)
@@ -569,3 +598,23 @@ class Answer(TimeStampedModel):
             self.correct,
             self.correction)
 
+class AppSession(TimeStampedModel):
+    finished_at = models.DateTimeField(auto_now=True)
+
+    answers = models.ManyToManyField(Answer)
+
+    user = models.ForeignKey(User)
+
+    app_name = models.CharField(max_length=64, blank=False, null=False)
+
+    total_count = models.IntegerField(default=0)
+    correct_count = models.IntegerField(default=0)
+
+    def update(self, answer):
+        answers.append(answer)
+        self.total_count = self.total_count + 1
+
+        if answer.correct:
+            self.correct_count = self.correct_count + 1
+
+        self.save()

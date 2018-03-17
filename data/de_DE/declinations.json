@@ -1,0 +1,70 @@
+{
+    "nominative" :
+    {
+        "definite" :
+        {
+            "f": "e",
+            "m": "e",
+            "n": "e",
+            "p": "en"
+        },
+        "indefinite" :
+        {
+            "f": "e",
+            "m": "er",
+            "n": "es",
+            "p": "en"
+        }
+    },
+    "accusative" :
+    {
+        "definite" :
+        {
+            "f": "e",
+            "m": "en",
+            "n": "es",
+            "p": "en"
+        },
+        "indefinite" :
+        {
+            "f": "e",
+            "m": "en",
+            "n": "es",
+            "p": "en"
+        }
+    },
+    "dative" :
+    {
+        "definite" :
+        {
+            "f": "en",
+            "m": "en",
+            "n": "en",
+            "p": "en"
+        },
+        "indefinite" :
+        {
+            "f": "en",
+            "m": "en",
+            "n": "en",
+            "p": "en"
+        }
+    },
+    "genitive" :
+    {
+        "definite" :
+        {
+            "f": "en",
+            "m": "en",
+            "n": "en",
+            "p": "en"
+        },
+        "indefinite" :
+        {
+            "f": "en",
+            "m": "en",
+            "n": "en",
+            "p": "en"
+        }
+    }
+}

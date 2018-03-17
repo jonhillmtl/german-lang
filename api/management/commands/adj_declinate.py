@@ -15,4 +15,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for adjective in Adjective.objects.all():
             noun, choice_mode = Noun.random()
-            print(adjective.declinate(noun))
+
+            print(adjective.adjective, noun.singular_form)
+            pprint.pprint(adjective.declinate(noun))

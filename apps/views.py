@@ -1,10 +1,20 @@
 from django.shortcuts import render, redirect
-from api.models import GrammarQueryModel, GrammarQueryStub, Noun
+from api.models import GrammarQueryModel, GrammarQueryStub, Noun, AppSession
 import json
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+
+def _render_app_session(request, app_name, template, context=dict()):
+    session = AppSession()
+    session.app_name = app_name
+    session.user = request.user
+    session.save()
+
+    context['session_id'] = session.id
+
+    return render(request, template, context)
 
 @login_required
 def noun_list(request):
@@ -29,7 +39,7 @@ def noun_flash(request):
 
 @login_required
 def noun_gender(request):
-    return render(request, 'apps/noun_gender.html')
+    return _render_app_session(request, 'noun_gender', 'apps/noun_gender.html')
 
 @login_required
 def noun_translation_multi(request):
