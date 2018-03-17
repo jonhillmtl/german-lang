@@ -70,7 +70,6 @@ class Mode(Enum):
     VERB_PP_MULTI = 'verb_pp_multi'
     VERB_TRANSLATION_MULTI = 'verb_translation_multi'
 
-
 class GrammarQueryStub(object):
     mode = None
     start_time = None
@@ -184,25 +183,25 @@ class GrammarQueryModel(models.Model):
         abstract = True
 
     @classmethod
-    def random(cls, grammar_query_stub):
+    def random(cls, grammar_query_stub=None):
+        if grammar_query_stub is None:
+            return random.choice(cls.objects.all()), "random"
+
         # TODO JHILL: move somewhere nicer
         grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
-        """
+
         funcs = [
-            cls.never_done,
-            cls.rarely_done,
-            cls.recently_wrong,
+            # cls.never_done,
+            # cls.rarely_done,
+            # cls.recently_wrong,
             cls.weak
         ]
 
         func = random.choice(funcs)
         models = func(grammar_query_stub)
         choice_mode = str(func.__name__)
-        """
 
-        models = cls.objects
-        models = filter_level_chapter(grammar_query_stub, models)
-        choice_mode = 'random'
+        # models = filter_level_chapter(grammar_query_stub, models)
 
         model = random.choice(models)
         return model, choice_mode
@@ -210,7 +209,6 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def rarely_done(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
-        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
         query = Answer.objects.filter(
             **params,
@@ -229,8 +227,7 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def never_done(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
-        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
-        
+
         query = Answer.objects.filter(
             **params,
         ).values(grammar_query_stub.cls).values_list(grammar_query_stub.cls + '_id', flat=True)
@@ -240,28 +237,18 @@ class GrammarQueryModel(models.Model):
     @classmethod
     def weak(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
-        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
-
+        print(params)
+        
         query = Answer.objects.filter(
-            **params,
-        ).values(grammar_query_stub.cls).annotate(
-            correct_count=Cast(Count(FilterCase(When(correct=True, then=True))), FloatField())
-        ).annotate(
-            incorrect_count=Cast(Count(FilterCase(When(correct=False, then=False))), FloatField())
-        ).annotate(
-            total=(F('correct_count') + F('incorrect_count'))
-        ).filter(
-            total__gt=0
-        ).annotate(
-            average=(F('correct_count') / F('total') * 100)
-        ) #.order_by("average").values_list(grammar_query_stub.cls + '_id', flat=True)
+            **params
+        ).all() # .values(grammar_query_stub.cls + '_id')
+        print(query)
 
         return cls.objects.filter(id__in=query)
 
     @classmethod
     def recently_wrong(cls, grammar_query_stub):
         params = grammar_query_stub.build_query_params()
-        grammar_query_stub.cls = str(cls).split('.')[-1][:-2].lower()
 
         query = Answer.objects.filter(
             **params,
@@ -281,13 +268,15 @@ class GrammarQueryModel(models.Model):
         params = dict()
         if self.__class__ == Noun:
             params['noun__isnull'] = False
+
         elif self.__class__ == Verb:
             params['verb__isnull'] = False
+
         elif self.__class__ == Adjective:
             params['adjective__isnull'] = False
+
         elif self.__class__ == Phrase:
             params['phrase__isnull'] = False
-
 
         random_translations = random.sample(
             list(Translation.objects.filter(**params).all()),
@@ -486,8 +475,51 @@ class Preposition(GrammarQueryModel, TimeStampedModel):
 class Pronoun(GrammarQueryModel, TimeStampedModel):
     pass
 
+# TODO JHILL: move somewhere nicer
+# TODO JHILL: only works for German
+articles = {
+    'n': 'ein',
+    'f': 'eine',
+    'm': 'ein'
+}
+
+# TODO JHILL: move somewhere nicer
+# TODO JHILL: only works for German
+nominative_declinations = {
+    'm' : 'r',
+    'n' : 's',
+    'f' : 'e'
+}
+
 class Adjective(GrammarQueryModel, TimeStampedModel):
     adjective = models.CharField(max_length=64, default='')
+
+    # TODO JHILL: other cases, needs to be spun out into JSON file probably
+    def declinate(self, noun):
+        article = articles[noun.gender]
+        declinated = ''
+
+        if noun.gender == 'n' or noun.gender == 'm':
+            format_string = ''
+
+            if noun.singular_form[-1] == 'e':
+                format_string = '{}{}'
+            else:
+                format_string = '{}e{}'
+            declinated = format_string.format(self.adjective, nominative_declinations[noun.gender])
+
+        elif noun.gender == 'f':
+            format_string = ''
+
+            if noun.singular_form[-1] == 'e':
+                declinated = self.adjective
+            else:
+                declinated = "{}{}".format(self.adjective, nominative_declinations[noun.gender])
+
+        return "{} {} {} ({})".format(article, declinated, noun.singular_form, noun.gender)
+
+    def __str__(self):
+        return "{}".format(self.adjective)
 
 class Adverb(GrammarQueryModel, TimeStampedModel):
     pass
