@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 import datetime
 
-def _render_app_session(request, app_name, template, context=dict()):
+def _render_app_session_view(request, app_name, template, context=dict()):
     current_appsession_id = request.COOKIES.get('appsession_id')
     if current_appsession_id is not None:
         current_session = AppSession.objects.get(pk=current_appsession_id)
@@ -51,31 +51,31 @@ def noun_flash(request):
 
 @login_required
 def noun_gender(request):
-    return _render_app_session(request, 'noun_gender', 'apps/noun_gender.html')
+    return _render_app_session_view(request, 'noun_gender', 'apps/noun_gender.html')
 
 @login_required
 def noun_translation_multi(request):
-    return render(request, 'apps/noun_translation_multi.html')
+    return _render_app_session_view(request, 'noun_translation_multi', 'apps/noun_translation_multi.html')
 
 @login_required
 def noun_pluralization(request):
-    return render(request, 'apps/noun_pluralization.html')
+    return _render_app_session_view(request, 'noun_pluralization', 'apps/noun_pluralization.html')
 
 @login_required
 def noun_translation(request):
-    return render(request, 'apps/noun_translation.html')
+    return _render_app_session_view(request, 'noun_translation', 'apps/noun_translation.html')
 
 @login_required
 def noun_article_missing(request):
-    return render(request, 'apps/noun_article_missing.html')
+    return _render_app_session_view(request, 'noun_article_missing', 'apps/noun_article_missing.html')
 
 @login_required
 def verb_translation_multi(request):
-    return render(request, 'apps/verb_translation_multi.html')
+    return _render_app_session_view(request, 'verb_translation_multi', 'apps/verb_translation_multi.html')
 
 @login_required
 def verb_pp_multi(request):
-    return render(request, 'apps/verb_pp_multi.html')
+    return _render_app_session_view(request, 'verb_pp_multi', 'apps/verb_pp_multi.html')
 
 @login_required
 def pronouns_missing(request):
@@ -83,8 +83,9 @@ def pronouns_missing(request):
     f = open("./data/{}/pronouns.json".format(language_code))
     pronouns = f.read()
 
-    return render(
+    return _render_app_session_view(
         request,
+        'pronouns_missing',
         'apps/pronouns_missing.html',
         dict(
             pronouns=pronouns
@@ -103,19 +104,41 @@ def pos_pronouns_missing(request):
     except ValueError:
         return HttpResponse("nope")
 
-    return render(
+    return _render_app_session_view(
         request,
+        'pos_pronouns_missing',
         'apps/pos_pronouns_missing.html',
         dict(
             pronouns=pronouns
         )
     )
 
+@login_required
+def prep_cases_multi(request):
+    # TODO JHILL: get language code from cookie
+    language_code = 'de_DE'
+
+    f = open("./data/{}/prep_cases.json".format(language_code))
+    prep_cases = f.read()
+    try:
+        jsoned = json.loads(prep_cases)
+    except ValueError:
+        return HttpResponse("nope")
+
+    return _render_app_session_view(
+        request,
+        'prep_cases_multi',
+        'apps/prep_cases_multi.html',
+        dict(
+            prep_cases=prep_cases
+        )
+    )
+
 def adjective_translation_multi(request):
-    return render(request, 'apps/adjective_translation_multi.html')
+    return _render_app_session_view(request, 'adjective_translation_multi', 'apps/adjective_translation_multi.html')
 
 def phrase_translation_multi(request):
-    return render(request, 'apps/phrase_translation_multi.html')
+    return _render_app_session_view(request, 'phrase_translation_multi', 'apps/phrase_translation_multi.html')
 
 def signup(request):
     if request.method == 'GET':

@@ -32,4 +32,5 @@ urlpatterns = [
 
     url(r'^phrase/translation/multi/$', views.phrase_translation_multi, name='phrase_translation_multi'),
 
+    url(r'^prep/cases/multi/$', views.prep_cases_multi, name='prep_cases_multi')
 ]

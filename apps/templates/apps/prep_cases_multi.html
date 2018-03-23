@@ -1,0 +1,36 @@
+{% extends 'apps/base.html' %}
+{% load static %}
+
+{% block head_includes %}
+    <link rel="stylesheet" type="text/css" href="{% static 'apps/prep_cases_multi/style.css' %}" />
+    <script type="text/javascript" src="{% static 'apps/prep_cases_multi/script.js' %}"></script>
+{% endblock %}
+
+{% block header_title %}
+    Which of what now? Come on Jon.
+{% endblock %}
+
+{% block content %}
+    <div class="flash">
+        <span id="id_prep_span"></span>
+    </div>
+
+    <div id="id_buttons" class="buttons">
+        <button class="case" data-case="dativ">wo? dativ</button>
+        <button class="case" data-case="either">dativ/akkusativ</button>
+        <button class="case" data-case="akkusativ">wohin? akkusativ</button>
+    </div>
+
+    <script type="text/javascript">
+        var prep_cases = {{ prep_cases|safe }};
+    </script>
+
+    <div id="id_correction_overlay" class="correction_overlay">
+        <div class="correction"><span id="id_correction_correct"></span></div>
+        <input type="text" id="id_correction_text" placeholder="correct it">
+    </div>
+
+    {% include 'apps/sections/score.html' %}
+    {% include 'apps/sections/metadata.html' %}
+
+{% endblock %}

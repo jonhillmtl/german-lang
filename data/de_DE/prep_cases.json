@@ -1,0 +1,5 @@
+{
+    "dativ": ["ab", "außer", "zu", "nach", "bei", "von", "aus", "mit", "seit", "gegenüber"],
+    "either": ["in", "an", "auf", "neben", "hinter", "über", "unter", "vor", "zwischen"],
+    "akkusativ": ["bis", "durch", "für", "ohne", "gegen", "zum"]
+}

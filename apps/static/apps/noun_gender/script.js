@@ -42,15 +42,11 @@ $(document).ready(function()
                     get_noun();
 
                     $("#id_correction_overlay").hide();
-                    
-                    increment_count(true);
                 }
                 else
                 {
                     $("#id_correction_text").val('')
                     $("#id_correction_text").focus();
-                    
-                    increment_count(false);
                 }
             },
             data: JSON.stringify(
