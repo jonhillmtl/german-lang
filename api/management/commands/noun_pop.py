@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand
 from api.models import Noun, Translation
+from typing import List, Dict
+
 
 class Command(BaseCommand):
     help = 'Populates the nouns'
 
-    def handle(self, *args, **options):
+    def handle(self, *args: List, **options: Dict) -> None:
         added_count = 0
         with open("./data/de_DE/nouns.csv", "r") as f:
             for line in f.readlines()[1:]:

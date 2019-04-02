@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand
 from api.models import Phrase, Translation
+from typing import List, Dict
+
 
 class Command(BaseCommand):
     help = 'Populates the nouns'
 
-    def handle(self, *args, **options):
+    def handle(self, *args: List, **options: Dict) -> None:
         with open("./data/de_DE/phrases.csv", "r") as f:
             for line in f.readlines()[1:]:
                 values = line.split(';')

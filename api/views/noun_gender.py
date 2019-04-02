@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from rest_framework.decorators import api_view
 
 from ..serializers import NounSerializer, AppSessionSerializer
@@ -7,7 +7,7 @@ from ..models import Noun, Answer, AppSession
 import json
 
 
-def _save_answer_to_session(request, answer):
+def _save_answer_to_session(request: HttpRequest, answer: Answer) -> AppSession:
     session = AppSession.objects.get(pk=request.COOKIES.get('appsession_id'))
 
     if session:
@@ -15,8 +15,9 @@ def _save_answer_to_session(request, answer):
 
     return session
 
+
 @api_view(['POST'])
-def check(request):
+def check(request: HttpRequest) -> JsonResponse:
     # TODO JHILL: handle 404 gracefuly
     json_data = json.loads(request.body)
     noun = Noun.objects.get(pk=json_data['noun_id'])
@@ -52,7 +53,7 @@ def check(request):
         ))
 
 @api_view(['POST'])
-def correction(request):
+def correction(request: HttpRequest) -> JsonResponse:
     json_data = json.loads(request.body)
     noun = Noun.objects.get(pk=json_data['noun_id'])
 

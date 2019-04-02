@@ -1,6 +1,9 @@
 from django.core.management.base import BaseCommand
 from api.models import Noun
+from typing import List, Dict
+
 import pprint
+
 
 class Command(BaseCommand):
     help = 'Dumps a noun or all nouns'
@@ -13,7 +16,7 @@ class Command(BaseCommand):
             help='',
         )
 
-    def handle(self, *args, **options):
+    def handle(self, *args: List, **options: Dict) -> None:
         if options['noun_id'] is not None:
             nouns = [Noun.objects.get(pk=options['noun_id'])]
         else:

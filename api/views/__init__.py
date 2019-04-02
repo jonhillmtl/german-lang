@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from rest_framework.decorators import api_view
 from ..serializers import NounSerializer, VerbSerializer, NounFlashSerializer, AdjectiveSerializer, PhraseSerializer
 from ..models import Noun, UserStats, GrammarQueryStub, Verb, Adjective, Phrase
@@ -6,13 +6,14 @@ from ..models import Noun, UserStats, GrammarQueryStub, Verb, Adjective, Phrase
 import json
 
 @api_view(['GET'])
-def nouns(request):
+def nouns(request: HttpRequest) -> JsonResponse:
     return JsonResponse(data=dict(
         nouns=NounFlashSerializer(Noun.objects.all(), many=True).data
     ))
 
+
 @api_view(['GET'])
-def noun_random(request):
+def noun_random(request: HttpRequest) -> JsonResponse:
     # TODO JHILL: need to specify language code, or provide a default
     # need to specify a mode for this
     # TODO JHILL: make into a general purpose view for all GrammarQueryModels
@@ -41,7 +42,7 @@ def noun_random(request):
     return JsonResponse(data, safe=False)
 
 @api_view(['GET'])
-def verb_random(request):
+def verb_random(request: HttpRequest) -> JsonResponse:
     # TODO JHILL: need to specify language code, or provide a default
     # need to specify a mode for this
     # TODO JHILL: make into a general purpose view for all GrammarQueryModels
@@ -61,9 +62,10 @@ def verb_random(request):
     )
 
     return JsonResponse(data, safe=False)
-    
+
+
 @api_view(['GET'])
-def adjective_random(request):
+def adjective_random(request: HttpRequest) -> JsonResponse:
     # TODO JHILL: need to specify language code, or provide a default
     # need to specify a mode for this
     # TODO JHILL: make into a general purpose view for all GrammarQueryModels
@@ -83,9 +85,10 @@ def adjective_random(request):
     )
 
     return JsonResponse(data, safe=False)
-    
+
+
 @api_view(['GET'])
-def phrase_random(request):
+def phrase_random(request: HttpRequest) -> JsonResponse:
     # TODO JHILL: need to specify language code, or provide a default
     # need to specify a mode for this
     # TODO JHILL: make into a general purpose view for all GrammarQueryModels
@@ -108,7 +111,7 @@ def phrase_random(request):
 
 
 @api_view(['GET'])
-def noun_view(request, pk):
+def noun_view(request: HttpRequest, pk: int) -> JsonResponse:
     # TODO JHILL: handle 404 gracefuly
     noun = Noun.objects.get(pk=pk)
 
@@ -119,7 +122,7 @@ def noun_view(request, pk):
 
 
 @api_view(['POST'])
-def noun_answer_gender_check(request):
+def noun_answer_gender_check(request: HttpRequest) -> JsonResponse:
     json_data = json.loads(request.body)
     noun = Noun.objects.get(pk=json_data['noun_id'])
 
@@ -139,8 +142,9 @@ def noun_answer_gender_check(request):
             error=str(e)
         ))
 
+
 @api_view(['GET'])
-def stats(request):
+def stats(request: HttpRequest) -> JsonResponse:
     # TODO JHILL: Move this onto the user object, make it queryable like crazy
     us = UserStats(request.user)
     mode = request.GET.get('mode', None)
