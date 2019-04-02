@@ -1,6 +1,7 @@
 from utils import url_manifest
 import json
 
+
 def url_manifest_processor(request):
     return {
         'urls' : url_manifest()

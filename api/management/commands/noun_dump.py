@@ -25,3 +25,4 @@ class Command(BaseCommand):
         for noun in nouns:
             print(noun.id, noun)
             pprint.pprint(noun.articled)
+

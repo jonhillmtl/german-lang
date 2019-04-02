@@ -6,18 +6,18 @@ from django.core.management import call_command
 class RecentlyWrongTestCase(TestCase):
     user = None
 
-    def setUp(self):
+    def setUp(self) -> None:
         for i in range(0, 5):
             Noun().save()
         self.user = User.objects.create()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         call_command('flush', '--noinput')
 
-    def test_set_up(self):
+    def test_set_up(self) -> None:
         assert Noun.objects.count() == 5
 
-    def test(self):
+    def test(self) -> None:
         print([n.id for n in Noun.objects.all()])
         Answer(
             user=self.user,
@@ -35,18 +35,18 @@ class RecentlyWrongTestCase(TestCase):
 class RarelyDoneTestCase(TestCase):
     user = None
 
-    def setUp(self):
+    def setUp(self) -> None:
         for i in range(0, 5):
             Noun().save()
         self.user = User.objects.create()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         call_command('flush', '--noinput')
 
-    def test_set_up(self):
+    def test_set_up(self) -> None:
         assert Noun.objects.count() == 5
 
-    def test(self):
+    def test(self) -> None:
         for i in range(1, 6):
             for j in range(0, i):
                 Answer(

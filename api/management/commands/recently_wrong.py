@@ -18,3 +18,4 @@ class Command(BaseCommand):
 
         for answer in answers:
             print(answer)
+

@@ -7,10 +7,10 @@ set -v
 python3 -m pyflakes .
 
 # typechecks
-python3 -m mypy --warn-unused-ignores --ignore-missing-imports --strict-optional --disallow-untyped-defs .
+# python3 -m mypy --warn-unused-ignores --ignore-missing-imports --strict-optional --disallow-untyped-defs .
 
 # enforce docstrings
-pep257 --add-ignore=D202,D210,D200
+# pep257 --add-ignore=D202,D210,D200
 
 # check code style
 pycodestyle --max-line-length=140 .

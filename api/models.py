@@ -12,11 +12,13 @@ from difflib import SequenceMatcher
 import json
 import random
 
+
 def normalize_answer(answer):
     if answer is None:
         return None
 
     return answer.lower().rstrip().lstrip()
+
 
 GENDERS = (
     ('m', 'masculine'),
@@ -24,16 +26,19 @@ GENDERS = (
     ('n', 'neuter'),
 )
 
+
 NOUN_FORMS = (
     ('s', 'singular'),
     ('p', 'plural'),
 )
+
 
 PERSON = (
     ('1', 'first'),
     ('2', 'second'),
     ('3', 'third')
 )
+
 
 COURSE_LEVELS = (
     ('a1.1', 'a1.1'),
@@ -45,10 +50,12 @@ COURSE_LEVELS = (
     ('c1', 'c1')
 )
 
+
 @unique
 class Article(Enum):
     DEFINITE = 'definite'
     INDEFINITE = 'indefinite'
+
 
 @unique
 class Case(Enum):
@@ -56,6 +63,7 @@ class Case(Enum):
     ACCUSATIVE = 'accusative'
     DATIVE = 'dative'
     GENITIVE = 'genitive'
+
 
 @unique
 class Mode(Enum):
@@ -66,6 +74,7 @@ class Mode(Enum):
 
     VERB_PP_MULTI = 'verb_pp_multi'
     VERB_TRANSLATION_MULTI = 'verb_translation_multi'
+
 
 class GrammarQueryStub(object):
     mode = None
@@ -98,9 +107,11 @@ class GrammarQueryStub(object):
 
         return params
 
+
 # expand to handle multiple qgm_types
 class UserStats(object):
     user = None
+
     def __init__(self, user):
         self.user = user
 
@@ -132,19 +143,23 @@ class UserStats(object):
         grammar_query_stub = GrammarQueryStub(user=self.user, mode=mode)
         return self._percentage_query(grammar_query_stub)
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     levels = JSONField(default=list, blank=True, null=True)
     tags = JSONField(default=list, blank=True, null=True)
 
+
 def level_chapter_valid(model, level_chapters):
     return {'level': model.level, 'chapter': model.chapter} in level_chapters
+
 
 def filter_level_chapter(grammar_query_stub, models):
     level_chapters = grammar_query_stub.user.profile.levels
     models = models.all()
     models = [m for m in models if level_chapter_valid(m, level_chapters)]
     return models
+
 
 class GrammarQueryModel(models.Model):
     level = models.CharField(max_length=4, null=True, choices=COURSE_LEVELS, default=None)
@@ -313,6 +328,7 @@ class GrammarQueryModel(models.Model):
                 return True
         return False
 
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -355,6 +371,7 @@ def _articles(singular_form=None, plural_form=None, gender=None, language_code='
                         articles[key] = value
 
     return articles
+
 
 class Noun(GrammarQueryModel, TimeStampedModel):
     singular_form = models.CharField(max_length=64)
@@ -471,11 +488,14 @@ class Verb(GrammarQueryModel, TimeStampedModel):
 
         return random.sample(random_verbs, 4)
 
+
 class Preposition(GrammarQueryModel, TimeStampedModel):
     pass
 
+
 class Pronoun(GrammarQueryModel, TimeStampedModel):
     pass
+
 
 # TODO JHILL: move somewhere nicer
 # TODO JHILL: only works for German
@@ -485,6 +505,7 @@ articles = {
     'm': 'ein'
 }
 
+
 # TODO JHILL: move somewhere nicer
 # TODO JHILL: only works for German
 nominative_declinations = {
@@ -492,6 +513,7 @@ nominative_declinations = {
     'n' : 's',
     'f' : 'e'
 }
+
 
 class Adjective(GrammarQueryModel, TimeStampedModel):
     adjective = models.CharField(max_length=64, default='')
@@ -553,14 +575,17 @@ class Adjective(GrammarQueryModel, TimeStampedModel):
     def __str__(self):
         return "{}".format(self.adjective)
 
+
 class Adverb(GrammarQueryModel, TimeStampedModel):
     pass
+
 
 class Phrase(GrammarQueryModel, TimeStampedModel):
     phrase = models.TextField(default='')
 
     def __str__(self):
         return "{}".format(self.phrase)
+
 
 class Translation(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
@@ -579,6 +604,7 @@ class Translation(TimeStampedModel):
             self.translation,
             self.form,
             self.language_code)
+
 
 class Answer(TimeStampedModel):
     noun = models.ForeignKey(Noun, null=True)
@@ -599,6 +625,7 @@ class Answer(TimeStampedModel):
         return "({}) ({})".format(
             self.correct,
             self.correction)
+
 
 class AppSession(TimeStampedModel):
     finished_at = models.DateTimeField(default=None, null=True, blank=True)

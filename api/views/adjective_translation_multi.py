@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from rest_framework.decorators import api_view
 
 from ..serializers import AdjectiveSerializer
@@ -8,7 +8,7 @@ import json
 
 
 @api_view(['POST'])
-def check(request):
+def check(request: HttpRequest) -> JsonResponse:
     # TODO JHILL: handle 404 gracefuly
     json_data = json.loads(request.body)
     adjective = Adjective.objects.get(pk=json_data['adjective_id'])
