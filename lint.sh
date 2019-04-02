@@ -3,14 +3,20 @@
 set -e
 set -v
 
-python3 -m pyflakes pipe_to main.py setup.py tests.py
+# lint it using pyflakes
+python3 -m pyflakes .
 
 # typechecks
-python3 -m mypy \
-  --disallow-untyped-defs \
-  --warn-unused-ignores \
-  --ignore-missing-imports \
-  --strict-optional \
-  .
+python3 -m mypy --warn-unused-ignores --ignore-missing-imports --strict-optional --disallow-untyped-defs .
 
-pycodestyle --max-line-length=110 pipe_to main.py setup.py tests.py
+# enforce docstrings
+pep257 --add-ignore=D202,D210,D200
+
+# check code style
+pycodestyle --max-line-length=140 .
+
+# and now just to be really hard on yourself
+pylint main.py \
+    --max-line-length=140 \
+    -d C0111 -d W0511 -d R0904 -d R0912 -d C0411 \
+    -d R0914 -d R0913 -d C0330 -d R0801 -d R0915

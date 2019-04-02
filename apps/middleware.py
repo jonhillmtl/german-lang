@@ -10,7 +10,7 @@ class AuthenticationMiddleware:
         response = self.get_response(request)
         response = self.process_response(request, response)
         return response
-        
+
     def process_response(self, request, response):
         if not request.COOKIES.get('authentication_token', None):
             if request.user.is_authenticated:

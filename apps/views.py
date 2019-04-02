@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from api.models import GrammarQueryModel, GrammarQueryStub, Noun, AppSession
 import json
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
@@ -22,8 +21,6 @@ def _render_app_session_view(request, app_name, template, context=dict()):
     session.user = request.user
     session.save()
 
-    context['session_id'] = session.id
-
     response = render(request, template, context)
     response.set_cookie('appsession_id', session.id)
     return response
@@ -32,7 +29,7 @@ def _render_app_session_view(request, app_name, template, context=dict()):
 def noun_list(request):
     nouns = Noun.objects.order_by('level', 'chapter', 'singular_form').all()
 
-    return render(request, 'apps/noun_list.html', dict(
+    return _render_app_session_view(request, 'noun_list', 'apps/noun_list.html', dict(
         nouns=nouns
     ))
 
@@ -41,13 +38,13 @@ def noun_random_feed(request):
     query_stub = GrammarQueryStub(mode='random', user=request.user)
     nouns = [Noun.random(query_stub)[0] for i in range(0, 100)]
 
-    return render(request, 'apps/noun_random_feed.html', dict(
+    return _render_app_session_view(request, 'noun_random_feed', 'apps/noun_random_feed.html', dict(
         nouns=nouns
     ))
 
 @login_required
 def noun_flash(request):
-    return render(request, 'apps/noun_flash.html')
+    return _render_app_session_view(request, 'noun_flash', 'apps/noun_flash.html')
 
 @login_required
 def noun_gender(request):
@@ -92,6 +89,7 @@ def pronouns_missing(request):
         )
     )
 
+
 @login_required
 def pos_pronouns_missing(request):
     # TODO JHILL: get language code from cookie
@@ -99,10 +97,6 @@ def pos_pronouns_missing(request):
 
     f = open("./data/{}/pos_pronouns.json".format(language_code))
     pronouns = f.read()
-    try:
-        jsoned = json.loads(pronouns)
-    except ValueError:
-        return HttpResponse("nope")
 
     return _render_app_session_view(
         request,
@@ -113,6 +107,7 @@ def pos_pronouns_missing(request):
         )
     )
 
+
 @login_required
 def prep_cases_multi(request):
     # TODO JHILL: get language code from cookie
@@ -120,10 +115,6 @@ def prep_cases_multi(request):
 
     f = open("./data/{}/prep_cases.json".format(language_code))
     prep_cases = f.read()
-    try:
-        jsoned = json.loads(prep_cases)
-    except ValueError:
-        return HttpResponse("nope")
 
     return _render_app_session_view(
         request,
@@ -134,11 +125,21 @@ def prep_cases_multi(request):
         )
     )
 
+
 def adjective_translation_multi(request):
-    return _render_app_session_view(request, 'adjective_translation_multi', 'apps/adjective_translation_multi.html')
+    return _render_app_session_view(
+        request,
+        'adjective_translation_multi',
+        'apps/adjective_translation_multi.html'
+    )
 
 def phrase_translation_multi(request):
-    return _render_app_session_view(request, 'phrase_translation_multi', 'apps/phrase_translation_multi.html')
+    return _render_app_session_view(
+        request,
+        'phrase_translation_multi',
+        'apps/phrase_translation_multi.html'
+    )
+
 
 def signup(request):
     if request.method == 'GET':
@@ -147,15 +148,16 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            
+
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
-            
+
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            
+
             return redirect('index')
     return render(request, 'registration/signup.html', {'form': form})
+
 
 @login_required
 def stats(request):

@@ -1,5 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
-from api.models import Noun, Translation
+from django.core.management.base import BaseCommand
 import requests
 import os
 from lxml import html
@@ -22,7 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for v in options['verb']:
             self.download(v)
-        
+
     def download(self, verb):
         filename = "./data/conjugations/{}.html".format(verb)
 
@@ -44,7 +43,7 @@ class Command(BaseCommand):
             tree = html.fromstring(content)
 
             section = tree.xpath("//section[@id='block-duden-tiles-6']")
-            part_1 = div = section[0][4][0][0][0][1].text.strip()
-            part_2 = div = section[0][4][0][0][1][1].text.strip()
-            
+            part_1 = section[0][4][0][0][0][1].text.strip()
+            part_2 = section[0][4][0][0][1][1].text.strip()
+
             print(part_1, part_2)

@@ -1,6 +1,5 @@
-from django.core.management.base import BaseCommand, CommandError
-from api.models import Noun, Translation
-from text_header import text_header
+from django.core.management.base import BaseCommand
+from api.models import Noun
 import pprint
 
 class Command(BaseCommand):

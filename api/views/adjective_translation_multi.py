@@ -1,22 +1,10 @@
-from datetime import datetime
-
-from django.db import connection
-
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer
-
-from rest_framework.views import APIView
 
 from ..serializers import AdjectiveSerializer
-from ..models import Adjective, Answer, UserStats
+from ..models import Adjective, Answer
 
 import json
-import random
 
 
 @api_view(['POST'])
@@ -38,7 +26,7 @@ def check(request):
             answer=json_data,
             correction=False)
         answer.save()
-        
+
         return JsonResponse(dict(
             correct=correct,
             correct_answer=[nt.id for nt in adjective.translation_set.all()],
@@ -46,7 +34,7 @@ def check(request):
             adjective=AdjectiveSerializer(adjective).data,
             success=True
         ), safe=False)
-    
+
     except AssertionError as e:
         return JsonResponse(dict(
             success=False,

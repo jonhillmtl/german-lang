@@ -2,17 +2,14 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import Count, When, Sum, F, Value, FloatField, CharField
+from django.db.models import Count, When, F, FloatField, CharField
 from django.db.models import Case as FilterCase
 from django.db.models.functions import Cast
 
-from itertools import chain
-from text_header import text_header
 from enum import Enum, unique
 from difflib import SequenceMatcher
 
 import json
-import datetime
 import random
 
 def normalize_answer(answer):
@@ -121,7 +118,7 @@ class UserStats(object):
         ).count()
 
         total = correct + incorrect
-        if total is 0:
+        if total == 0:
             return None
 
         return correct / total * 100.0
@@ -224,8 +221,9 @@ class GrammarQueryModel(models.Model):
             total=(F('correct_count') + F('incorrect_count'))
         ).order_by("total").values_list(grammar_query_stub.cls + '_id')
 
-        id_list = [m[0] for m in query[0:grammar_query_stub.count]]
-        preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
+        # TODO JHILL: preserved should work?
+        # id_list = [m[0] for m in query[0:grammar_query_stub.count]]
+        # preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
         return cls.objects.filter(id__in=query) # .order_by(preserved)
 
     @classmethod

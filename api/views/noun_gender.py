@@ -1,22 +1,11 @@
-from datetime import datetime
-
-from django.db import connection
-
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer    
-
-from rest_framework.views import APIView
 
 from ..serializers import NounSerializer, AppSessionSerializer
-from ..models import Noun, Answer, UserStats, AppSession
+from ..models import Noun, Answer, AppSession
 
 import json
-import random
+
 
 def _save_answer_to_session(request, answer):
     session = AppSession.objects.get(pk=request.COOKIES.get('appsession_id'))
@@ -45,7 +34,7 @@ def check(request):
             answer=json_data,
             correction=False)
         answer.save()
-        
+
         session = _save_answer_to_session(request, answer)
 
         return JsonResponse(dict(
@@ -72,7 +61,7 @@ def correction(request):
         correct = noun.check_gender_correction(json_data['correction'])
 
         answer = Answer(
-            noun=noun,            
+            noun=noun,
             correct=correct,
             user=request.user,
             mode='noun_gender',

@@ -1,10 +1,5 @@
-from api.models import Answer
-from api.models import Adjective, Noun, UserStats, GrammarQueryStub
-from api.serializers import NounSerializer
-
-from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand, CommandError
-from django.db.models import Count
+from api.models import Adjective, Noun
+from django.core.management.base import BaseCommand
 
 import pprint
 

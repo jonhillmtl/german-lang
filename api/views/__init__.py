@@ -1,23 +1,9 @@
-from datetime import datetime
-
-from django.db import connection
-
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer    
-
-from rest_framework.views import APIView
-
 from ..serializers import NounSerializer, VerbSerializer, NounFlashSerializer, AdjectiveSerializer, PhraseSerializer
-from ..models import Noun, Answer, UserStats, GrammarQueryStub, Verb, Adjective, Phrase
+from ..models import Noun, UserStats, GrammarQueryStub, Verb, Adjective, Phrase
 
 import json
-import random
-from text_header import text_header
 
 @api_view(['GET'])
 def nouns(request):
@@ -158,7 +144,8 @@ def stats(request):
     # TODO JHILL: Move this onto the user object, make it queryable like crazy
     us = UserStats(request.user)
     mode = request.GET.get('mode', None)
-    gqm_type = request.GET.get('gqm_type', None)
+
+    # gqm_type = request.GET.get('gqm_type', None)
 
     return JsonResponse(dict(
         mode_percentage=us.all_time_percentage(mode),

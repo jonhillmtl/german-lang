@@ -1,12 +1,7 @@
 from api.models import Answer
-from api.models import Noun, UserStats, GrammarQueryStub
-from api.serializers import NounSerializer
-
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db.models import Count
-
-import pprint
 
 
 class Command(BaseCommand):

@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import GrammarQueryModel, GrammarQueryStub, Noun, Answer
+from .models import GrammarQueryStub, Noun, Answer
 from django.contrib.auth.models import User
 from django.core.management import call_command
 

@@ -1,10 +1,6 @@
-from api.models import Answer, Noun, UserStats, GrammarQueryStub
-from api.serializers import NounSerializer
-
+from api.models import GrammarQueryStub, Noun
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand, CommandError
-
-import pprint
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
