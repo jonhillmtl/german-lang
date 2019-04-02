@@ -12,7 +12,7 @@ urlpatterns = [
     # phrases
 
     # GET
-    url(r'^phrase/$', views.phrase_random, name='phrase_random'),   
+    url(r'^phrase/$', views.phrase_random, name='phrase_random'),
 
     # POST
     url(
@@ -24,7 +24,7 @@ urlpatterns = [
     # adjectives
 
     # GET
-    url(r'^adjective/$', views.adjective_random, name='adjective_random'),   
+    url(r'^adjective/$', views.adjective_random, name='adjective_random'),
 
     # POST
     url(
@@ -32,20 +32,20 @@ urlpatterns = [
         adjective_translation_multi.check,
         name='adjective_translation_multi_check'
     ),
-    
+
     # nouns
-    
+
     # GET
     url(r'^nouns/$', views.nouns, name='nouns'),
-    url(r'^noun/$', views.noun_random, name='noun_random'),   
-    url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),   
+    url(r'^noun/$', views.noun_random, name='noun_random'),
+    url(r'^nouns/(?P<pk>\d+)/$', views.noun_view, name='noun_view'),
 
     # noun_gender mode
 
     # POST
-    url(r'nouns/gender/check/$', noun_gender.check, name='noun_gender_check'),   
+    url(r'nouns/gender/check/$', noun_gender.check, name='noun_gender_check'),
     url(r'nouns/gender/correction/$', noun_gender.correction, name='noun_gender_correction'),
-    
+
     # noun_translation_multi mode
 
     # POST
@@ -63,7 +63,7 @@ urlpatterns = [
         noun_pluralization.check,
         name='noun_pluralization_check'
     ),
-    
+
     # noun_translation mode
 
     # POST

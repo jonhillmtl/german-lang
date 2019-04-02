@@ -6,14 +6,16 @@ from django.db.models import Count, When, F, FloatField, CharField
 from django.db.models import Case as FilterCase
 from django.db.models.functions import Cast
 
+from typing import List, Tuple, Dict, Optional, Any
 from enum import Enum, unique
 from difflib import SequenceMatcher
 
 import json
 import random
+import datetime
 
 
-def normalize_answer(answer):
+def normalize_answer(answer: str) -> str:
     if answer is None:
         return None
 
@@ -76,6 +78,14 @@ class Mode(Enum):
     VERB_TRANSLATION_MULTI = 'verb_translation_multi'
 
 
+class TimeStampedModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
 class GrammarQueryStub(object):
     mode = None
     start_time = None
@@ -84,14 +94,21 @@ class GrammarQueryStub(object):
     cls = None
     count = 30
 
-    def __init__(self, count=10, user=None, mode=None, start_time=None, end_time=None):
+    def __init__(
+        self,
+        count: Optional[int] = 10,
+        user: Optional[User] = None,
+        mode: Optional[str] = None,
+        start_time: Optional[datetime.datetime] = None,
+        end_time: Optional[datetime.datetime] = None
+    ):
         self.user = user
         self.mode = mode
         self.start_time = start_time
         self.end_time = end_time
         self.count = count
 
-    def build_query_params(self):
+    def build_query_params(self) -> Dict:
         params = dict(
             user=self.user,
         )
@@ -112,10 +129,13 @@ class GrammarQueryStub(object):
 class UserStats(object):
     user = None
 
-    def __init__(self, user):
+    def __init__(self, user: User):
         self.user = user
 
-    def _percentage_query(self, grammar_query_stub):
+    def _percentage_query(
+        self,
+        grammar_query_stub: GrammarQueryStub
+    ) -> Optional[float]:
         params = grammar_query_stub.build_query_params()
 
         correct = Answer.objects.filter(
@@ -134,11 +154,11 @@ class UserStats(object):
 
         return correct / total * 100.0
 
-    def all_time_percentage(self, mode=None):
+    def all_time_percentage(self, mode: str = None) -> float:
         grammar_query_stub = GrammarQueryStub(user=self.user, mode=mode)
         return self._percentage_query(grammar_query_stub)
 
-    def last_24h_percentage(self, mode=None):
+    def last_24h_percentage(self, mode:str = None) -> float:
         # TODO JHILL: fix this
         grammar_query_stub = GrammarQueryStub(user=self.user, mode=mode)
         return self._percentage_query(grammar_query_stub)
@@ -150,25 +170,30 @@ class Profile(models.Model):
     tags = JSONField(default=list, blank=True, null=True)
 
 
-def level_chapter_valid(model, level_chapters):
+def level_chapter_valid(
+    model: Any,
+    level_chapters: Dict
+) -> bool:
     return {'level': model.level, 'chapter': model.chapter} in level_chapters
 
 
-def filter_level_chapter(grammar_query_stub, models):
+def filter_level_chapter(
+    grammar_query_stub: GrammarQueryStub,
+    models: List
+) -> List:
     level_chapters = grammar_query_stub.user.profile.levels
     models = models.all()
     models = [m for m in models if level_chapter_valid(m, level_chapters)]
     return models
 
 
-class GrammarQueryModel(models.Model):
+class GrammarQueryModel(TimeStampedModel):
     level = models.CharField(max_length=4, null=True, choices=COURSE_LEVELS, default=None)
     chapter = models.IntegerField(null=True, default=None)
     language_code = models.CharField(max_length=5)
     tags = ArrayField(base_field=CharField(max_length=32), default=list)
 
     # TODO JHILL: cache this!
-    # there might be a prettier way to do this
     @classmethod
     def levels(cls):
         nouns = Noun.objects.values('level', 'chapter').distinct()
@@ -177,7 +202,6 @@ class GrammarQueryModel(models.Model):
         return nouns.union(verbs).order_by('level', 'chapter')
 
     # TODO JHILL: cache this!
-    # there might be a prettier way to do this
     @classmethod
     def all_tags(cls):
         nouns = Noun.objects.values('tags').distinct()
@@ -239,7 +263,7 @@ class GrammarQueryModel(models.Model):
         # TODO JHILL: preserved should work?
         # id_list = [m[0] for m in query[0:grammar_query_stub.count]]
         # preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
-        return cls.objects.filter(id__in=query) # .order_by(preserved)
+        return cls.objects.filter(id__in=query)  # .order_by(preserved)
 
     @classmethod
     def never_done(cls, grammar_query_stub):
@@ -252,10 +276,10 @@ class GrammarQueryModel(models.Model):
         return cls.objects.exclude(id__in=query)
 
     @classmethod
-    def weak(cls, grammar_query_stub):
+    def weak(cls, grammar_query_stub: GrammarQueryStub) -> List:
         params = grammar_query_stub.build_query_params()
         print(params)
-        
+
         query = Answer.objects.filter(
             **params
         ).all() # .values(grammar_query_stub.cls + '_id')
@@ -264,7 +288,7 @@ class GrammarQueryModel(models.Model):
         return cls.objects.filter(id__in=query)
 
     @classmethod
-    def recently_wrong(cls, grammar_query_stub):
+    def recently_wrong(cls, grammar_query_stub: GrammarQueryStub) -> Any:
         params = grammar_query_stub.build_query_params()
 
         query = Answer.objects.filter(
@@ -272,12 +296,12 @@ class GrammarQueryModel(models.Model):
             correct=False
         ).order_by('-created_at').values(grammar_query_stub.cls).values_list(grammar_query_stub.cls + '_id', flat=True)
 
-        id_list = list(query)[0:grammar_query_stub.count]        
+        id_list = list(query)[0:grammar_query_stub.count]
         preserved = FilterCase(*[When(pk=pk, then=pos) for pos, pk in enumerate(id_list)])
         return cls.objects.filter(id__in=query).order_by(preserved)
 
     @property
-    def possible_translations(self):
+    def possible_translations(self) -> List:
         translation = self.translation_set.order_by('?').first()
         fill_count = 3
 
@@ -306,21 +330,22 @@ class GrammarQueryModel(models.Model):
         return [dict(id=t.id, translation=t.translation) for t in translations]
 
     @property
-    def translations_text(self):
+    def translations_text(self) -> str:
         translations = self.translation_set.all()
         translations.reverse()
         return ", ".join([pt.translation for pt in translations])
 
-    def check_translation_id(self, translation_id):
-        """ 
+    def check_translation_id(self, translation_id: int) -> bool:
+        """
         check to see if this GrammarQueryModel is translated by the translation
         represented by translation_id
         :param translation_id: the id of the translation to filter for
         :return bool: true if it was in the set, false if not
         """
+
         return self.translation_set.filter(id=translation_id).first() is not None
 
-    def check_translation(self, translation):
+    def check_translation(self, translation: str) -> bool:
         translation = translation.lower().strip()
         for trans in self.translation_set.all():
             ratio = SequenceMatcher(None, translation, trans.translation).ratio()
@@ -329,16 +354,14 @@ class GrammarQueryModel(models.Model):
         return False
 
 
-class TimeStampedModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-
 # TODO JHILL: cache
-def _articles(singular_form=None, plural_form=None, gender=None, language_code='de_DE', append_noun=False):
+def _articles(
+    singular_form: Optional[str] = None,
+    plural_form: Optional[str] = None,
+    gender: Optional[str] = None,
+    language_code: str = 'de_DE',
+    append_noun: bool = False
+) -> Dict:
     articles = dict()
 
     with open("./data/{}/articles.json".format(language_code)) as f:
@@ -373,12 +396,16 @@ def _articles(singular_form=None, plural_form=None, gender=None, language_code='
     return articles
 
 
-class Noun(GrammarQueryModel, TimeStampedModel):
+class Noun(GrammarQueryModel):
     singular_form = models.CharField(max_length=64)
     plural_form = models.CharField(max_length=64)
     gender = models.CharField(max_length=1, choices=GENDERS)
 
-    def answers(self, form, target_language_code):
+    def answers(
+        self,
+        form: str,
+        target_language_code: str
+    ) -> List:
         assert form in [f[0] for f in NOUN_FORMS], "{} not in NOUN_FORMS".format(form)
         return [normalize_answer(na.translation) for na in Translation.objects.filter(
             noun=self,
@@ -387,13 +414,13 @@ class Noun(GrammarQueryModel, TimeStampedModel):
         ).all()]
 
     @property
-    def articles(self):
+    def articles(self) -> Dict:
         return _articles(
             gender=self.gender
         )
 
     @property
-    def articled(self):
+    def articled(self) -> Dict:
         return _articles(
             gender=self.gender,
             plural_form=self.plural_form,
@@ -401,12 +428,20 @@ class Noun(GrammarQueryModel, TimeStampedModel):
             language_code=self.language_code,
             append_noun=True)
 
-    def check_plural(self, plural):
+    def check_plural(
+        self,
+        plural: str
+    ) -> bool:
         # TODO JHILL: make more lenient
         # TODO JHILL: well, this depends on other things now
         return self.articled['nominative_definite_plural'] == plural
 
-    def check_gender_correction(self, correction, article='definite', case='nominative'):
+    def check_gender_correction(
+        self,
+        correction: str,
+        article: str = 'definite',
+        case:str = 'nominative'
+    ) -> bool:
         key = "{}_{}_{}".format(
             case,
             article,
@@ -414,10 +449,10 @@ class Noun(GrammarQueryModel, TimeStampedModel):
         )
         return self.articled[key] == correction
 
-    def check_gender(self, gender):
+    def check_gender(self, gender: str) -> str:
         return self.gender == gender
 
-    def check_answers(self, data):
+    def check_answers(self, data: Dict) -> Tuple[Dict, List, List]:
         target_language_code = data.get('target_language_code', None)
         gender = data.get('gender', None)
         singular_form = normalize_answer(data.get('singular_form', None))
@@ -452,7 +487,7 @@ class Noun(GrammarQueryModel, TimeStampedModel):
             gender_correct=gender_correct
         ), singular_answers, plural_answers
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{}/{} ({}) ({})".format(
             self.singular_form,
             self.plural_form,
@@ -460,7 +495,7 @@ class Noun(GrammarQueryModel, TimeStampedModel):
             self.language_code)
 
 
-class Verb(GrammarQueryModel, TimeStampedModel):
+class Verb(GrammarQueryModel):
     verb = models.CharField(max_length=64, default='')
     past_participle = models.CharField(max_length=64, default='')
     seperable = models.BooleanField(default=False)
@@ -468,12 +503,12 @@ class Verb(GrammarQueryModel, TimeStampedModel):
     auxiliary = models.CharField(max_length=32, default='')
     type = models.CharField(max_length=16, default='')
 
-    def check_past_participle(self, pp):
+    def check_past_participle(self, pp: str) -> bool:
         # TODO JHILL: make more lenient
         return self.past_participle == pp
 
     @property
-    def possible_past_participles(self):
+    def possible_past_participles(self) -> List:
         translation = self.past_participle
         fill_count = 3
 
@@ -489,11 +524,11 @@ class Verb(GrammarQueryModel, TimeStampedModel):
         return random.sample(random_verbs, 4)
 
 
-class Preposition(GrammarQueryModel, TimeStampedModel):
+class Preposition(GrammarQueryModel):
     pass
 
 
-class Pronoun(GrammarQueryModel, TimeStampedModel):
+class Pronoun(GrammarQueryModel):
     pass
 
 
@@ -508,17 +543,17 @@ articles = {
 
 # TODO JHILL: move somewhere nicer
 # TODO JHILL: only works for German
-nominative_declinations = {
+NOMINATIVE_DECLINATIONS = {
     'm' : 'r',
     'n' : 's',
     'f' : 'e'
 }
 
 
-class Adjective(GrammarQueryModel, TimeStampedModel):
+class Adjective(GrammarQueryModel):
     adjective = models.CharField(max_length=64, default='')
 
-    def declinate(self, noun):
+    def declinate(self, noun: Noun) -> str:
         language_code = 'de_DE'
         with open("./data/{}/articles.json".format(language_code)) as f:
             article_data = json.loads(f.read())
@@ -549,7 +584,7 @@ class Adjective(GrammarQueryModel, TimeStampedModel):
         return declinations
 
     # TODO JHILL: other cases, needs to be spun out into JSON file probably
-    def _declinate(self, noun):
+    def _declinate(self, noun: Noun) -> str:
         article = articles[noun.gender]
         declinated = ''
 
@@ -560,7 +595,7 @@ class Adjective(GrammarQueryModel, TimeStampedModel):
                 format_string = '{}{}'
             else:
                 format_string = '{}e{}'
-            declinated = format_string.format(self.adjective, nominative_declinations[noun.gender])
+            declinated = format_string.format(self.adjective, NOMINATIVE_DECLINATIONS[noun.gender])
 
         elif noun.gender == 'f':
             format_string = ''
@@ -568,22 +603,22 @@ class Adjective(GrammarQueryModel, TimeStampedModel):
             if noun.singular_form[-1] == 'e':
                 declinated = self.adjective
             else:
-                declinated = "{}{}".format(self.adjective, nominative_declinations[noun.gender])
+                declinated = "{}{}".format(self.adjective, NOMINATIVE_DECLINATIONS[noun.gender])
 
         return "{} {} {} ({})".format(article, declinated, noun.singular_form, noun.gender)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{}".format(self.adjective)
 
 
-class Adverb(GrammarQueryModel, TimeStampedModel):
+class Adverb(GrammarQueryModel):
     pass
 
 
-class Phrase(GrammarQueryModel, TimeStampedModel):
+class Phrase(GrammarQueryModel):
     phrase = models.TextField(default='')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{}".format(self.phrase)
 
 
@@ -598,7 +633,7 @@ class Translation(TimeStampedModel):
     language_code = models.CharField(max_length=5, default='en_US')
 
     # TODO JHILL: improve
-    def __str__(self):
+    def __str__(self) -> str:
         return "{}: {} ({}) ({})".format(
             self.noun,
             self.translation,
@@ -621,7 +656,7 @@ class Answer(TimeStampedModel):
     correct_answer = models.CharField(max_length=512, default='')
 
     # TODO JHILL: improve
-    def __str__(self):
+    def __str__(self) -> str:
         return "({}) ({})".format(
             self.correct,
             self.correction)
@@ -639,7 +674,7 @@ class AppSession(TimeStampedModel):
     total_count = models.IntegerField(default=0)
     correct_count = models.IntegerField(default=0)
 
-    def update(self, answer):
+    def update(self, answer: Answer) -> bool:
         self.answers.add(answer)
 
         self.total_count = self.total_count + 1
@@ -648,3 +683,5 @@ class AppSession(TimeStampedModel):
             self.correct_count = self.correct_count + 1
 
         self.save()
+
+        return True
