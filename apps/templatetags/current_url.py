@@ -5,7 +5,10 @@ register = template.Library()
 
 
 @register.filter
-def current_url(current, url_name):
+def current_url(
+    current: str,
+    url_name: str
+) -> str:
     try:
         if current == url_manifest()[url_name]:
             return "current-url"

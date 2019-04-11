@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpRequest
+from django.http import JsonResponse, HttpRequest, HttpResponse
 from api.models import GrammarQueryModel, GrammarQueryStub, Noun, AppSession
 
 from django.contrib.auth.decorators import login_required
@@ -8,13 +8,15 @@ from django.contrib.auth import login, authenticate
 import datetime
 import json
 
+from typing import Dict
+
 
 def _render_app_session_view(
-    request,
-    app_name,
-    template,
-    context=dict()
-):
+    request: HttpRequest,
+    app_name: str,
+    template: str,
+    context: Dict = dict()
+) -> HttpResponse:
     current_appsession_id = request.COOKIES.get('appsession_id')
     if current_appsession_id is not None:
         current_session = AppSession.objects.get(pk=current_appsession_id)

@@ -1,14 +1,15 @@
 from django.core.management.base import BaseCommand
 from api.models import Noun
 from typing import List, Dict
+from argparse import ArgumentParser
 
 import pprint
 
 
 class Command(BaseCommand):
     help = 'Dumps a noun or all nouns'
-    
-    def add_arguments(self, parser):
+
+    def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
             '--noun_id',
             dest='noun_id',

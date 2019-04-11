@@ -195,7 +195,7 @@ class GrammarQueryModel(TimeStampedModel):
 
     # TODO JHILL: cache this!
     @classmethod
-    def levels(cls):
+    def levels(cls) -> List:
         nouns = Noun.objects.values('level', 'chapter').distinct()
         verbs = Noun.objects.values('level', 'chapter').distinct()
 
@@ -203,13 +203,13 @@ class GrammarQueryModel(TimeStampedModel):
 
     # TODO JHILL: cache this!
     @classmethod
-    def all_tags(cls):
+    def all_tags(cls) -> List:
         nouns = Noun.objects.values('tags').distinct()
         verbs = Noun.objects.values('tags').distinct()
 
         all_tags = nouns.union(verbs)
 
-        tags = []
+        tags = []  # type: List
         for all_tag in all_tags:
             for _, tag in all_tag.items():
                 tags.extend(tag)
@@ -219,7 +219,7 @@ class GrammarQueryModel(TimeStampedModel):
         abstract = True
 
     @classmethod
-    def random(cls, grammar_query_stub=None):
+    def random(cls, grammar_query_stub: Any = None) -> Tuple[Any, str]:
         if grammar_query_stub is None:
             return random.choice(cls.objects.all()), "random"
 
@@ -247,7 +247,7 @@ class GrammarQueryModel(TimeStampedModel):
         return model, choice_mode
 
     @classmethod
-    def rarely_done(cls, grammar_query_stub):
+    def rarely_done(cls, grammar_query_stub: GrammarQueryStub) -> List:
         params = grammar_query_stub.build_query_params()
 
         query = Answer.objects.filter(
@@ -266,7 +266,7 @@ class GrammarQueryModel(TimeStampedModel):
         return cls.objects.filter(id__in=query)  # .order_by(preserved)
 
     @classmethod
-    def never_done(cls, grammar_query_stub):
+    def never_done(cls, grammar_query_stub:GrammarQueryStub) -> List:
         params = grammar_query_stub.build_query_params()
 
         query = Answer.objects.filter(
