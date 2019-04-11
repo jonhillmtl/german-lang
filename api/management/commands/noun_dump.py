@@ -18,6 +18,8 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args: List, **options: Dict) -> None:
+        """ The handler for this script. """
+
         if options['noun_id'] is not None:
             nouns = [Noun.objects.get(pk=options['noun_id'])]
         else:

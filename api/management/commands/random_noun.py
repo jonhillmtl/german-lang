@@ -8,6 +8,8 @@ class Command(BaseCommand):
     help = 'Gets a stream of random nouns'
 
     def handle(self, *args: List, **options: Dict) -> None:
+        """ The handler for this script. """
+
         user = User.objects.get(pk=1)
         query_stub = GrammarQueryStub(mode='random', user=user)
 

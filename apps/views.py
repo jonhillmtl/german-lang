@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse
 from api.models import GrammarQueryModel, GrammarQueryStub, Noun, AppSession
 
 from django.contrib.auth.decorators import login_required
@@ -37,7 +37,7 @@ def _render_app_session_view(
 
 
 @login_required
-def noun_list(request: HttpRequest) -> JsonResponse:
+def noun_list(request: HttpRequest) -> HttpResponse:
     nouns = Noun.objects.order_by('level', 'chapter', 'singular_form').all()
 
     return _render_app_session_view(request, 'noun_list', 'apps/noun_list.html', dict(
@@ -46,7 +46,7 @@ def noun_list(request: HttpRequest) -> JsonResponse:
 
 
 @login_required
-def noun_random_feed(request: HttpRequest) -> JsonResponse:
+def noun_random_feed(request: HttpRequest) -> HttpResponse:
     query_stub = GrammarQueryStub(mode='random', user=request.user)
     nouns = [Noun.random(query_stub)[0] for i in range(0, 100)]
 
@@ -56,47 +56,61 @@ def noun_random_feed(request: HttpRequest) -> JsonResponse:
 
 
 @login_required
-def noun_flash(request: HttpRequest) -> JsonResponse:
+def noun_flash(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'noun_flash', 'apps/noun_flash.html')
 
 
 @login_required
-def noun_gender(request: HttpRequest) -> JsonResponse:
+def noun_gender(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'noun_gender', 'apps/noun_gender.html')
 
 
 @login_required
-def noun_translation_multi(request: HttpRequest) -> JsonResponse:
+def noun_translation_multi(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'noun_translation_multi', 'apps/noun_translation_multi.html')
 
 
 @login_required
-def noun_pluralization(request: HttpRequest) -> JsonResponse:
+def noun_pluralization(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'noun_pluralization', 'apps/noun_pluralization.html')
 
 
 @login_required
-def noun_translation(request: HttpRequest) -> JsonResponse:
+def noun_translation(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'noun_translation', 'apps/noun_translation.html')
 
 
 @login_required
-def noun_article_missing(request: HttpRequest) -> JsonResponse:
+def noun_article_missing(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'noun_article_missing', 'apps/noun_article_missing.html')
 
 
 @login_required
-def verb_translation_multi(request: HttpRequest) -> JsonResponse:
+def verb_translation_multi(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'verb_translation_multi', 'apps/verb_translation_multi.html')
 
 
 @login_required
-def verb_pp_multi(request: HttpRequest) -> JsonResponse:
+def verb_pp_multi(request: HttpRequest) -> HttpResponse:
     return _render_app_session_view(request, 'verb_pp_multi', 'apps/verb_pp_multi.html')
 
 
 @login_required
-def pronouns_missing(request: HttpRequest) -> JsonResponse:
+def pronouns_missing(request: HttpRequest) -> HttpResponse:
+    """
+    Render the pronouns_missing app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
     language_code = 'de_DE'
     f = open("./data/{}/pronouns.json".format(language_code))
     pronouns = f.read()
@@ -112,7 +126,22 @@ def pronouns_missing(request: HttpRequest) -> JsonResponse:
 
 
 @login_required
-def pos_pronouns_missing(request: HttpRequest) -> JsonResponse:
+def pos_pronouns_missing(request: HttpRequest) -> HttpResponse:
+    """
+    Render the pos_pronouns_missing app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     # TODO JHILL: get language code from cookie
     language_code = 'de_DE'
 
@@ -130,7 +159,22 @@ def pos_pronouns_missing(request: HttpRequest) -> JsonResponse:
 
 
 @login_required
-def prep_cases_multi(request: HttpRequest) -> JsonResponse:
+def prep_cases_multi(request: HttpRequest) -> HttpResponse:
+    """
+    Render the prep_cases_multi app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     # TODO JHILL: get language code from cookie
     language_code = 'de_DE'
 
@@ -147,7 +191,21 @@ def prep_cases_multi(request: HttpRequest) -> JsonResponse:
     )
 
 
-def adjective_translation_multi(request: HttpRequest) -> JsonResponse:
+def adjective_translation_multi(request: HttpRequest) -> HttpResponse:
+    """
+    Render the adjective_translation_multi app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
     return _render_app_session_view(
         request,
         'adjective_translation_multi',
@@ -155,7 +213,21 @@ def adjective_translation_multi(request: HttpRequest) -> JsonResponse:
     )
 
 
-def phrase_translation_multi(request: HttpRequest) -> JsonResponse:
+def phrase_translation_multi(request: HttpRequest) -> HttpResponse:
+    """
+    Render the phrase_translation_multi app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
     return _render_app_session_view(
         request,
         'phrase_translation_multi',
@@ -163,7 +235,21 @@ def phrase_translation_multi(request: HttpRequest) -> JsonResponse:
     )
 
 
-def signup(request: HttpRequest) -> JsonResponse:
+def signup(request: HttpRequest) -> HttpResponse:
+    """
+    Render the signup page or process a signup
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
     if request.method == 'GET':
         form = UserCreationForm()
     else:
@@ -182,7 +268,21 @@ def signup(request: HttpRequest) -> JsonResponse:
 
 
 @login_required
-def stats(request: HttpRequest) -> JsonResponse:
+def stats(request: HttpRequest) -> HttpResponse:
+    """
+    Render the signup page or process a signup
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
     grammar_query_stub = GrammarQueryStub(user=request.user)
     weak_nouns = Noun.weak(grammar_query_stub)
 
@@ -192,7 +292,7 @@ def stats(request: HttpRequest) -> JsonResponse:
 
 
 @login_required
-def prefs(request: HttpRequest) -> JsonResponse:
+def prefs(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
         levels = GrammarQueryModel.levels()
         tags = GrammarQueryModel.all_tags()

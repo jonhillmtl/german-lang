@@ -1,14 +1,16 @@
 from api.models import Adjective, Noun
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from typing import List, Dict
 
 import pprint
 
 
-class Command(BaseCommand):
-    help = 'Declinates nouns'
+class Command(DocStringCommand):
+    """ Declinates adjectives. """
 
     def handle(self, *args: List, **options: Dict) -> None:
+        """ The handler for this script. """
+
         for adjective in Adjective.objects.all():
             noun, choice_mode = Noun.random()
 

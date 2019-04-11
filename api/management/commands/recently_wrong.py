@@ -8,6 +8,8 @@ class Command(BaseCommand):
     help = 'Gets nouns you have never done'
 
     def handle(self, *args: List, **options: Dict) -> None:
+        """ The handler for this script. """
+
         user = User.objects.get(pk=1)
 
         answers = Answer.objects.filter(

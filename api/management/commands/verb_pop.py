@@ -7,6 +7,8 @@ class Command(BaseCommand):
     help = 'Populates the verbs'
 
     def handle(self, *args: List, **options: Dict) -> None:
+        """ The handler for this script. """
+
         with open("./data/de_DE/verbs.csv", "r") as f:
             for line in f.readlines()[1:]:
                 values = line.split(';')

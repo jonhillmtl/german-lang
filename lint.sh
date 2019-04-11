@@ -4,7 +4,10 @@ set -e
 set -v
 
 # lint it using pyflakes
-python3 -m pyflakes `find . -name "*.py"`
+# python3 -m pyflakes `find . -name "*.py"`
+
+# enforce docstrings
+pep257 --add-ignore=D202,D210,D200
 
 # typechecks
 python3 -m mypy \
@@ -12,12 +15,6 @@ python3 -m mypy \
     --ignore-missing-imports \
     --strict-optional \
     --disallow-untyped-defs `find . -name "*.py"`
-
-# enforce docstrings
-pep257 --add-ignore=D202,D210,D200
-
-# check code style
-pycodestyle --max-line-length=140 .
 
 # and now just to be really hard on yourself
 pylint `find . -name "*.py"` \

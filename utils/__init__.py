@@ -1,3 +1,5 @@
+""" Define utility functions useful to all code. """
+
 from django.core.urlresolvers import get_resolver
 from typing import Dict
 

@@ -1,12 +1,14 @@
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from api.models import Adjective, Translation
 from typing import List, Dict
 
 
-class Command(BaseCommand):
-    help = 'Populates the nouns'
+class Command(DocStringCommand):
+    """ Populates nouns. """
 
     def handle(self, *args: List, **options: Dict) -> None:
+        """ The handler for this script. """
+
         with open("./data/de_DE/words.csv", "r") as f:
             for line in f.readlines()[1:]:
                 values = line.split(';')
@@ -22,7 +24,7 @@ class Command(BaseCommand):
                     adj = Adjective()
                 else:
                     print("updating {}: {}".format(adj.id, adj.adjective))
-                
+
                 adj.adjective = text
                 adj.language_code = 'de_DE'
                 adj.level = values[2]

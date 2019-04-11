@@ -7,6 +7,8 @@ class Command(BaseCommand):
     help = 'Populates the nouns'
 
     def handle(self, *args: List, **options: Dict) -> None:
+        """ The handler for this script. """
+
         added_count = 0
         with open("./data/de_DE/nouns.csv", "r") as f:
             for line in f.readlines()[1:]:
