@@ -1,3 +1,5 @@
+// TODO JHILL: document all functions
+
 $(document).ready(function()
 {
     var headers =

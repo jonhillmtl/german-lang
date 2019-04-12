@@ -45,6 +45,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # TODO JHILL: why?
     'apps.middleware.AuthenticationMiddleware'
 ]
 
@@ -61,6 +63,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # TODO JHILL: why?
                 'german_lang.context_processors.url_manifest_processor',
                 'german_lang.context_processors.menu_item_processor'
             ],
