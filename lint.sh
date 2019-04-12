@@ -6,6 +6,8 @@ set -v
 # lint it using pyflakes
 # python3 -m pyflakes `find . -name "*.py"`
 
+pycodestyle --max-line-length=140 .
+
 # enforce docstrings
 pep257 --add-ignore=D202,D210,D200
 

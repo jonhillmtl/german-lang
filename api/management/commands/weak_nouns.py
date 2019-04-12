@@ -6,7 +6,7 @@ from typing import List, Dict
 
 
 class Command(DocStringCommand):
-    help = 'Gets weak nouns'
+    """ Gets weak nouns. """
 
     def handle(self, *args: List, **options: Dict) -> None:
         """ The handler for this script. """

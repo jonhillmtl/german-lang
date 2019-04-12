@@ -39,7 +39,7 @@ def _render_app_session_view(
 @login_required
 def noun_list(request: HttpRequest) -> HttpResponse:
     """
-    Render the noun_list app
+    Render the noun_list app.
 
     Parameters
     ----------
@@ -63,7 +63,7 @@ def noun_list(request: HttpRequest) -> HttpResponse:
 @login_required
 def noun_random_feed(request: HttpRequest) -> HttpResponse:
     """
-    Render the noun_random_feed app
+    Render the noun_random_feed app.
 
     Parameters
     ----------
@@ -87,41 +87,161 @@ def noun_random_feed(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def noun_flash(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_flash app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'noun_flash', 'apps/noun_flash.html')
 
 
 @login_required
 def noun_gender(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_gender app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'noun_gender', 'apps/noun_gender.html')
 
 
 @login_required
 def noun_translation_multi(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_translation_multi app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'noun_translation_multi', 'apps/noun_translation_multi.html')
 
 
 @login_required
 def noun_pluralization(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_pluralization app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'noun_pluralization', 'apps/noun_pluralization.html')
 
 
 @login_required
 def noun_translation(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_translation app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'noun_translation', 'apps/noun_translation.html')
 
 
 @login_required
 def noun_article_missing(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_article_missing app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'noun_article_missing', 'apps/noun_article_missing.html')
 
 
 @login_required
 def verb_translation_multi(request: HttpRequest) -> HttpResponse:
+    """
+    Render the verb_translation_multi app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'verb_translation_multi', 'apps/verb_translation_multi.html')
 
 
 @login_required
 def verb_pp_multi(request: HttpRequest) -> HttpResponse:
+    """
+    Render the verb_pp_multi app.
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     return _render_app_session_view(request, 'verb_pp_multi', 'apps/verb_pp_multi.html')
 
 
@@ -267,7 +387,7 @@ def phrase_translation_multi(request: HttpRequest) -> HttpResponse:
 
 def signup(request: HttpRequest) -> HttpResponse:
     """
-    Render the signup page or process a signup
+    Render the signup page or process a signup.
 
     Parameters
     ----------
@@ -300,7 +420,7 @@ def signup(request: HttpRequest) -> HttpResponse:
 @login_required
 def stats(request: HttpRequest) -> HttpResponse:
     """
-    Render the signup page or process a signup
+    Render the stats page.
 
     Parameters
     ----------
@@ -325,7 +445,7 @@ def stats(request: HttpRequest) -> HttpResponse:
 @login_required
 def prefs(request: HttpRequest) -> HttpResponse:
     """
-    Render the stats page
+    Render the stats page.
 
     Parameters
     ----------
