@@ -24,7 +24,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('level', models.CharField(choices=[('a1.1', 'a1.1'), ('a1.2', 'a1.2'), ('a2.1', 'a2.1'), ('a2.2', 'a2.2'), ('b1.1', 'b1.2'), ('b2.1', 'b2.2'), ('c1', 'c1')], default=None, max_length=4, null=True)),
+                ('level', models.CharField(
+                    choices=[
+                        ('a1.1', 'a1.1'), ('a1.2', 'a1.2'),
+                        ('a2.1', 'a2.1'), ('a2.2', 'a2.2'),
+                        ('b1.1', 'b1.2'), ('b2.1', 'b2.2'),
+                        ('c1', 'c1')], default=None, max_length=4, null=True)),
                 ('chapter', models.IntegerField(default=None, null=True)),
                 ('language_code', models.CharField(max_length=5)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), default=list, size=None)),
@@ -40,7 +45,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('level', models.CharField(choices=[('a1.1', 'a1.1'), ('a1.2', 'a1.2'), ('a2.1', 'a2.1'), ('a2.2', 'a2.2'), ('b1.1', 'b1.2'), ('b2.1', 'b2.2'), ('c1', 'c1')], default=None, max_length=4, null=True)),
+                ('level', models.CharField(
+                    choices=[
+                        ('a1.1', 'a1.1'), ('a1.2', 'a1.2'),
+                        ('a2.1', 'a2.1'), ('a2.2', 'a2.2'),
+                        ('b1.1', 'b1.2'), ('b2.1', 'b2.2'),
+                        ('c1', 'c1')], default=None, max_length=4, null=True)),
                 ('chapter', models.IntegerField(default=None, null=True)),
                 ('language_code', models.CharField(max_length=5)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), default=list, size=None)),
@@ -89,7 +99,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('level', models.CharField(choices=[('a1.1', 'a1.1'), ('a1.2', 'a1.2'), ('a2.1', 'a2.1'), ('a2.2', 'a2.2'), ('b1.1', 'b1.2'), ('b2.1', 'b2.2'), ('c1', 'c1')], default=None, max_length=4, null=True)),
+                ('level', models.CharField(
+                    choices=[
+                        ('a1.1', 'a1.1'), ('a1.2', 'a1.2'),
+                        ('a2.1', 'a2.1'), ('a2.2', 'a2.2'),
+                        ('b1.1', 'b1.2'), ('b2.1', 'b2.2'),
+                        ('c1', 'c1')], default=None, max_length=4, null=True)),
                 ('chapter', models.IntegerField(default=None, null=True)),
                 ('language_code', models.CharField(max_length=5)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), default=list, size=None)),
@@ -107,7 +122,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('level', models.CharField(choices=[('a1.1', 'a1.1'), ('a1.2', 'a1.2'), ('a2.1', 'a2.1'), ('a2.2', 'a2.2'), ('b1.1', 'b1.2'), ('b2.1', 'b2.2'), ('c1', 'c1')], default=None, max_length=4, null=True)),
+                ('level', models.CharField(
+                    choices=[
+                        ('a1.1', 'a1.1'), ('a1.2', 'a1.2'),
+                        ('a2.1', 'a2.1'), ('a2.2', 'a2.2'),
+                        ('b1.1', 'b1.2'), ('b2.1', 'b2.2'),
+                        ('c1', 'c1')], default=None, max_length=4, null=True)),
                 ('chapter', models.IntegerField(default=None, null=True)),
                 ('language_code', models.CharField(max_length=5)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), default=list, size=None)),
@@ -123,7 +143,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('level', models.CharField(choices=[('a1.1', 'a1.1'), ('a1.2', 'a1.2'), ('a2.1', 'a2.1'), ('a2.2', 'a2.2'), ('b1.1', 'b1.2'), ('b2.1', 'b2.2'), ('c1', 'c1')], default=None, max_length=4, null=True)),
+                ('level', models.CharField(
+                    choices=[
+                        ('a1.1', 'a1.1'), ('a1.2', 'a1.2'),
+                        ('a2.1', 'a2.1'), ('a2.2', 'a2.2'),
+                        ('b1.1', 'b1.2'), ('b2.1', 'b2.2'),
+                        ('c1', 'c1')], default=None, max_length=4, null=True)),
                 ('chapter', models.IntegerField(default=None, null=True)),
                 ('language_code', models.CharField(max_length=5)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), default=list, size=None)),
@@ -147,7 +172,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('level', models.CharField(choices=[('a1.1', 'a1.1'), ('a1.2', 'a1.2'), ('a2.1', 'a2.1'), ('a2.2', 'a2.2'), ('b1.1', 'b1.2'), ('b2.1', 'b2.2'), ('c1', 'c1')], default=None, max_length=4, null=True)),
+                ('level', models.CharField(
+                    choices=[
+                        ('a1.1', 'a1.1'), ('a1.2', 'a1.2'),
+                        ('a2.1', 'a2.1'), ('a2.2', 'a2.2'),
+                        ('b1.1', 'b1.2'), ('b2.1', 'b2.2'),
+                        ('c1', 'c1')], default=None, max_length=4, null=True)),
                 ('chapter', models.IntegerField(default=None, null=True)),
                 ('language_code', models.CharField(max_length=5)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), default=list, size=None)),
@@ -179,7 +209,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('level', models.CharField(choices=[('a1.1', 'a1.1'), ('a1.2', 'a1.2'), ('a2.1', 'a2.1'), ('a2.2', 'a2.2'), ('b1.1', 'b1.2'), ('b2.1', 'b2.2'), ('c1', 'c1')], default=None, max_length=4, null=True)),
+                ('level', models.CharField(
+                    choices=[
+                        ('a1.1', 'a1.1'), ('a1.2', 'a1.2'),
+                        ('a2.1', 'a2.1'), ('a2.2', 'a2.2'),
+                        ('b1.1', 'b1.2'), ('b2.1', 'b2.2'),
+                        ('c1', 'c1')], default=None, max_length=4, null=True)),
                 ('chapter', models.IntegerField(default=None, null=True)),
                 ('language_code', models.CharField(max_length=5)),
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=32), default=list, size=None)),

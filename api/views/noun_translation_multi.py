@@ -39,4 +39,3 @@ def check(request: HttpRequest) -> JsonResponse:
             success=False,
             error=str(e)
         ))
-

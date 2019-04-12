@@ -20,4 +20,3 @@ class Command(DocStringCommand):
 
         for answer in answers:
             print(answer)
-

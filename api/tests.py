@@ -3,6 +3,7 @@ from .models import GrammarQueryStub, Noun, Answer
 from django.contrib.auth.models import User
 from django.core.management import call_command
 
+
 class RecentlyWrongTestCase(TestCase):
     user = None
 
@@ -66,4 +67,3 @@ class RarelyDoneTestCase(TestCase):
                 noun=Noun.objects.get(pk=1)
             ).save()
         assert [n.id for n in Noun.rarely_done(grammar_query_stub)] == [2, 3, 4, 5, 1]
-

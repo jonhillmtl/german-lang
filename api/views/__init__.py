@@ -5,6 +5,7 @@ from ..models import Noun, UserStats, GrammarQueryStub, Verb, Adjective, Phrase
 
 import json
 
+
 @api_view(['GET'])
 def nouns(request: HttpRequest) -> JsonResponse:
     return JsonResponse(data=dict(
@@ -24,7 +25,7 @@ def noun_random(request: HttpRequest) -> JsonResponse:
 
     query_stub = GrammarQueryStub(mode=mode, user=request.user)
 
-    if mode == 'noun_plurazation':    
+    if mode == 'noun_plurazation':
         while True:
             noun, choice_mode = Noun.random(grammar_query_stub=query_stub)
             if noun.plural_form != '':
@@ -40,6 +41,7 @@ def noun_random(request: HttpRequest) -> JsonResponse:
     )
 
     return JsonResponse(data, safe=False)
+
 
 @api_view(['GET'])
 def verb_random(request: HttpRequest) -> JsonResponse:

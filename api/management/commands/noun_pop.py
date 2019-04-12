@@ -30,7 +30,7 @@ class Command(DocStringCommand):
                 else:
                     print("(skipping) {}: {}".format(noun.id, noun.singular_form))
                     continue
-                
+
                 gender = values[2].strip().lower()
                 if gender == 'das':
                     gender = 'n'

@@ -21,7 +21,7 @@ class Command(DocStringCommand):
                     phrase = Phrase()
                 else:
                     print("updating {}: {}".format(phrase.id, phrase.phrase))
-                
+
                 phrase.phrase = text
                 phrase.language_code = 'de_DE'
                 phrase.level = 'a1.1'

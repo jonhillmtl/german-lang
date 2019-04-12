@@ -1,6 +1,5 @@
 """ This is the manage.py file for Django. """
 
-#!/usr/bin/env python
 import os
 import sys
 

@@ -52,6 +52,7 @@ def check(request: HttpRequest) -> JsonResponse:
             error=str(e)
         ))
 
+
 @api_view(['POST'])
 def correction(request: HttpRequest) -> JsonResponse:
     json_data = json.loads(request.body)
