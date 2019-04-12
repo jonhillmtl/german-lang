@@ -158,7 +158,7 @@ class UserStats(object):
         grammar_query_stub = GrammarQueryStub(user=self.user, mode=mode)
         return self._percentage_query(grammar_query_stub)
 
-    def last_24h_percentage(self, mode:str = None) -> float:
+    def last_24h_percentage(self, mode: str = None) -> float:
         # TODO JHILL: fix this
         grammar_query_stub = GrammarQueryStub(user=self.user, mode=mode)
         return self._percentage_query(grammar_query_stub)
@@ -266,7 +266,7 @@ class GrammarQueryModel(TimeStampedModel):
         return cls.objects.filter(id__in=query)  # .order_by(preserved)
 
     @classmethod
-    def never_done(cls, grammar_query_stub:GrammarQueryStub) -> List:
+    def never_done(cls, grammar_query_stub: GrammarQueryStub) -> List:
         params = grammar_query_stub.build_query_params()
 
         query = Answer.objects.filter(
@@ -282,7 +282,7 @@ class GrammarQueryModel(TimeStampedModel):
 
         query = Answer.objects.filter(
             **params
-        ).all() # .values(grammar_query_stub.cls + '_id')
+        ).all()  # .values(grammar_query_stub.cls + '_id')
         print(query)
 
         return cls.objects.filter(id__in=query)
@@ -389,7 +389,7 @@ def _articles(
                         value = "{}".format(
                             article_data[case.value][article.value][use_gender],
                         )
-                
+
                     if value is not None:
                         articles[key] = value
 
@@ -440,7 +440,7 @@ class Noun(GrammarQueryModel):
         self,
         correction: str,
         article: str = 'definite',
-        case:str = 'nominative'
+        case: str = 'nominative'
     ) -> bool:
         key = "{}_{}_{}".format(
             case,
@@ -457,7 +457,7 @@ class Noun(GrammarQueryModel):
         gender = data.get('gender', None)
         singular_form = normalize_answer(data.get('singular_form', None))
         plural_form = normalize_answer(data.get('plural_form', None))
-        
+
         assert plural_form is not None, 'Must provide plural_form'
         assert singular_form is not None, 'Must provide singular_form'
         assert gender is not None, 'Must provide gender'
@@ -544,9 +544,9 @@ articles = {
 # TODO JHILL: move somewhere nicer
 # TODO JHILL: only works for German
 NOMINATIVE_DECLINATIONS = {
-    'm' : 'r',
-    'n' : 's',
-    'f' : 'e'
+    'm': 'r',
+    'n': 's',
+    'f': 'e'
 }
 
 
@@ -570,7 +570,7 @@ class Adjective(GrammarQueryModel):
                 )
 
                 declinated = "{}{}".format(
-                    self.adjective, 
+                    self.adjective,
                     declination_data[case.value][article.value][noun.gender])
 
                 value = "{} {} {}".format(

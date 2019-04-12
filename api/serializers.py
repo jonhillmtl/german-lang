@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import Noun, Verb, Adjective, Phrase, AppSession
 
+
 class AppSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppSession
         fields = '__all__'
+
 
 class NounFlashSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,6 +21,7 @@ class NounFlashSerializer(serializers.ModelSerializer):
             'level',
             'chapter',
         )
+
 
 class NounSerializer(serializers.ModelSerializer):
     class Meta:

@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    
+
     'rest_framework',
     'rest_framework_json_api',
     'api',
@@ -63,7 +63,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'german_lang.context_processors.url_manifest_processor',
                 'german_lang.context_processors.menu_item_processor'
-                
             ],
         },
     },
@@ -157,7 +156,7 @@ AUTHENTICATION_BACKENDS = (
 
 JWT_KEY = {
     "k": os.environ.get('JWT_KEY', None),
-    "kty" : "oct"
+    "kty": "oct"
 }
 
 if JWT_KEY["k"] is None:
