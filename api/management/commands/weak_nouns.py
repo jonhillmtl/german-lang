@@ -1,11 +1,11 @@
 from api.models import Answer
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from django.db.models import Count
 from typing import List, Dict
 
 
-class Command(BaseCommand):
+class Command(DocStringCommand):
     help = 'Gets weak nouns'
 
     def handle(self, *args: List, **options: Dict) -> None:

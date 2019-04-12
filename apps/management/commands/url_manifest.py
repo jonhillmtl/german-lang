@@ -1,11 +1,11 @@
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from utils import url_manifest
 from typing import List, Dict
 
 import pprint
 
 
-class Command(BaseCommand):
+class Command(DocStringCommand):
     """ Populates the nouns. """
 
     help = 'Populates the nouns'

@@ -38,6 +38,21 @@ def _render_app_session_view(
 
 @login_required
 def noun_list(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_list app
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     nouns = Noun.objects.order_by('level', 'chapter', 'singular_form').all()
 
     return _render_app_session_view(request, 'noun_list', 'apps/noun_list.html', dict(
@@ -47,6 +62,21 @@ def noun_list(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def noun_random_feed(request: HttpRequest) -> HttpResponse:
+    """
+    Render the noun_random_feed app
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     query_stub = GrammarQueryStub(mode='random', user=request.user)
     nouns = [Noun.random(query_stub)[0] for i in range(0, 100)]
 
@@ -283,6 +313,7 @@ def stats(request: HttpRequest) -> HttpResponse:
         the HttpResponse with rendered html
 
     """
+
     grammar_query_stub = GrammarQueryStub(user=request.user)
     weak_nouns = Noun.weak(grammar_query_stub)
 
@@ -293,6 +324,21 @@ def stats(request: HttpRequest) -> HttpResponse:
 
 @login_required
 def prefs(request: HttpRequest) -> HttpResponse:
+    """
+    Render the stats page
+
+    Parameters
+    ----------
+    request: HttpRequest
+        the HttpRequest
+
+    Response
+    --------
+    HttpResponse
+        the HttpResponse with rendered html
+
+    """
+
     if request.method == 'GET':
         levels = GrammarQueryModel.levels()
         tags = GrammarQueryModel.all_tags()

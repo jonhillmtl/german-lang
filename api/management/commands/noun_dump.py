@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from api.models import Noun
 from typing import List, Dict
 from argparse import ArgumentParser
@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 import pprint
 
 
-class Command(BaseCommand):
+class Command(DocStringCommand):
     help = 'Dumps a noun or all nouns'
 
     def add_arguments(self, parser: ArgumentParser) -> None:

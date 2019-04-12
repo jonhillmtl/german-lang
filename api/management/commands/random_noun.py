@@ -1,10 +1,10 @@
 from api.models import GrammarQueryStub, Noun
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from typing import List, Dict
 
 
-class Command(BaseCommand):
+class Command(DocStringCommand):
     help = 'Gets a stream of random nouns'
 
     def handle(self, *args: List, **options: Dict) -> None:

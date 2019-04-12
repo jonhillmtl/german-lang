@@ -1,9 +1,9 @@
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from api.models import Phrase, Translation
 from typing import List, Dict
 
 
-class Command(BaseCommand):
+class Command(DocStringCommand):
     help = 'Populates the nouns'
 
     def handle(self, *args: List, **options: Dict) -> None:

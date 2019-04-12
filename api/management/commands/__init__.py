@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 
 class DocStringCommand(BaseCommand):
     def __init__(self):

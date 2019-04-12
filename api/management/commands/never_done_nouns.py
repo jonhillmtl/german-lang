@@ -1,7 +1,7 @@
 from api.models import Answer
 from api.models import Noun
 from django.contrib.auth.models import User
-from django.core.management.base import BaseCommand
+from . import DocStringCommand
 from typing import List, Dict
 
 
